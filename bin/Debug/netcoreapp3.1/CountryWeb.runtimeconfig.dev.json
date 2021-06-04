@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\akai\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\akai\\.nuget\\packages"
+      "/Users/hsiaochingkao/.dotnet/store/|arch|/|tfm|",
+      "/Users/hsiaochingkao/.nuget/packages"
     ]
   }
 }

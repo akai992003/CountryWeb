@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "J:\\CountryWeb\\CountryWeb.csproj": {}
+    "/Users/hsiaochingkao/Source/HN/CountryWeb/CountryWeb.csproj": {}
   },
   "projects": {
-    "J:\\CountryWeb\\CountryWeb.csproj": {
+    "/Users/hsiaochingkao/Source/HN/CountryWeb/CountryWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "J:\\CountryWeb\\CountryWeb.csproj",
+        "projectUniqueName": "/Users/hsiaochingkao/Source/HN/CountryWeb/CountryWeb.csproj",
         "projectName": "CountryWeb",
-        "projectPath": "J:\\CountryWeb\\CountryWeb.csproj",
-        "packagesPath": "C:\\Users\\akai\\.nuget\\packages\\",
-        "outputPath": "J:\\CountryWeb\\obj\\",
+        "projectPath": "/Users/hsiaochingkao/Source/HN/CountryWeb/CountryWeb.csproj",
+        "packagesPath": "/Users/hsiaochingkao/.nuget/packages/",
+        "outputPath": "/Users/hsiaochingkao/Source/HN/CountryWeb/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\akai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/hsiaochingkao/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.302/RuntimeIdentifierGraph.json"
         }
       }
     }

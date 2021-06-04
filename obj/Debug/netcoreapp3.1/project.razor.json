@@ -1,5 +1,5 @@
 {
-  "FilePath": "/Users/chukaisu/src/CountryWeb/CountryWeb.csproj",
+  "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/CountryWeb.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14402,48 +14402,48 @@
   "RootNamespace": "CountryWeb",
   "Documents": [
     {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/重大事記.cshtml",
-      "TargetPath": "Views\\Home\\重大事記.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Shared/Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/tel.cshtml",
-      "TargetPath": "Views\\Home\\tel.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/_ViewImports.cshtml",
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Shared/_Layout.cshtml",
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Home/tel.cshtml",
+      "TargetPath": "Views\\Home\\tel.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Home/Privacy.cshtml",
+      "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Home/importevent.cshtml",
+      "TargetPath": "Views\\Home\\importevent.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Shared/Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/hsiaochingkao/Source/HN/CountryWeb/Views/Home/Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     }
   ],
