@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/chukaisu/src/CountryWeb/CountryWeb.csproj": {}
+    "J:\\CountryWeb\\CountryWeb.csproj": {}
   },
   "projects": {
-    "/Users/chukaisu/src/CountryWeb/CountryWeb.csproj": {
+    "J:\\CountryWeb\\CountryWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/chukaisu/src/CountryWeb/CountryWeb.csproj",
+        "projectUniqueName": "J:\\CountryWeb\\CountryWeb.csproj",
         "projectName": "CountryWeb",
-        "projectPath": "/Users/chukaisu/src/CountryWeb/CountryWeb.csproj",
-        "packagesPath": "/Users/chukaisu/.nuget/packages/",
-        "outputPath": "/Users/chukaisu/src/CountryWeb/obj/",
+        "projectPath": "J:\\CountryWeb\\CountryWeb.csproj",
+        "packagesPath": "C:\\Users\\akai\\.nuget\\packages\\",
+        "outputPath": "J:\\CountryWeb\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/chukaisu/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\akai\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -56,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.302/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     }

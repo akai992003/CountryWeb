@@ -25,7 +25,7 @@ namespace CountryWeb.Controllers {
         public IActionResult tel () {
             return View ();
         }
-        public IActionResult 重大事記 () {
+        public IActionResult importevent () {
             return View ();
         }
 
