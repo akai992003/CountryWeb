@@ -35,3 +35,4 @@
 /Users/chukaisu/src/CountryWeb/obj/Debug/netcoreapp3.1/CountryWeb.genruntimeconfig.cache
 /Users/chukaisu/src/CountryWeb/obj/Debug/netcoreapp3.1/CountryWeb.csproj.CopyComplete
 /Users/chukaisu/src/CountryWeb/obj/Debug/netcoreapp3.1/Razor/Views/Home/tel.cshtml.g.cs
+/Users/chukaisu/src/CountryWeb/obj/Debug/netcoreapp3.1/Razor/Views/Home/重大事記.cshtml.g.cs

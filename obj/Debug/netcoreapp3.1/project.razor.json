@@ -14402,6 +14402,11 @@
   "RootNamespace": "CountryWeb",
   "Documents": [
     {
+      "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/重大事記.cshtml",
+      "TargetPath": "Views\\Home\\重大事記.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/chukaisu/src/CountryWeb/Views/Home/Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
