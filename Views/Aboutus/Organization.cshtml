@@ -1,0 +1,30 @@
+@* 組織架構 *@
+<div class="col-md-9 border border-top-0 border-right-0 border-bottom-0 mb-3">
+    <h2 class="title-border pb-2"><span class="title-border-left pl-2">組織架構</span>
+    </h2>
+    <div id="myAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
+        透過滑鼠滾輪或觸控面板可以調整圖片大小及拖曳圖片。
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>組織架構</h4>
+    <img class="border w-100 py-2" src="/img/組織架構圖.png" alt="組織架構">
+    <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>委員會組織架構
+    </h4>
+    <img class="border w-100 py-2" src="/img/委員組織架構圖.png" alt="委員會組織架構">
+    <script>
+        wheelzoom(document.querySelectorAll('img'));
+        $('#myAlert').on('closed.bs.alert', function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'https://www.country.org.tw/acceptImage',
+            });
+        })
+    </script>
+</div>

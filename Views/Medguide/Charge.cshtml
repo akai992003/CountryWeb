@@ -1,0 +1,327 @@
+<ul class="nav nav-tabs news-flex" role="tablist">
+    <li class="nav-item news-tab">
+        <a class="nav-link active border border-right-0" id="appointment-tab" data-toggle="tab" href="#appointment"
+            title="{{ trans('lang.掛號費收費標準') }}" role="tab" aria-controls="appointment" aria-selected="true">{{
+            trans('lang.掛號費收費標準') }}</a>
+    </li>
+    <li class="nav-item news-tab">
+        <a class="nav-link border" id="own-tab" data-toggle="tab" href="#own" title="{{ trans('lang.自費項目收費標準') }}"
+            role="tab" aria-controls="own" aria-selected="false">{{ trans('lang.自費項目收費標準') }}</a>
+    </li>
+</ul>
+<div class="tab-content border border-top-0">
+    <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="appointment-tab">
+        <div class="container">
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>自費</h4>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>項目</th>
+                        <th>自費</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>門診</td>
+                        <td>420</td>
+                    </tr>
+                    <tr>
+                        <td>急診</td>
+                        <td>550</td>
+                    </tr>
+                    <tr>
+                        <td>眩暈特別門診<br>
+                            <small>（楊怡祥醫師）</small>
+                        </td>
+                        <td>400</td>
+                    </tr>
+                    <tr>
+                        <td>牙科</td>
+                        <td>400</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>健保</h4>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th rowspan="2" class="align-middle">項目</th>
+                        <th colspan="3">健保</th>
+                    </tr>
+                    <tr>
+                        <th>掛號費</th>
+                        <th>部分負擔</th>
+                        <th>合計</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>門診</td>
+                        <td>270</td>
+                        <td>80</td>
+                        <td>350</td>
+                    </tr>
+                    <tr>
+                        <td>急診</td>
+                        <td>370</td>
+                        <td>150</td>
+                        <td>520</td>
+                    </tr>
+                    <tr>
+                        <td>眩暈特別門診<br>
+                            <small>（楊怡祥醫師）</small>
+                        </td>
+                        <td class="align-middle">400</td>
+                        <td class="align-middle">80</td>
+                        <td class="align-middle">480</td>
+                    </tr>
+                    <tr>
+                        <td>牙科</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>門診基本負擔</h4>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th rowspan="2" class="align-middle">醫院層</th>
+                        <th colspan="2">西醫門診</th>
+                    </tr>
+                    <tr>
+                        <th>經轉診</th>
+                        <th>未經轉診</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>醫學中心</td>
+                        <td>210</td>
+                        <td>360</td>
+                    </tr>
+                    <tr>
+                        <td>區域醫院</td>
+                        <td>140</td>
+                        <td>240</td>
+                    </tr>
+                    <tr class="bg-light-primary">
+                        <td>地區醫院</td>
+                        <td>50</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>診所</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>醫院層</th>
+                        <th>急診</th>
+                        <th>牙醫</th>
+                        <th>中醫</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>醫學中心</td>
+                        <td>450</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>區域醫院</td>
+                        <td>300</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr class="bg-light-primary">
+                        <td>地區醫院</td>
+                        <td>150</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>診所</td>
+                        <td>150</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="alert alert-primary mt-3" role="alert">
+                <ol class="text-primary pl-4 pt-1 pb-2 m-0">
+                    <li class="pb-2">
+                        <small class="text-dark">凡領有身心障礙手冊者，門診就醫時不論醫院層級，基本部分負擔費用均按診所層級收取 50 元。
+                        </small>
+                    </li>
+                    <li class="pb-2">
+                        <small class="text-dark">
+                            門診手術後、急診手術後或住院患者出院後1個月內之一次回診，及生產出院後6週內第一次回診，視同轉診，並得由醫院自行開立証明供病患使用，按「經轉診」規定收取部分負擔。
+                        </small>
+                    </li>
+                </ol>
+            </div>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>門診藥品部分負擔</h4>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>藥費</th>
+                        <th>部分負擔費用</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>100元以下</td>
+                        <td>0元</td>
+                    </tr>
+                    <tr>
+                        <td>101~200元</td>
+                        <td>20元</td>
+                    </tr>
+                    <tr>
+                        <td>201~300元</td>
+                        <td>40元</td>
+                    </tr>
+                    <tr>
+                        <td>301~400元</td>
+                        <td>60元</td>
+                    </tr>
+                    <tr>
+                        <td>401~500元</td>
+                        <td>80元</td>
+                    </tr>
+                    <tr>
+                        <td>501~600元</td>
+                        <td>100元</td>
+                    </tr>
+                    <tr>
+                        <td>601~700元</td>
+                        <td>120元</td>
+                    </tr>
+                    <tr>
+                        <td>701~800元</td>
+                        <td>140元</td>
+                    </tr>
+                    <tr>
+                        <td>801~900元</td>
+                        <td>160元</td>
+                    </tr>
+                    <tr>
+                        <td>901~1000元</td>
+                        <td>180元</td>
+                    </tr>
+                    <tr>
+                        <td>1001元以上</td>
+                        <td>200元</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>門診復健（含中醫傷科）部分負擔</h4>
+            <p>如果您有在門診進行復健物理治療或中醫傷科治療，那麼同一療程自第 2 次起，每次須付部分負擔 50 元(復健物理治療「中度-複雜」及「複雜」治療除外)。</p>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>住院部分負擔</h4>
+            <p>
+                住院部分負擔是依您住院病房類別及住院日數長短所定不同比率計收。急性病房之部分負擔比率高於慢性病房，其目的是希望民眾生病住院時，過了急性期，就應該回家療養或轉入慢性病房。</p>
+
+            <table class="table table-bordered table-hover text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th colspan="5">住院部分負擔比率表</th>
+                    <tr>
+                        <th rowspan="2" class="align-middle">病房別</th>
+                        <th colspan="4">部分負擔比率</th>
+                    </tr>
+                    <tr>
+                        <th>5%</th>
+                        <th>10%</th>
+                        <th>20%</th>
+                        <th>30%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-light-primary">
+                        <td>急性病房</td>
+                        <td class="align-middle">-</td>
+                        <td class="align-middle">30日內</td>
+                        <td class="align-middle">31~60日</td>
+                        <td class="align-middle">61日後</td>
+                    </tr>
+                    <tr>
+                        <td>慢性病房</td>
+                        <td class="align-middle">30日內</td>
+                        <td class="align-middle">31~90日</td>
+                        <td class="align-middle">91~180日</td>
+                        <td class="align-middle">180日後</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>全民健康保險法第 43 條及第 47 條</h4>
+            <p>現行全民健康保險法第 43 條及第 47 條已明定保險對象就醫應自行負擔部分費用；同法第 48
+                條並規定，保險對象因重大傷病、分娩、接受預防保健服務及於山地離島地區就醫時，免自行負擔費用。又依同法第 49
+                條規定，低收入戶成員之就醫部分負擔，係由中央社政主管機關編列預算支應。</p>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>免除部分負擔的對象</h4>
+            <ol class="text-primary pl-4 pt-1 pb-2 m-0">
+                <li class="pb-2">
+                    <span class="text-dark">可免除所有部分負擔者：</span>
+                    <ol class="text-primary pl-4 pt-1 pb-2 m-0" type="i">
+                        <li class="pb-2"><span class="text-dark">重大傷病、分娩及於山地離島地區就醫者。</span></li>
+                        <li class="pb-2"><span class="text-dark">經離島地區院所轉診至臺灣本島當次之門診或急診者。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">健保卡上註記「榮」字的榮民、榮民遺眷之家戶代表。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">健保卡上註記「福」字的低收入戶。</span></li>
+                        <li class="pb-2"><span class="text-dark">3 歲以下兒童。</span></li>
+                        <li class="pb-2"><span class="text-dark">登記列管結核病患至指定特約醫院就醫。</span></li>
+                        <li class="pb-2"><span class="text-dark">勞保被保險人因職業傷病就醫。</span></li>
+                        <li class="pb-2"><span
+                                class="text-dark">持「油症患者就診卡」或健保卡上註記「油症」身分之多氯聯苯中毒者(以下稱油症患者)：第一代油症患者之門、急診及住院；第二代油症患者之門、急診就醫。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">百歲人瑞。</span></li>
+                        <li class="pb-2"><span
+                                class="text-dark">同一療程，除了第一次診療需要部分負擔外，療程期間內都免除門診基本部分負擔(復健物理治療及中醫傷科除外)。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">服役期間持有役男身分證之替代役役男(含一般替代役役男及第一階段、第二階段研發替代役役男)。</span>
+                        </li>
+                    </ol>
+                </li>
+                <li class="pb-2">
+                    <span class="text-dark">可免除藥品部分負擔者：</span>
+                    <ol class="text-primary pl-4 pt-1 pb-2 m-0" type="i">
+                        <li class="pb-2"><span class="text-dark">持「慢性病連續處方箋」調劑(開藥 28 天以上)者【衛生署公告之慢性病包括高血壓、糖尿病等 100
+                                種。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">接受牙醫醫療服務者。</span></li>
+                        <li class="pb-2"><span class="text-dark">接受全民健保醫療費用支付標準所規定之「論病例計酬項目」服務者。</span></li>
+                    </ol>
+                </li>
+                <li class="pb-2">
+                    <span class="text-dark">可免除門診復健部分負擔者：</span>
+                    <ol class="text-primary pl-4 pt-1 pb-2 m-0" type="i">
+                        <li class="pb-2"><span class="text-dark">實施的復健物理治療屬於「中度－複雜治療」，也就是實施中度治療項目達 3 項以上，而且合計時間超過 50
+                                分鐘，如肌肉電刺激等 14 項。</span>
+                        </li>
+                        <li class="pb-2"><span class="text-dark">實施的復健物理治療屬於「複雜治療」，需要治療專業人員親自實施，如平衡訓練等 7
+                                項。限復健專科醫師處方。</span>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+            <h4 class="text-primary py-2"><i class="fas fa-caret-right pr-2"></i>臺北市醫療機構牙科收費標準表</h4>
+            <a href="https://www-ws.gov.taipei/Download.ashx?u=LzAwMS9VcGxvYWQvNjg0L3JlbGZpbGUvNDczNDgvODE0MDkyNy8xMjg4NjI1NC00NzI5LTQzMjAtYTJkNy1iZTU1ZThlYjg1MDIucGRm&n=6Ie65YyX5biC6Yar55mC5qmf5qeL54mZ56eR5pS26LK75qiZ5rqW6KGoKOWlieaguOeJiC0xMDkwMTE3KS5wZGY%3d&icon=..pdf"
+                title="臺北市醫療機構牙科收費標準表" target="_blank">臺北市醫療機構牙科收費標準表</a>
+            <div class="alert alert-primary mt-3" role="alert">
+                <small>※ 資料來源：衛生福利部中央健康保險署公告</small>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="own" role="tabpanel" aria-labelledby="own-tab">
+        
+    </div>
+</div>

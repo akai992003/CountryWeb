@@ -139,29 +139,12 @@
                                 <div class="text-center pr-3">認識宏恩</div>
                             </a>
                             <ul class="dropdown-menu">
-                                 @* Echo Add
-                                <li>
-                                     兩種寫法都可以 
-                                    <a class="dropdown-item" title="tel" href="/Home/tel">tel</a>
-                                      <a class="dropdown-item" title="tel" asp-controller="Home" asp-action="tel">
-                                        tel
-                                    </a> 
-                                </li> *@
-                                <li>
-                                    <a class="dropdown-item" href="https://www.country.org.tw/認識宏恩/管理團隊"
-                                        title="管理團隊">管理團隊</a></li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/認識宏恩/願景使命"
-                                        title="願景使命">願景使命</a></li>
-                                <li>
-                                    @* Echo Update *@
-                                    <a class="dropdown-item" title="重大事記" asp-controller="Home" asp-action="importevent">
-                                        重大事記
-                                    </a>
-                                    @* <a class="dropdown-item" href="https://www.country.org.tw/認識宏恩/重大事記"
-                                        title="重大事記">重大事記</a> *@
-                                </li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/認識宏恩/組織架構"
-                                        title="組織架構">組織架構</a></li>
+                                    @* <a class="dropdown-item" title="tel" href="/Home/tel">tel</a>
+                                    <a class="dropdown-item" title="tel" asp-controller="Home" asp-action="tel"> *@
+                                <li><a class="dropdown-item" href="/Aboutus/Manageteam" title="管理團隊">管理團隊</a></li>
+                                <li><a class="dropdown-item" href="/Aboutus/Mission" title="願景使命">願景使命</a></li>
+                                <li><a class="dropdown-item" title="重大事記" asp-controller="Aboutus" asp-action="Importevent">重大事記</a></li>
+                                <li><a class="dropdown-item" href="/Aboutus/Organization" title="組織架構">組織架構</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -184,13 +167,13 @@
                                         title="醫師停診">醫師停診</a></li>
                                 <li><a class="dropdown-item" href="https://www.country.org.tw/就醫指南/看哪一科"
                                         title="看哪一科">看哪一科</a></li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/就醫指南/就醫權益與須知"
+                                <li><a class="dropdown-item" href="/Medguide/Mednotice"
                                         title="就醫權益與須知">就醫權益與須知</a></li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/就醫指南/住院服務"
+                                <li><a class="dropdown-item" href="/Medguide/Admission"
                                         title="住院服務">住院服務</a></li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/就醫指南/急診服務"
+                                <li><a class="dropdown-item" href="/Medguide/Emergencyservice"
                                         title="急診服務">急診服務</a></li>
-                                <li><a class="dropdown-item" href="https://www.country.org.tw/就醫指南/收費說明"
+                                <li><a class="dropdown-item" href="/Medguide/Charge"
                                         title="收費說明">收費說明</a></li>
                             </ul>
                         </li>
@@ -270,7 +253,7 @@
 
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" style="padding-top: 125px">
             @RenderBody()
         </main>
     </div>
