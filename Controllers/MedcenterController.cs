@@ -1,4 +1,3 @@
-// 就醫指南
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,24 +6,19 @@ using System.Threading.Tasks;
 using CountryWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
 namespace CountryWeb.Controllers
 {
-    public class Medguide : Controller
+    public class MedcenterController : Controller
     {
-        public IActionResult Mednotice() //權益與須知
+        public IActionResult Medteam() //醫療團隊
         {
             return View();
         }
-        public IActionResult Admission() //住院服務
+         public IActionResult Medaffteam() //醫事團隊
         {
             return View();
         }
-        public IActionResult Emergencyservice() //急診服務
-        {
-            return View();
-        }
-         public IActionResult Charge() //收費說明
+         public IActionResult Medespec() //特色醫療
         {
             return View();
         }
