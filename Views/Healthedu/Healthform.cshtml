@@ -1,1 +1,146 @@
 @* 衛教單張 *@
+
+@model CountryWeb.Controllers.dtoA2;
+
+<section class="bg-medical-img">
+    <div class="container">
+        <h1 class="text-primary">衛教單張</h1>
+    </div>
+</section>
+<!-- Breadcrumb -->
+<section class="container d-none d-md-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item"><a href="#" title="#">衛教園地</a></li>
+        <li class="breadcrumb-item active" aria-current="page">衛教單張</li>
+    </ol>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Mobile Button -->
+            <button class="mobile-menu collapsed text-primary d-md-none d-sm-block mt-3 mb-4" type="button"
+                data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                <div class="d-flex justify-content-between">
+                    <span>衛教園地</span>
+                    <i class="fas fa-caret-down fa-lg pt-1"></i>
+                </div>
+            </button>
+            <div id="menu" class="collapse mb-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a class="text-dark" href="衛教單張" title="衛教單張">
+                            衛教單張
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-dark" href="防疫新知" title="防疫新知">
+                            <i class="fas fa-caret-right text-primary pr-2"></i>
+                            防疫新知
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- Left Menu -->
+            <div class="d-none d-md-block">
+                <div class="pb-2">
+                    <button class="btn left-menu mb-2" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true">
+                        衛教園地
+                    </button>
+                    <div id="collapseTwo" class="collapse show">
+                        <ul class="list-unstyled list-group mb-2">
+                            <li class="left-menu-content list-group-item">
+                                <a class="text-dark" href="衛教單張" title="衛教單張">
+                                    衛教單張<i
+                                        class="fas fa-caret-right text-primary pr-2"></i> 
+                                    衛教單張</a>
+                            </li>
+                            <li class="left-menu-content list-group-item">
+                                <a class="text-dark" href="防疫新知" title="防疫新知">
+                                    防疫新知<i
+                                        class="fas fa-caret-right text-primary pr-2"></i> 
+                                    防疫新知</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content -->
+        <div class="col-md-9 border border-top-0 border-right-0 border-bottom-0 mb-3">
+            <h2 class="title-border pb-2">
+                @* {{ trans('lang.' . $menu) }} *@
+                <span class="title-border-left pl-2">menu</span>
+            </h2>
+            <!-- 衛教單張 -->
+
+            <div class="input-group pt-3">
+                <select class="custom-select" id="list" name="list">
+                    <option value="">全部</option>
+                    @{
+                        foreach (var item in ViewBag.A1)
+                        {
+                            <option value="@item.title">
+                                @item.title
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="py-3">
+                <table id="dataTable" class="table table-hover text-center" style="width:100%">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>類別</th>
+                            <th>標題</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in @ViewBag.A2)
+                            {
+                                <tr>
+                                    <td class="text-center align-middle">@item.title</td>
+                                    <td class="text-left align-middle">
+                                        <span class="text-primary pr-2">
+                                            <i class="far fa-clock pr-2"></i>
+                                            @item.publish_date
+                                        </span>
+                                        @* href="{{ url('衛教園地/' . $menu . '/' . $news_list->no) }}" *@
+                                        <a class="text-dark" href="#" title="@item.title" target="_blank">
+                                            @item.title
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('#dataTable').DataTable({
+                        pageLength: 25,
+                        fixedHeader: true,
+                        "columns": [
+                            { "width": "20%" },
+                            { "width": "80%" },
+                        ]
+                    });
+                    let table = $('#dataTable').DataTable();
+                    $('#list').change(function () {
+                        table
+                            .search(this.value)
+                            .draw();
+                    });
+                })
+            </script>
+
+
+        </div>
+    </div>
+</section>
