@@ -1,1 +1,101 @@
 @* 防疫新知 *@
+@model CountryWeb.Controllers.dtoA2;
+
+<section class="bg-medical-img">
+    <div class="container">
+        <h1 class="text-primary">防疫新知</h1>
+    </div>
+</section>
+<!-- Breadcrumb -->
+<section class="container d-none d-md-block">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item"><a href="#" title="衛教園地">衛教園地</a></li>
+        <li class="breadcrumb-item active" aria-current="page">防疫新知</li>
+    </ol>
+</section>
+<!-- Menu -->
+<section class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Mobile Button -->
+            <button class="mobile-menu collapsed text-primary d-md-none d-sm-block mt-3 mb-4" type="button"
+                data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                <div class="d-flex justify-content-between">
+                    <span>衛教園地</span>
+                    <i class="fas fa-caret-down fa-lg pt-1"></i>
+                </div>
+            </button>
+            <div id="menu" class="collapse mb-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a class="text-dark" href="https://www.country.org.tw/衛教園地/衛教單張" title="衛教單張">
+
+                            衛教單張
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-dark" href="https://www.country.org.tw/衛教園地/防疫新知" title="防疫新知">
+                            <i class="fas fa-caret-right text-primary pr-2"></i>
+                            防疫新知
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Left Menu -->
+            <div class="d-none d-md-block">
+                <div class="pb-2">
+                    <button class="btn left-menu mb-2" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true">
+                        衛教園地
+                    </button>
+                    <div id="collapseTwo" class="collapse show">
+                        <ul class="list-unstyled list-group mb-2">
+                            <li class="left-menu-content list-group-item">
+                                <a class="text-dark" href="https://www.country.org.tw/衛教園地/衛教單張" title="衛教單張">
+
+                                    衛教單張</a>
+                            </li>
+                            <li class="left-menu-content list-group-item">
+                                <a class="text-dark" href="https://www.country.org.tw/衛教園地/防疫新知" title="防疫新知">
+                                    <i class="fas fa-caret-right text-primary pr-2"></i>
+                                    防疫新知</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content -->
+        <div class="col-md-9 border border-top-0 border-right-0 border-bottom-0 mb-3">
+            <h2 class="title-border pb-2"><span class="title-border-left pl-2">防疫新知</span>
+            </h2>
+            <!-- 防疫新知 -->
+            <form action="https://www.country.org.tw/衛教園地/防疫新知" method="GET" role="search">
+                <div class="search_div">
+                    <label for="search" class="d-none">搜尋</label>
+                    <input class="form-control" type="text" id="search" name="search" placeholder="請輸入要查詢的關鍵字">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary search-btn"><i class="fas fa-search"></i>
+                </button>
+            </form>
+            <hr class="hr mt-2">
+            <div class="pt-0 pb-2">
+                <ul class="list-group list-group-flush">
+                    @{
+                        foreach (var item in @ViewBag.A1)
+                        {
+                            <tr>
+                                <li class="list-group-item news-list-item">
+                                    <div class="news-words">
+                                        <span class="text-primary pr-2">
+                                            <i class="far fa-clock pr-2"></i>
+                                            @item.publish_date
+                                        </span>@item.title
+                                    </div>
+                                </li>
+                            </tr>
+                        }
+                    }
+                </ul>
+            </div>

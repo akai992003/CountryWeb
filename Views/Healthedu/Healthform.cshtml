@@ -73,7 +73,7 @@
         <div class="col-md-9 border border-top-0 border-right-0 border-bottom-0 mb-3">
             <h2 class="title-border pb-2">
                 @* {{ trans('lang.' . $menu) }} *@
-                <span class="title-border-left pl-2">menu</span>
+                <span class="title-border-left pl-2">衛教單張</span>
             </h2>
             <!-- 衛教單張 -->
 
@@ -103,7 +103,7 @@
                             foreach (var item in @ViewBag.A2)
                             {
                                 <tr>
-                                    <td class="text-center align-middle">@item.title</td>
+                                    <td class="text-center align-middle">@item.type</td>
                                     <td class="text-left align-middle">
                                         <span class="text-primary pr-2">
                                             <i class="far fa-clock pr-2"></i>
