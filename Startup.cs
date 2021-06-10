@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CountryWeb.Data;
+using CountryWeb.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,9 +16,14 @@ namespace CountryWeb
 {
     public class Startup
     {
+        private string connRoot { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            // Echo:取得連線資訊
+            connRoot = UStore.GetUStore(Configuration["ConnectionStrings:Root"], "Root");
         }
 
         public IConfiguration Configuration { get; }
@@ -23,6 +31,13 @@ namespace CountryWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Echo : DI
+            services.AddDbContext<TgContext>(delegate (DbContextOptionsBuilder options)
+            {
+                options.UseSqlServer(connRoot);
+            });
+            services.AddScoped<InewsListsService, newsListsService>();
+
             services.AddControllersWithViews();
         }
 

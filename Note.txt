@@ -1,0 +1,32 @@
+1.新增參考
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+2.新增資料夾 Data
+新增檔案
+TgContext.cs
+newsLists.cs
+
+3.新增資料夾 Helper
+新增檔案
+UStore.cs
+它是用來判斷若是 appsettings.json 沒有連線字串,則會讀取 ap.json
+
+4.新增檔案
+ap.json
+這個檔案放連線資訊,所以不會放到 git 上
+請注意 .gitignore 檔 , 加入此檔案名稱
+
+5.修改檔案
+appsettings.Development.json (開發環境)
+appsettings.json (正式環境)
+加上
+  "ConnectionStrings": {
+    "Root": ""
+  }
+這段
+意思是,之後主機上會讀取此檔案設定
+
+6.修改其他檔案 Startup.cs
+請看註解是 Echo 的部分
+
