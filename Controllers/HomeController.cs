@@ -16,35 +16,62 @@ namespace CountryWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IvPService IvP;
+        private readonly ICovid19Service ICovid19;
 
-        public HomeController(ILogger<HomeController> logger, IvPService IvPService)
+        public HomeController(ILogger<HomeController> logger, IvPService IvPService, ICovid19Service ICovid19Service)
         {
             _logger = logger;
-            IvP = IvPService;
+            this.IvP = IvPService;
+            this.ICovid19 = ICovid19Service;
         }
 
 
         public async Task<IActionResult> IndexAsync()
         {
-            var d = new dtoCovid19 ();
+            var d = new dtoCovid19();
+            // // test
+            //     d.Id ="A224671095";
+            //     d.Name ="Echo Kao";
+            //     d.Birthday = "19780212";
+            //     d.Phone = "0988670002";
+            // // test
 
-            var sec = SecurityModule.CreateRecaptchaString ();
+            var sec = SecurityModule.CreateRecaptchaString();
             d.SECURITY = sec[0];
             ViewBag.Answer = sec[1];
-            
+
             var vP1 = await this.IvP.GetvP1();
             List<SelectListItem> vPId = new List<SelectListItem>();
             foreach (var p in vP1)
             {
-                vPId.Add(new SelectListItem()
+                if (p.Fulls == true)
                 {
-                    Text = p.head,
-                    Value = p.id.ToString()
-                });
+                    vPId.Add(new SelectListItem()
+                    {
+                        Text = p.head,
+                        Value = p.id.ToString(),
+                        Disabled = true
+                    });
+                }
+                else
+                {
+                    vPId.Add(new SelectListItem()
+                    {
+                        Text = p.head,
+                        Value = p.id.ToString()
+                    });
+                }
             }
 
             ViewBag.vPId = vPId;
             return View(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Covid19AddAsync(dtoCovid19 dto)
+        {
+            await this.ICovid19.NewOne(dto);
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()

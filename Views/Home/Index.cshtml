@@ -17,7 +17,7 @@
     <h2 class="title-border pb-2"><span class="title-border-left pl-2">Covid-19疫苗接種專區</span>
     </h2>
 
-    <form asp-controller="Home" asp-action="Index" method="post" id="Index" name="Index">
+    <form asp-controller="Home" asp-action="Covid19Add" method="post" id="Covid19Add" name="Covid19Add">
         <div class="card my-2">
             <div class="card-header text-white bg-primary">
                 Covid-19疫苗接種專區
@@ -62,9 +62,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="Name">姓名</label>
-                            @* <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name"
-                                required> *@
-                            @Html.TextBoxFor(model => model.Name,new {@class="form-control",@required = "required"})
+                            <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" autocomplete="off" required>
                         </div>
                     </div>
                 </div>
@@ -72,19 +70,15 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="Birthday">生日</label>
-                            @* <input type="text" class="form-control" id="Birthday" name="Birthday"
-                                value="@Model.Birthday"
-                                placeholder="西元1982年06月24日 輸入 19820624 共8碼" required> *@
-                            @Html.TextBoxFor(model => model.Birthday,new {@class="form-control",@required = "required"})
+                            <input type="text" class="form-control" id="Birthday" name="Birthday" value="@Model.Birthday"
+                                placeholder="西元1982年06月24日 輸入 19820624 共8碼" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="Phone">聯絡電話</label>
-                            @* <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone"
-                                required
-                                pattern="[0-9#]*" placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。"> *@
-                            @Html.TextBoxFor(model => model.Phone,new {@class="form-control",@required = "required"})
+                            <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone"
+                                pattern="[0-9#]*" placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
                         </div>
                     </div>
                 </div>
@@ -103,11 +97,11 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="Answer">驗證碼
+                            <label for="Answer">安全確認碼
                                 @Html.DisplayFor(model => model.SECURITY,new {@class="form-control"})
                             </label>
 
-                            <input type="text" id="Answer" name="Answer" class="form-control" placeholder='驗證碼'
+                            <input type="text" id="Answer" name="Answer" class="form-control" placeholder='請輸入安全確認碼'
                                 autocomplete="off" required>
                         </div>
                     </div>
@@ -144,84 +138,38 @@
         $('form').submit(function (e) {
             e.preventDefault();
 
-            $('.modal').modal('show');
+            @* $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>已額滿');
             $('.modal-body').html('<p class="m-0">預約已額滿，謝謝。</p>');
+            return; *@
 
-            return;
-
-            let idLength = $('#id').val().length;
+            let idLength = $('#Id').val().length;
             if (idLength < 8) {
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
                 $('.modal-body').html('<p class="m-0">身分證字號長度需大於8碼</p>');
                 return;
             }
-            let brLength = $('#birthday').val().length;
+
+            let brLength = $('#Birthday').val().length;
             if (brLength !== 8) {
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
                 $('.modal-body').html('<p class="m-0">西元生日格式需為8碼</p>');
                 return;
             }
-            let daLength = $('#head').val();
-            if (daLength == '') {
+
+            const answer1 = $('#Answer').val();
+            const answer2 = '@ViewBag.Answer';
+            if (answer1 !== answer2) {
                 $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">預約日期未選擇</p>');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>安全確認碼');
+                $('.modal-body').html('<p class="m-0">安全確認碼錯誤</p>');
                 return;
             }
 
-            let head_value = $("#heads option[value=" + $('#head').val() + "]").data('value') == undefined ? $('#head').val() : $("#heads option[value=" + $('#head').val() + "]").data('value');
-
-            if (head_value > '17') {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                $('.modal-body').html('<p class="m-0">預約失敗，請選擇其他日期，謝謝。</p>');
-                return;
-            }
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                type: 'POST',
-                url: 'https://www.country.org.tw/covid19Update',
-                dataType: 'json',
-                data: {
-                    id: $('#id').val(),
-                    name: $('#name').val(),
-                    birthday: $('#birthday').val(),
-                    head: head_value,
-                    phone: $('#phone').val(),
-                    captcha: $('#captcha').val()
-                },
-            }).done(function (data) {
-                // console.log(data.result);
-
-                if (data.result === 1) {
-                    $('.modal').modal('show');
-                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>已有預約');
-                    $('.modal-body').html('<p class="m-0">您已有預約紀錄,如有任何問題請洽本院 (+886)2 2771-3161 #130</p>');
-                } else if (data.result == 'full') {
-                    $('.modal').modal('show');
-                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>當日已額滿');
-                    $('.modal-body').html('<p class="m-0">當日預約已額滿，請選擇其他日期，謝謝。</p>');
-                } else if (data.result == 'fail') {
-                    $('.modal').modal('show');
-                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>驗證失敗');
-                    $('.modal-body').html('<p class="m-0">驗證失敗，請重新輸入驗證碼，謝謝。</p>');
-                } else if (data.result == 'success') {
-                    $('.modal').modal('show');
-                    $('.modal-title').html('<i class="fas fa-check text-primary pr-2"></i>預約成功');
-                    $('.modal-body').html('<p class="m-0">您已預約成功，謝謝。</p>');
-                    document.getElementById('captchaCode').src = 'captcha/mini?' + Math.random();
-                }
-
-            });
+            Covid19Add.submit();
+ 
         });
     });
 </script>
