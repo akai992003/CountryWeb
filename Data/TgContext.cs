@@ -19,7 +19,8 @@ namespace CountryWeb.Data {
         }
 
         public DbSet<newsLists> newsLists { get; set; }
-        // public DbSet<A02_Delars> A02_Delars { get; set; }
+        public DbSet<Covid19> Covid19 { get; set; }
+        public DbSet<vP> vP { get; set; }
         
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
         }

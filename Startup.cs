@@ -1,22 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CountryWeb.Data;
 using CountryWeb.Helper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace CountryWeb
 {
     public class Startup
     {
         private string connRoot { get; }
+        readonly string sAllowS = "CorsDomain";
+        public const string CookieScheme = "SES";
 
         public Startup(IConfiguration configuration)
         {
@@ -37,8 +40,99 @@ namespace CountryWeb
                 options.UseSqlServer(connRoot);
             });
             services.AddScoped<InewsListsService, newsListsService>();
+            services.AddScoped<IvPService, vPService>();
+            // services.AddScoped<InewsListsService, newsListsService>();
+
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //* get IP */
+            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            //** 加入 appsettings.json 自訂的參數取得 */
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureCookie>();
+
+            // services.AddSingleton<JwtHelpers>();
+
+            // services
+            //     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //     .AddJwtBearer(options =>
+            //     {
+            //         // 當驗證失敗時，回應標頭會包含 WWW-Authenticate 標頭，這裡會顯示失敗的詳細錯誤原因
+            //         options.IncludeErrorDetails = true; // 預設值為 true，有時會特別關閉
+
+            //         options.TokenValidationParameters = new TokenValidationParameters
+            //         {
+            //             // 透過這項宣告，就可以從 "sub" 取值並設定給 User.Identity.Name
+            //             NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+            //             // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
+            //             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+
+            //             // 一般我們都會驗證 Issuer
+            //             ValidateIssuer = true,
+            //             ValidIssuer = issuer,
+
+            //             // 通常不太需要驗證 Audience
+            //             ValidateAudience = false,
+            //             //ValidAudience = "JwtAuthDemo", // 不驗證就不需要填寫
+
+            //             // 一般我們都會驗證 Token 的有效期間
+            //             ValidateLifetime = true,
+
+            //             // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
+            //             ValidateIssuerSigningKey = false,
+
+            //             // "1234567890123456" 應該從 IConfiguration 取得
+            //             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey))
+            //         };
+            //     });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                //* 原本是true,但有些人的電腦似乎會無效,所以改成false */
+                options.CheckConsentNeeded = context => false;
+                // options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+
+            });
+
+            // * 重要!! 3.1版須添加此段才可以讀取 Request.Body
+            // * for Kestrel , ex MAC OS
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            // * for IIS
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.Strict;
+            });
+
+            /// * for Cors Domain , 注意網址結尾不要/符號
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: sAllowS,
+                    builder =>
+                    {
+                        builder.WithOrigins(
+                            "https://localhost:5001",
+                            "http://localhost:4200",
+                            "http://localhost:4200/#"
+                        ).AllowAnyHeader().AllowAnyMethod();
+                        // 這兩段是回傳資料用的.沒設定的話 Client 收到都是empty array
+                    });
+            });
 
             services.AddControllersWithViews();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
