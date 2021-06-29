@@ -17,7 +17,7 @@ namespace CountryWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IvPService IvP;
         private readonly ICovid19Service ICovid19;
-
+        //todo 新增使用身份證字號預約查詢功能。
         public HomeController(ILogger<HomeController> logger, IvPService IvPService, ICovid19Service ICovid19Service)
         {
             _logger = logger;
@@ -70,6 +70,8 @@ namespace CountryWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Covid19AddAsync(dtoCovid19 dto)
         {
+            //todo 已預約過的不可再預約。
+            //todo 預約完要出現提醒示窗。(預約施打的日期時間，提醒事項)
             await this.ICovid19.NewOne(dto);
             return RedirectToAction("Index", "Home");
         }
