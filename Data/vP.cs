@@ -42,6 +42,7 @@ namespace CountryWeb.Data
     public interface IvPService
     {
         Task<List<dtovP2>> GetvP1();
+        dtovP GetvP2(string id);
     }
 
     public class vPService : IvPService
@@ -61,6 +62,10 @@ namespace CountryWeb.Data
             }
         }
 
+        /// <summary>
+        /// 取得預約日期列表
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<dtovP2>> GetvP1()
         {
             // using (var context = new TgContext())
@@ -90,7 +95,9 @@ namespace CountryWeb.Data
                     {
                         c = "已額滿";
                         vp.Fulls = true;
-                    } else {
+                    }
+                    else
+                    {
                         vp.Fulls = false;
                     }
                     var head = string.Format("{0} {1}年{2}月{3}日 {4} {5}", p.head, p.date1.ToString("yyyy"), p.date1.ToString("MM"), p.date1.ToString("dd"), p.week, c);
@@ -99,6 +106,40 @@ namespace CountryWeb.Data
                     l.Add(vp);
                 }
                 return l;
+            }
+
+        }
+
+        /// <summary>
+        /// 用id取得單一預約日期的資訊
+        /// </summary>
+        /// <returns></returns>
+        public dtovP GetvP2(string id)
+        {
+            if (id ==null || id == "")
+            {
+                return null;
+            }
+            var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
+            using (var cn = new SqlConnection(this._dapperconn))
+            {
+                var q = cn.Query<dtovP>(SqlStr);
+                var p = q.FirstOrDefault();
+                if (p != null)
+                {
+                    // if (p.Cnt2 >= p.Cnt)
+                    // {
+                    //     // 已額滿
+                    //     return true;
+                    // } else {
+                    //     return false;
+                    // }
+                    return p;
+                }
+                else
+                {
+                    return null;
+                }
             }
 
         }

@@ -1,6 +1,8 @@
+using System.Text;
 using CountryWeb.Data;
 using CountryWeb.Helper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 
 namespace CountryWeb
 {
@@ -20,6 +24,8 @@ namespace CountryWeb
         private string connRoot { get; }
         readonly string sAllowS = "CorsDomain";
         public const string CookieScheme = "SES";
+        private string issuer { get; }
+        private string signKey { get; }
 
         public Startup(IConfiguration configuration)
         {
@@ -27,6 +33,8 @@ namespace CountryWeb
 
             // Echo:取得連線資訊
             connRoot = UStore.GetUStore(Configuration["ConnectionStrings:Root"], "Root");
+            issuer = UStore.GetUStore(Configuration["JwtSettings:Issuer"], "Issuer");
+            signKey = UStore.GetUStore(Configuration["JwtSettings:SignKey"], "SignKey");
         }
 
         public IConfiguration Configuration { get; }
@@ -51,41 +59,55 @@ namespace CountryWeb
             //** 加入 appsettings.json 自訂的參數取得 */
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureCookie>();
+            services.AddSingleton<JwtHelpers>();
+            /// * for Cors Domain , 注意網址結尾不要/符號
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: sAllowS,
+                    builder =>
+                    {
+                        builder.WithOrigins(
+                            "https://localhost:5001",
+                            "http://localhost:4200",
+                            "http://localhost:4200/#"
+                        ).AllowAnyHeader().AllowAnyMethod();
+                        // 這兩段是回傳資料用的.沒設定的話 Client 收到都是empty array
+                    });
+            });
 
-            // services.AddSingleton<JwtHelpers>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                // 當驗證失敗時，回應標頭會包含 WWW-Authenticate 標頭，這裡會顯示失敗的詳細錯誤原因
+                options.IncludeErrorDetails = true; // 預設值為 true，有時會特別關閉
 
-            // services
-            //     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //     .AddJwtBearer(options =>
-            //     {
-            //         // 當驗證失敗時，回應標頭會包含 WWW-Authenticate 標頭，這裡會顯示失敗的詳細錯誤原因
-            //         options.IncludeErrorDetails = true; // 預設值為 true，有時會特別關閉
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // 透過這項宣告，就可以從 "sub" 取值並設定給 User.Identity.Name
+                    NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                    // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
 
-            //         options.TokenValidationParameters = new TokenValidationParameters
-            //         {
-            //             // 透過這項宣告，就可以從 "sub" 取值並設定給 User.Identity.Name
-            //             NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
-            //             // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
-            //             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                    // 一般我們都會驗證 Issuer
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
 
-            //             // 一般我們都會驗證 Issuer
-            //             ValidateIssuer = true,
-            //             ValidIssuer = issuer,
+                    // 通常不太需要驗證 Audience
+                    ValidateAudience = false,
+                    //ValidAudience = "JwtAuthDemo", // 不驗證就不需要填寫
 
-            //             // 通常不太需要驗證 Audience
-            //             ValidateAudience = false,
-            //             //ValidAudience = "JwtAuthDemo", // 不驗證就不需要填寫
+                    // 一般我們都會驗證 Token 的有效期間
+                    ValidateLifetime = true,
+                     
 
-            //             // 一般我們都會驗證 Token 的有效期間
-            //             ValidateLifetime = true,
+                    // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
+                    ValidateIssuerSigningKey = false,
 
-            //             // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
-            //             ValidateIssuerSigningKey = false,
+                    // "1234567890123456" 應該從 IConfiguration 取得
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey))
+                };
+            });
 
-            //             // "1234567890123456" 應該從 IConfiguration 取得
-            //             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey))
-            //         };
-            //     });
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -114,23 +136,15 @@ namespace CountryWeb
                 options.Cookie.SameSite = SameSiteMode.Strict;
             });
 
-            /// * for Cors Domain , 注意網址結尾不要/符號
-            services.AddCors(options =>
+
+            // services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
-                options.AddPolicy(name: sAllowS,
-                    builder =>
-                    {
-                        builder.WithOrigins(
-                            "https://localhost:5001",
-                            "http://localhost:4200",
-                            "http://localhost:4200/#"
-                        ).AllowAnyHeader().AllowAnyMethod();
-                        // 這兩段是回傳資料用的.沒設定的話 Client 收到都是empty array
-                    });
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                };
             });
-
-            services.AddControllersWithViews();
-
 
         }
 
@@ -147,12 +161,13 @@ namespace CountryWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseCors(sAllowS); // UseCors 要在 驗證授權 前面
+            app.UseAuthentication(); // 先驗證
+            app.UseAuthorization(); // 再授權
 
             app.UseEndpoints(endpoints =>
             {

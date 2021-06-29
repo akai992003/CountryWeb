@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using CountryWeb.Helper;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace CountryWeb.Data
 {
@@ -24,13 +25,14 @@ namespace CountryWeb.Data
         public string Name { get; set; }
         public string Birthday { get; set; }
         public string Phone { get; set; }
-        public string vPId { get; set; } // 預約日期
+        public string Vpid { get; set; } // 預約日期
         public string SECURITY { get; set; }
     }
 
     public interface ICovid19Service
     {
         Task NewOne(dtoCovid19 dto);
+        string GetOne(string id);
     }
 
     public class Covid19Service : ICovid19Service
@@ -58,12 +60,38 @@ namespace CountryWeb.Data
             d.Name = dto.Name;
             d.Birthday = dto.Birthday;
             d.Phone = dto.Phone;
-            d.vPId = int.Parse(dto.vPId);
+            d.vPId = int.Parse(dto.Vpid);
             using (var context = new TgContext())
             {
                 await context.Covid19.AddAsync(d);
                 await context.SaveChangesAsync();
             }
+        }
+
+        public string GetOne(string id)
+        {
+            using (var context = new TgContext())
+            {
+                var q = (from p in context.Covid19
+                         join p2 in context.vP
+                         on p.vPId equals p2.id
+                         where p.Id == id
+                         select new
+                         {
+                             date = p2.date1.ToString("yyyy-MM-dd"),
+                             week = p2.week
+                         }).FirstOrDefault();
+                if (q != null)
+                {
+                    // 以預約
+                    return string.Format("您已預約 {0} - {1} 的時段", q.date, q.week);
+                }
+                else
+                {
+                    return "";
+                }
+            }
+
         }
     }
 }

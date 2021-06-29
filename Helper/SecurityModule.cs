@@ -6,7 +6,9 @@ namespace CountryWeb.Helper
     {
         #region Recaptcha
 
-        private static readonly string[] _operationStr = new string[] { " + ", " - " };
+        // private static readonly string[] _operationStr = new string[] { " + ", " - " };
+                private static readonly string[] _operationStr = new string[] { " + " };
+
 
         private static int Calculation (int num1, int num2, int operation)
         {

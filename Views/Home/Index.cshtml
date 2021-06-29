@@ -17,7 +17,7 @@
     <h2 class="title-border pb-2"><span class="title-border-left pl-2">Covid-19疫苗接種專區</span>
     </h2>
 
-    <form asp-controller="Home" asp-action="Covid19Add" method="post" id="Covid19Add" name="Covid19Add">
+    <form   method="post"  >
         <div class="card my-2">
             <div class="card-header text-white bg-primary">
                 Covid-19疫苗接種專區
@@ -87,7 +87,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="head">預約日期</label>
-                            @Html.DropDownList("vPId", null, new {@class="form-control",@required="required"})
+                            @Html.DropDownList("Vpid", null, new {@class="form-control",@required="required"})
+ 
                         </div>
                         <div>
 
@@ -124,6 +125,8 @@
 
 </section>
 <script>
+    const contentType = "application/json; charset=utf-8";
+
     $(document).ready(function () {
         let branch;
 
@@ -168,10 +171,67 @@
                 return;
             }
 
-            Covid19Add.submit();
+            const Vpid = $('#Vpid option:selected').val();
+            const pa = {
+                "Id": $('#Id').val(),
+                "Name": $('#Name').val(),
+                "Birthday": $('#Birthday').val(),
+                "Phone": $('#Phone').val(),
+                "Vpid": Vpid,
+                "SECURITY": ""
+            }
+            
+            const data1 = JSON.stringify(pa);
+            const urlx = "api/WS/CheckOne";
+            const token = '@ViewBag.token';
+             $.ajax({
+                url: urlx,
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer "+ token +""
+                },
+                contentType: contentType,
+                dataType: "json",
+                data: data1,
+                timeout: 3000,
+                async: false,
+                success: function (data) {
+ 
+                    if (data.code === "200") {
+                        $('.modal').modal('show');
+                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約成功');
+                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                    } else if (data.code === "300") {
+                        $('.modal').modal('show');
+                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                    } else if(data.code === "400"){
+                        $('.modal').modal('show');
+                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                    } else {
+                        $('.modal').modal('show');
+                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                    }
+                    
+                },
+  
+                error: function (xhr) {
+                    console.log('預約錯誤');
+                    console.log(xhr);
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                    $('.modal-body').html('<p class="m-0">不正確的操作方式</p>');
+                }
+            });
+
+            
  
         });
     });
+
+
 </script>
 
 <div class="modal fade">

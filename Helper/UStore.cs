@@ -18,6 +18,10 @@ namespace CountryWeb.Helper
                     {
                         case "Root":
                             return val2.Root;
+                        case "Issuer":
+                            return val2.Issuer;
+                        case "SignKey":
+                            return val2.SignKey;
                         default:
                             return "";
                     }
