@@ -22,6 +22,8 @@ namespace CountryWeb.Helper
                             return val2.Issuer;
                         case "SignKey":
                             return val2.SignKey;
+                         case "uRI":
+                            return val2.uRI;
                         default:
                             return "";
                     }

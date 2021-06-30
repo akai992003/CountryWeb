@@ -69,7 +69,8 @@ namespace CountryWeb
                         builder.WithOrigins(
                             "https://localhost:5001",
                             "http://localhost:4200",
-                            "http://localhost:4200/#"
+                            "http://localhost:4200/#",
+                            "https://www.country.org.tw"
                         ).AllowAnyHeader().AllowAnyMethod();
                         // 這兩段是回傳資料用的.沒設定的話 Client 收到都是empty array
                     });
@@ -161,7 +162,7 @@ namespace CountryWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

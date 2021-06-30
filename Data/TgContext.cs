@@ -20,7 +20,8 @@ namespace CountryWeb.Data {
 
         public DbSet<newsLists> newsLists { get; set; }
         public DbSet<Covid19> Covid19 { get; set; }
-        public DbSet<vP> vP { get; set; }
+        public DbSet<VP> VP { get; set; }
+        public DbSet<A2E> A2E { get; set; }
         
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
         }

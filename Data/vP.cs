@@ -11,24 +11,24 @@ using Dapper;
 
 namespace CountryWeb.Data
 {
-    public class vP
+    public class VP
     {
         [Key]
-        public int id { get; set; }
-        public string head { get; set; }
-        public DateTime date1 { get; set; }
-        public string week { get; set; }
+        public int Id { get; set; }
+        public string Head { get; set; }
+        public DateTime Date1 { get; set; }
+        public string Week { get; set; }
         public int Cnt { get; set; }
     }
 
-    public class dtovP
+    public class dtoVP
     {
         public int id { get; set; }
         public string head { get; set; }
         public DateTime date1 { get; set; }
         public string week { get; set; }
-        public int Cnt { get; set; }
-        public int Cnt2 { get; set; }
+        public int cnt { get; set; }
+        public int cnt2 { get; set; }
 
     }
 
@@ -41,8 +41,8 @@ namespace CountryWeb.Data
 
     public interface IvPService
     {
-        Task<List<dtovP2>> GetvP1();
-        dtovP GetvP2(string id);
+        List<dtovP2> GetvP1();
+        dtoVP GetvP2(string id);
     }
 
     public class vPService : IvPService
@@ -66,44 +66,37 @@ namespace CountryWeb.Data
         /// 取得預約日期列表
         /// </summary>
         /// <returns></returns>
-        public async Task<List<dtovP2>> GetvP1()
+        public List<dtovP2> GetvP1()
         {
-            // using (var context = new TgContext())
-            // {
-            // var q = await (from p in context.vP
-            //                where p.id > 16
-            //                select new dtovP
-            //                {
-            //                    id = p.id,
-            //                    head = string.Format("{0} {1}年{2}月{3}日 {4}",p.head,p.date1.ToString("yyyy"),p.date1.ToString("MM"),p.date1.ToString("dd") , p.week)  
-            //                }).ToListAsync();
-            // return q;
-            // }    
-            var SqlStr = string.Format("execute SP_GetvP");
+            var SqlStr = string.Format("execute SP_GetVP");
             using (var cn = new SqlConnection(this._dapperconn))
             {
-                var q = await cn.QueryAsync<dtovP>(SqlStr);
-                // return q.ToList();
+                var q = cn.Query<dtoVP>(SqlStr);
+
                 var l = new List<dtovP2>();
                 foreach (var p in q)
                 {
-                    var vp = new dtovP2();
-                    vp.id = p.id;
-
-                    var c = "";
-                    if (p.Cnt2 >= p.Cnt)
+                    if (DateTime.Today < p.date1)
                     {
-                        c = "已額滿";
-                        vp.Fulls = true;
-                    }
-                    else
-                    {
-                        vp.Fulls = false;
-                    }
-                    var head = string.Format("{0} {1}年{2}月{3}日 {4} {5}", p.head, p.date1.ToString("yyyy"), p.date1.ToString("MM"), p.date1.ToString("dd"), p.week, c);
+                        var vp = new dtovP2();
+                        vp.id = p.id;
 
-                    vp.head = head;
-                    l.Add(vp);
+                        var c = "";
+                        if (p.cnt2 >= p.cnt)
+                        {
+                            c = "已額滿";
+                            vp.Fulls = true;
+                        }
+                        else
+                        {
+                            vp.Fulls = false;
+                        }
+                        var head = string.Format("{0} {1}年{2}月{3}日 {4} {5}", p.head, p.date1.ToString("yyyy"), p.date1.ToString("MM"), p.date1.ToString("dd"), p.week, c);
+
+                        vp.head = head;
+                        l.Add(vp);
+                    }
+
                 }
                 return l;
             }
@@ -114,16 +107,16 @@ namespace CountryWeb.Data
         /// 用id取得單一預約日期的資訊
         /// </summary>
         /// <returns></returns>
-        public dtovP GetvP2(string id)
+        public dtoVP GetvP2(string id)
         {
-            if (id ==null || id == "")
+            if (id == null || id == "")
             {
                 return null;
             }
             var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
             using (var cn = new SqlConnection(this._dapperconn))
             {
-                var q = cn.Query<dtovP>(SqlStr);
+                var q = cn.Query<dtoVP>(SqlStr);
                 var p = q.FirstOrDefault();
                 if (p != null)
                 {
