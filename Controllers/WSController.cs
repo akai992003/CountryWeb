@@ -40,15 +40,16 @@ namespace CountryWeb.Controllers
                 /* 判斷token的時間與 call api 的時間差*/
                 DateTime date = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "DateOfJoing").Value);
                 TimeSpan ts = DateTime.Now - date;
-                if (ts.TotalMinutes >= 3)
+
+                if (ts.TotalMinutes >= 5)
                 {
-                    result["msg"] = "已超過網頁安全時間";
+                    result["msg"] = "已超過網頁安全時間(五分鐘)";
                     result["code"] = "300";
                     return result;
                 }
 
                 /* 可能會額滿 */
-                var vP2 = this.IvP.GetvP2(dto.Vpid);
+                var vP2 = this.IvP.GetvP2(dto.vpid);
                 if (vP2 == null)
                 {
                     result["msg"] = "不正確的操作方式";
@@ -66,7 +67,7 @@ namespace CountryWeb.Controllers
                 }
 
                 /* 已預約過的不可再預約 */
-                var cod = this.ICovid19.GetOne(dto.Id);
+                var cod = this.ICovid19.GetOne(dto.id);
                 if (cod != "")
                 {
                     result["msg"] = cod;

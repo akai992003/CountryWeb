@@ -51,7 +51,7 @@ namespace CountryWeb.Controllers
             // // test
 
             var sec = SecurityModule.CreateRecaptchaString();
-            d.SECURITY = sec[0];
+            d.sECURITY = sec[0];
             ViewBag.Answer = sec[1];
 
             var vP1 = await this.IvP.GetvP1();

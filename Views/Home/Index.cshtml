@@ -25,8 +25,8 @@
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
                 <p style="margin-left: 20px;color: orangered;">
-                    因疫情影響，疫苗供給吃緊，中央需統籌調配，本院目前疫苗依實際到貨期程另行公告安排施打時間; <br>
-                    不便之處敬請見諒!
+                    本院院內開打疫苗 說明 : <br>
+                    為第1類至第4類、第5類洗腎患者、第6類孕婦、110年5月9日前接種第一劑者，請至本院<a id = "div_id" href="#">疫苗預約系統</a>預約
                 </p>
                 <ol class="pl-4 pt-1 pb-2 m-0">
                     <li class="pb-2"><span class="text-dark">攜帶文件：請攜帶健保卡、身份證 至一樓服務台報到</span></li>
@@ -49,38 +49,74 @@
                         alt="lang.COVID19接種後注意">
                 </div>
             </div>
-
-            <div class="card-body">
+            <div id="div_id"></div>
+            <div lass="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="Id">身份證字號</label>
+                            <label for="id">身份證字號</label>
                             @* <input type="text" class="form-control" id="Id" name="Id" value="@Model.Id" required> *@
-                            @Html.TextBoxFor(model => model.Id,new {@class="form-control",@required = "required"})
+                            @Html.TextBoxFor(model => model.id,new {@class="form-control",@required = "required"})
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="Name">姓名</label>
-                            <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" autocomplete="off" required>
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" value="@Model.name" class="form-control" autocomplete="off" required>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
+                <div class="row"> 
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="Birthday">生日</label>
-                            <input type="text" class="form-control" id="Birthday" name="Birthday" value="@Model.Birthday"
-                                placeholder="西元1982年06月24日 輸入 19820624 共8碼" required>
+                            <label for="birthday_year">生日</label>
+                                <input type="text" class="form-control" id="birthday_year" name="birthday_year" value="@Model.birthday_year" placeholder="例:1982" maxlength="4" required>
+                        </div>
+                    </div>     
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="birthday_month">月</label>
+                                <input type="text" class="form-control" id="birthday_month" name="birthday_month" value="@Model.birthday_month" placeholder="例:06" maxlength="2" required>
                         </div>
                     </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="birthday_day">日</label>
+                                <input type="text" class="form-control" id="birthday_day" name="birthday_day" value="@Model.birthday_day" placeholder="例:24" maxlength="2" required >
+                        </div>
+                    </div> 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="Phone">聯絡電話</label>
-                            <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone"
+                            <label for="phone">聯絡電話</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="@Model.phone"
                                 pattern="[0-9#]*" placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="addr_country">居住地-縣市</label>
+                            <input type="text" class="form-control" id="addr_country" name="addr_country" value="@Model.addr_country" placeholder="例:台北市" required >
+ 
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="addr_city">居住地-鄉鎮市區</label>
+                            <input type="text" class="form-control" id="addr_city" name="addr_city" value="@Model.addr_city" placeholder="例:大安區" required >
+ 
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="addr_detal">居住地-街道地址</label>
+                            <input type="text" class="form-control" id="addr_detal" name="addr_detal" value="@Model.addr_detal" placeholder="例:仁愛路四段61號" required >
+ 
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <div class="row">
@@ -90,16 +126,14 @@
                             @Html.DropDownList("Vpid", null, new {@class="form-control",@required="required"})
  
                         </div>
-                        <div>
-
-                            <p style="margin-left: 20px;color: orangered;">疫苗暫停接種，依照政府配發管制另行公布開放預約申請</p>
-                        </div>
-
+                        
+                        <p style="margin-left: 20px;color: orangered;">疫苗暫停接種，依照政府配發管制另行公布開放預約申請</p>
+                    
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="Answer">安全確認碼
-                                @Html.DisplayFor(model => model.SECURITY,new {@class="form-control"})
+                                @Html.DisplayFor(model => model.sECURITY,new {@class="form-control"})
                             </label>
 
                             <input type="text" id="Answer" name="Answer" class="form-control" placeholder='請輸入安全確認碼'
@@ -146,7 +180,7 @@
             $('.modal-body').html('<p class="m-0">預約已額滿，謝謝。</p>');
             return; *@
 
-            let idLength = $('#Id').val().length;
+            let idLength = $('#id').val().length;
             if (idLength < 8) {
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
@@ -154,14 +188,27 @@
                 return;
             }
 
-            let brLength = $('#Birthday').val().length;
-            if (brLength !== 8) {
+            let brLength_Y = $('#birthday_year').val().length;
+            if (brLength_Y !== 4) {
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">西元生日格式需為8碼</p>');
+                $('.modal-body').html('<p class="m-0">西元年格式需為4碼</p>');
                 return;
             }
-
+            let brLength_M = $('#birthday_month').val().length;
+            if (brLength_M !== 2) {
+                $('.modal').modal('show');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+                $('.modal-body').html('<p class="m-0">月份格式需為2碼</p>');
+                return;
+            }
+            let brLength_D = $('#birthday_day').val().length;
+            if (brLength_D !== 2) {
+                $('.modal').modal('show');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+                $('.modal-body').html('<p class="m-0">日格式需為2碼</p>');
+                return;
+            }
             const answer1 = $('#Answer').val();
             const answer2 = '@ViewBag.Answer';
             if (answer1 !== answer2) {
@@ -171,14 +218,19 @@
                 return;
             }
 
-            const Vpid = $('#Vpid option:selected').val();
+            const Vpid = $('#vpid option:selected').val();
             const pa = {
-                "Id": $('#Id').val(),
-                "Name": $('#Name').val(),
-                "Birthday": $('#Birthday').val(),
-                "Phone": $('#Phone').val(),
-                "Vpid": Vpid,
-                "SECURITY": ""
+                "id": $('#id').val(),
+                "name": $('#name').val(),
+                "birthday_year": $('#birthday_year').val(),
+                "birthday_month": $('#birthday_month').val(),
+                "birthday_day": $('#birthday_day').val(),
+                "phone": $('#phone').val(),
+                "vpid": Vpid,
+                "sECURITY": "",
+                "birthday_year": $('#birthday_year').val(),
+                "birthday_month": $('#birthday_month').val(),
+                "birthday_day": $('#birthday_day').val(),
             }
             
             const data1 = JSON.stringify(pa);
@@ -211,7 +263,7 @@
                         $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
                     } else {
                         $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>重覆預約');
                         $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
                     }
                     
@@ -426,5 +478,8 @@
 <script>
     $('#back-to-bottom').click(function () {
         $('html, body').animate({ scrollTop: $(document).height() }, 1000);
+    });
+    $('#div_id').click(function () {
+        $('html, body').animate({scrollTop: $(document).height()-1200}, 1000);
     });
 </script>
