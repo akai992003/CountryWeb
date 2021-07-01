@@ -174,7 +174,7 @@ namespace CountryWeb.Data
                 if (q != null)
                 {
                     // 已預約
-                    return string.Format("您已預約 {0} - {1} 的時段", q.date, q.week);
+                    return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
                 }
                 else
                 {
