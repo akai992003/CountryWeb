@@ -31,7 +31,7 @@ namespace CountryWeb.Controllers
 
             var cnt = this.ICovid19.GetA2ECnt();
             // 830 + done = 0
-            ViewBag.Cnt = 830 + cnt;
+            ViewBag.Cnt = 1316 + cnt;
             ViewBag.uRI = this.uRI;
             return View();
         }
