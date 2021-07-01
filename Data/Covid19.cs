@@ -20,6 +20,7 @@ namespace CountryWeb.Data
         public string Addr_city { get; set; }
         public string Addr_detal { get; set; }
         public int VPId { get; set; }
+        public int  Idtypes{ get; set; }
     }
 
     public class A2E
@@ -49,6 +50,7 @@ namespace CountryWeb.Data
         public string addr_country { get; set; }
         public string addr_city { get; set; }
         public string addr_detal { get; set; }
+        public string idtypes { get; set; }
     }
 
     public class dtoA2E
@@ -108,6 +110,8 @@ namespace CountryWeb.Data
             d.Addr_detal = dto.addr_detal;
             d.Phone = dto.phone;
             d.VPId = int.Parse(dto.vpid);
+            d.Idtypes= int.Parse(dto.idtypes);
+
             using (var context = new TgContext())
             {
                 await context.Covid19.AddAsync(d);

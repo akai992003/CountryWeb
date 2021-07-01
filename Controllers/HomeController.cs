@@ -38,6 +38,12 @@ namespace CountryWeb.Controllers
 
         public IActionResult Index()
         {
+            var disableds = "disabled";
+            if (DateTime.Now >= new DateTime(2021, 7, 1, 12, 0, 0))
+            {
+                disableds = "";
+            }
+            ViewBag.disableds = disableds;
             ViewBag.uRI = this.uRI;
             return View();
         }

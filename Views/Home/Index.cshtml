@@ -1,8 +1,8 @@
 ﻿@* <section class="bg-news-img">
     <div class="container">
-        <h1 class="text-primary">Covid-19專區</h1>
+    <h1 class="text-primary">Covid-19專區</h1>
     </div>
-</section> *@
+    </section> *@
 <section class="container">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="https://www.country.org.tw" title="首頁">首頁</a></li>
@@ -13,9 +13,9 @@
 
     <!-- Content -->
     @* <h2 class="title-border pb-2"><span class="title-border-left pl-2">Covid-19疫苗接種專區</span>
-    </h2> *@
+        </h2> *@
 
-    <form method="post"  >
+    <form method="post">
         <div class="card my-2">
             <div class="card-header text-white bg-primary">
                 Covid-19疫苗接種專區
@@ -24,26 +24,26 @@
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
                 <p style="margin-left: 20px;color: orangered;">
                     本院院內開打疫苗 說明<br>
-                    為第1類至第4類、第5類洗腎患者、第6類孕婦、第7類者、110年5月9日前接種第一劑者，請至「下方表單填寫預約資料」<br>
+                    為第1類至第3類、第5類洗腎患者、第6類孕婦、第7類者、110年5月9日前接種第一劑者，請至「下方表單填寫預約資料」<br>
                     依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗<br>
                     本院所提供AZ疫苗，時間為周二至周六上午9時至11時<br>
                     為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式<br>
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
-                    若要預約殘劑,請按<a asp-action="A2E">這裡</a> 
+                    若要預約殘劑,請按<a asp-action="A2E">這裡</a>
                 </p>
                 <div class="row">
-                    
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="id">&nbsp; 預約查詢</label>
                             <input type="text" id="id1" name="id1" class="form-control" placeholder="請輸入身份證字號">
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="row">
-                  
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             <a href="#" id="search1" name="search1" class="btn btn-danger mx-2" onclick="btnSearch()">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <ol class="pl-4 pt-1 pb-2 m-0">
                     <li class="pb-2"><span class="text-dark">攜帶文件：請攜帶健保卡、身份證 至一樓服務台報到</span></li>
                     <li class="pb-2"><span class="text-dark">預約方式：採網路預約制，暫不提供電話預約及現場預約</span></li>
@@ -90,30 +90,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="row"> 
+                <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_year">&nbsp; 生日</label>
-                                <input type="text" class="form-control" id="birthday_year" name="birthday_year" placeholder="例:1982" maxlength="4" required>
+                            <input type="text" class="form-control" id="birthday_year" name="birthday_year"
+                                placeholder="例:1982" maxlength="4" required>
                         </div>
-                    </div>     
+                    </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_month">&nbsp; 月</label>
-                                <input type="text" class="form-control" id="birthday_month" name="birthday_month" placeholder="例:06" maxlength="2" required>
+                            <input type="text" class="form-control" id="birthday_month" name="birthday_month"
+                                placeholder="例:06" maxlength="2" required>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_day">&nbsp; 日</label>
-                                <input type="text" class="form-control" id="birthday_day" name="birthday_day" placeholder="例:24" maxlength="2" required >
+                            <input type="text" class="form-control" id="birthday_day" name="birthday_day"
+                                placeholder="例:24" maxlength="2" required>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="phone">&nbsp; 聯絡電話</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
-                                pattern="[0-9#]*" placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
+                            <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9#]*"
+                                placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
                         </div>
                     </div>
                 </div>
@@ -122,19 +125,22 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_country">&nbsp; 居住地-縣市</label>
-                            <input type="text" class="form-control" id="addr_country" name="addr_country" placeholder="例:台北市" required >
+                            <input type="text" class="form-control" id="addr_country" name="addr_country"
+                                placeholder="例:台北市" required>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_city">&nbsp; 居住地-鄉鎮市區</label>
-                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區" required >
+                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區"
+                                required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="addr_detal">&nbsp; 居住地-街道地址</label>
-                            <input type="text" class="form-control" id="addr_detal" name="addr_detal" placeholder="例:仁愛路四段61號" required >
+                            <input type="text" class="form-control" id="addr_detal" name="addr_detal"
+                                placeholder="例:仁愛路四段61號" required>
 
                         </div>
                     </div>
@@ -147,29 +153,54 @@
                             <select id="vpid" name="vpid" class="form-control required">
                             </select>
                         </div>
-                        @* <p style="margin-left: 20px;color: orangered;">疫苗暫停接種，依照政府配發管制另行公布開放預約申請</p> *@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="answer" id ="security" name ="security">&nbsp; 安全確認碼</label>
-                            <input type="text" id="answer" name="answer" class="form-control" placeholder='請輸入安全確認碼' autocomplete="off" required>
+                            <label for="idtypes">&nbsp; 接種身份類別</label>
+                            <select id="idtypes" name="idtypes" class="form-control required">
+                                <option value="1"> 第1類 醫事人員 </option>
+                                <option value="2"> 第2類 中央及地方政府防疫人員 </option>
+                                <option value="3"> 第3類 高接觸風險第一線工作人員 </option>
+                                <option value="4"> 第5類 洗腎患者 </option>
+                                <option value="5"> 第6類 孕婦 </option>
+                                <option value="6"> 110/5/9前已接種第一劑者 </option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="answer" id="security" name="security">安全確認碼</label>
+                            <input type="text" id="answer" name="answer" class="form-control" placeholder='請輸入安全確認碼'
+                                autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label style="color: orangered;margin-top: 20px;">
+                                施打當天請提交在職證明或識別證影本備查。<br>
+                                第四類、第七類為為專案申請件，本院不受理預約。
+                        </label>
+                    </div>
+                </div>
             </div>
             <br>
-            <p style="margin-left: 20px;color: orangered;">預計於 7/1 中午 12:00 開放疫苗預約,在此期間前預約皆屬測試階段</p>
-
+            
+            @if(ViewBag.disableds != "")
+            {
+                <p style="margin-left: 20px;color: orangered;">預計於 7/1 中午 12:00 開放疫苗預約,在此期間前預約皆屬測試階段</p>
+            }
             <div class="row justify-content-center">
+                
                 <a href="#" id="clean" class="btn btn-danger mx-2" title="取消">
                     <i class="fas fa-undo-alt pr-1"></i>清除</a>
 
-                @* todo 要啟用拿掉disabled  *@
-                <input type="submit" class="btn btn-primary mx-2" value="  送出" disabled="disabled">
+                <input type="submit" class="btn btn-primary mx-2" value="  送出" @ViewBag.disableds>
                 <i class="check fas fa-check" style="left: -72px;"></i>
             </div>
-           
+
             <br>
         </div>
     </form>
@@ -186,7 +217,7 @@
     $(document).ready(function () {
         let answer2;
         let token;
- 
+
         $('#clean').click(function () {
             $('form').trigger('reset');
         });
@@ -201,36 +232,33 @@
             success: function (data) {
                 token = data.token;
                 answer2 = data.answer;
-                
-                document.getElementById("security").innerText ='安全確認碼: ' + data.security;
-                
+
+                document.getElementById("security").innerText =  ' 安全確認碼: ' + data.security;
+
                 const vp1 = data.vp1;
                 var formoption = "";
-                $.each(vp1, function(v) {
+                $.each(vp1, function (v) {
                     var val1 = vp1[v].id;
                     var val2 = vp1[v].head;
-                    if (vp1[v].disabled===true) {
+                    if (vp1[v].disabled === true) {
                         formoption += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
                     } else {
                         formoption += "<option value='" + val1 + "'>" + val2 + "</option>";
                     }
-                    
+
                 });
                 $('#vpid').html(formoption);
 
             },
-            
+
             error: function (xhr, textStatus) {
                 console.log(xhr);
                 console.log(textStatus);
             },
         });
-  
+
         $('form').submit(function (e) {
             e.preventDefault();
-
-            // todo 要啟用以下拿掉
-            return;
 
             let idLength = $('#id').val().length;
             if (idLength < 8) {
@@ -285,8 +313,9 @@
                 "addr_country": $('#addr_country').val(),
                 "addr_city": $('#addr_city').val(),
                 "addr_detal": $('#addr_detal').val(),
+                "idtypes": $('#idtypes').val(),
             }
-            
+
             const data1 = JSON.stringify(pa);
             const urlx = '@ViewBag.uRI' + 'CheckOne';
 
@@ -294,7 +323,7 @@
                 url: urlx,
                 type: "POST",
                 headers: {
-                    "Authorization": "Bearer "+ token +""
+                    "Authorization": "Bearer " + token + ""
                 },
                 contentType: contentType,
                 dataType: "json",
@@ -302,27 +331,27 @@
                 timeout: 3000,
                 async: false,
                 success: function (data) {
- 
+
                     if (data.code === "200") {
                         reload = 1;
                         $('.modal').modal('show');
                         $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約成功');
-                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
                     } else if (data.code === "300") {
                         $('.modal').modal('show');
                         $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
-                    } else if(data.code === "400"){
+                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                    } else if (data.code === "400") {
                         $('.modal').modal('show');
                         $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
                     } else {
                         $('.modal').modal('show');
                         $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>重覆預約');
-                        $('.modal-body').html('<p class="m-0">' + data.msg +'</p>');
+                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
                     }
                 },
-  
+
                 error: function (xhr) {
                     console.log('預約錯誤');
                     console.log(xhr);
@@ -340,7 +369,7 @@
         const pa1 = {
             "id": $('#id1').val(),
         };
- 
+
         const urlp1 = '@ViewBag.uRI' + 'Search1';
 
         $.ajax({
@@ -352,13 +381,13 @@
             timeout: 30000,
             success: function (data) {
                 let msg = data.msg;
-                
+
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約紀錄');
                 $('.modal-body').html('<p class="m-0">' + msg + '</p>');
 
             },
-            
+
             error: function (xhr, textStatus) {
                 console.log(xhr);
                 console.log(textStatus);
@@ -383,7 +412,8 @@
             </div>
             <div class="modal-body">
             </div>
-            <div class="modal-footer"><a class="btn btn-primary text-white" title="關閉" data-dismiss="modal" onclick="rl()">關閉</a>
+            <div class="modal-footer"><a class="btn btn-primary text-white" title="關閉" data-dismiss="modal"
+                    onclick="rl()">關閉</a>
             </div>
         </div>
     </div>
@@ -391,183 +421,183 @@
 
 @* <section>
     <div class="sitemap-bg-color cursor text-center text-white py-2" aria-expanded="true" aria-controls="sitemap"
-        data-target="#sitemap" data-toggle="collapse">
-        <a title="展開 / 收合"><i class="fas fa-chevron-down fa-2x sitemap-arrow"></i></a>
+    data-target="#sitemap" data-toggle="collapse">
+    <a title="展開 / 收合"><i class="fas fa-chevron-down fa-2x sitemap-arrow"></i></a>
     </div>
     <div id="sitemap" class="collapse show sitemap-bg-color pt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="訊息專區">
-                            <h4 class="sitemap-title">訊息專區</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/訊息專區/最新消息" title="最新消息">最新消息</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/訊息專區/公告訊息" title="公告訊息">公告訊息</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/訊息專區/得獎訊息" title="得獎訊息">得獎訊息</a>
-                            </li>
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="認識宏恩">
-                            <h4 class="sitemap-title">認識宏恩</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/管理團隊" title="管理團隊">管理團隊</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/願景使命" title="願景使命">願景使命</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/重大事記" title="重大事記">重大事記</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/組織架構" title="組織架構">組織架構</a>
-                            </li>
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="就醫指南">
-                            <h4 class="sitemap-title">就醫指南</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/網路掛號" title="網路掛號">網路掛號</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/掛號查詢" title="網路掛號">掛號查詢</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看診進度" title="看診進度">看診進度</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/門診時間" title="門診時間">門診時間</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看哪一科" title="看哪一科">看哪一科</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/就醫權益與須知"
-                                    title="就醫權益與須知">就醫權益與須知</a></li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/住院服務" title="住院服務">住院服務</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/急診服務" title="急診服務">急診服務</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/就醫指南/收費說明" title="收費說明">收費說明</a>
-                            </li>
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="醫療中心">
-                            <h4 class="sitemap-title">醫療中心</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫療團隊" title="醫療團隊">醫療團隊</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫事團隊" title="醫事團隊">醫事團隊</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/醫療中心/特色醫療" title="特色醫療">特色醫療</a>
-                            </li>
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="衛教園地">
-                            <h4 class="sitemap-title">衛教園地</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/衛教園地/衛教單張" title="衛教單張">衛教單張</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/衛教園地/防疫新知" title="防疫新知">防疫新知</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-6 col-md-2">
-                    <li class="list-unstyled">
-                        <a class="text-white" title="為民服務">
-                            <h4 class="sitemap-title">為民服務</h4>
-                        </a>
-                        <ul class="list-unstyled sitemap-content">
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/就醫資料申請"
-                                    title="就醫資料申請">就醫資料申請</a></li>
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/社會服務" title="社會服務">社會服務</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/病友分享" title="病友分享">病友分享</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/滿意度調查"
-                                    title="滿意度調查">滿意度調查</a></li>
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/到院指南" title="到院指南">到院指南</a>
-                            </li>
-                            <li><a class="text-white" href="https://www.country.org.tw/為民服務/常見問題" title="常見問題">常見問題</a>
-                            </li>
-                        </ul>
-                    </li>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+    <div class="row">
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="訊息專區">
+    <h4 class="sitemap-title">訊息專區</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/最新消息" title="最新消息">最新消息</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/公告訊息" title="公告訊息">公告訊息</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/得獎訊息" title="得獎訊息">得獎訊息</a>
+    </li>
+    </ul>
+    </li>
     </div>
-</section>
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="認識宏恩">
+    <h4 class="sitemap-title">認識宏恩</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/管理團隊" title="管理團隊">管理團隊</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/願景使命" title="願景使命">願景使命</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/重大事記" title="重大事記">重大事記</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/組織架構" title="組織架構">組織架構</a>
+    </li>
+    </ul>
+    </li>
+    </div>
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="就醫指南">
+    <h4 class="sitemap-title">就醫指南</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/網路掛號" title="網路掛號">網路掛號</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/掛號查詢" title="網路掛號">掛號查詢</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看診進度" title="看診進度">看診進度</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/門診時間" title="門診時間">門診時間</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看哪一科" title="看哪一科">看哪一科</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/就醫權益與須知"
+    title="就醫權益與須知">就醫權益與須知</a></li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/住院服務" title="住院服務">住院服務</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/急診服務" title="急診服務">急診服務</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/收費說明" title="收費說明">收費說明</a>
+    </li>
+    </ul>
+    </li>
+    </div>
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="醫療中心">
+    <h4 class="sitemap-title">醫療中心</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫療團隊" title="醫療團隊">醫療團隊</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫事團隊" title="醫事團隊">醫事團隊</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/特色醫療" title="特色醫療">特色醫療</a>
+    </li>
+    </ul>
+    </li>
+    </div>
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="衛教園地">
+    <h4 class="sitemap-title">衛教園地</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/衛教園地/衛教單張" title="衛教單張">衛教單張</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/衛教園地/防疫新知" title="防疫新知">防疫新知</a>
+    </li>
 
-<footer class="footer-bg-color text-white">
+
+    </ul>
+    </li>
+    </div>
+    <div class="col-6 col-md-2">
+    <li class="list-unstyled">
+    <a class="text-white" title="為民服務">
+    <h4 class="sitemap-title">為民服務</h4>
+    </a>
+    <ul class="list-unstyled sitemap-content">
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/就醫資料申請"
+    title="就醫資料申請">就醫資料申請</a></li>
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/社會服務" title="社會服務">社會服務</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/病友分享" title="病友分享">病友分享</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/滿意度調查"
+    title="滿意度調查">滿意度調查</a></li>
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/到院指南" title="到院指南">到院指南</a>
+    </li>
+    <li><a class="text-white" href="https://www.country.org.tw/為民服務/常見問題" title="常見問題">常見問題</a>
+    </li>
+    </ul>
+    </li>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <footer class="footer-bg-color text-white">
     <div class="container pt-2">
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-6">
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-hospital-alt px-2"></i>醫院位置 臺北市大安區仁愛路四段71巷1號</li>
-                    <li><i class="fas fa-phone fa-flip-horizontal px-2"></i>總機專線 (+886)2 2771-3161</li>
-                    <li><i class="fas fa-headset px-2"></i>語音掛號 (+886)2 2771-3161 #2</li>
-                </ul>
-            </div>
-            <div class="col-12 col-lg-4 col-md-6">
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-headset px-2"></i>人工掛號 (+886)2 2771-3161 #3</li>
-                    <li><i class="fas fa-envelope px-2"></i>醫院信箱 country@country.org.tw</li>
-                    <li><i class="fas fa-fax px-2"></i>傳真專線 (+886)2 2771-8052</li>
-                </ul>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="row footer-btn-height">
-                    <div class="col-4 align-self-center">
-                        <a class="btn footer-btn text-white"
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSc6tcYmtMzxj87BqPfCNOu5VenI4w7URqjUfJhPhSCnCb57XA/viewform?c=0&amp;w=1"
-                            title="院長信箱" target="_blank">
-                            <i class="fas fa-mail-bulk fa-2x pb-1"></i><br>
-                            院長信箱
-                        </a>
-                    </div>
-                    <div class="col-4 align-self-center">
-                        <a class="btn footer-btn text-white"
-                            href="https://www.facebook.com/%E5%AE%8F%E6%81%A9%E9%86%AB%E7%99%82%E8%B2%A1%E5%9C%98%E6%B3%95%E4%BA%BA%E5%AE%8F%E6%81%A9%E7%B6%9C%E5%90%88%E9%86%AB%E9%99%A2-170125373906915/"
-                            title="粉絲團">
-                            <i class="fab fa-facebook-square fa-2x pb-1"></i><br>
-                            粉絲團
-                        </a>
-                    </div>
-                    <div class="col-4 align-self-center">
-                        <a class="btn footer-btn text-white" href="#" title="瀏覽人次">
-                            <i class="fas fa-eye fa-2x pb-1"></i><br>
-                            464138
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pb-2 text-center">
-            版權所有 © 2019 本網站內容屬「宏恩醫療財團法人宏恩綜合醫院」所有，未經授權禁止以任何形式儲存、散佈或重製。<br>
-            本網站建議以 Internet Explorer 10、Firefox 或 Google Chrome 等瀏覽器瀏覽。
-        </div>
+    <div class="row">
+    <div class="col-12 col-lg-4 col-md-6">
+    <ul class="list-unstyled">
+    <li><i class="fas fa-hospital-alt px-2"></i>醫院位置 臺北市大安區仁愛路四段71巷1號</li>
+    <li><i class="fas fa-phone fa-flip-horizontal px-2"></i>總機專線 (+886)2 2771-3161</li>
+    <li><i class="fas fa-headset px-2"></i>語音掛號 (+886)2 2771-3161 #2</li>
+    </ul>
     </div>
-</footer> *@
+    <div class="col-12 col-lg-4 col-md-6">
+    <ul class="list-unstyled">
+    <li><i class="fas fa-headset px-2"></i>人工掛號 (+886)2 2771-3161 #3</li>
+    <li><i class="fas fa-envelope px-2"></i>醫院信箱 country@country.org.tw</li>
+    <li><i class="fas fa-fax px-2"></i>傳真專線 (+886)2 2771-8052</li>
+    </ul>
+    </div>
+    <div class="col-12 col-lg-4">
+    <div class="row footer-btn-height">
+    <div class="col-4 align-self-center">
+    <a class="btn footer-btn text-white"
+    href="https://docs.google.com/forms/d/e/1FAIpQLSc6tcYmtMzxj87BqPfCNOu5VenI4w7URqjUfJhPhSCnCb57XA/viewform?c=0&amp;w=1"
+    title="院長信箱" target="_blank">
+    <i class="fas fa-mail-bulk fa-2x pb-1"></i><br>
+    院長信箱
+    </a>
+    </div>
+    <div class="col-4 align-self-center">
+    <a class="btn footer-btn text-white"
+    href="https://www.facebook.com/%E5%AE%8F%E6%81%A9%E9%86%AB%E7%99%82%E8%B2%A1%E5%9C%98%E6%B3%95%E4%BA%BA%E5%AE%8F%E6%81%A9%E7%B6%9C%E5%90%88%E9%86%AB%E9%99%A2-170125373906915/"
+    title="粉絲團">
+    <i class="fab fa-facebook-square fa-2x pb-1"></i><br>
+    粉絲團
+    </a>
+    </div>
+    <div class="col-4 align-self-center">
+    <a class="btn footer-btn text-white" href="#" title="瀏覽人次">
+    <i class="fas fa-eye fa-2x pb-1"></i><br>
+    464138
+    </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="pb-2 text-center">
+    版權所有 © 2019 本網站內容屬「宏恩醫療財團法人宏恩綜合醫院」所有，未經授權禁止以任何形式儲存、散佈或重製。<br>
+    本網站建議以 Internet Explorer 10、Firefox 或 Google Chrome 等瀏覽器瀏覽。
+    </div>
+    </div>
+    </footer> *@
 
 <script>
     $('#back-to-bottom').click(function () {
-        $('html, body').animate({ scrollTop: $(document).height() }, 1000);
+        $('html, body').animate({scrollTop: $(document).height()}, 1000);
     });
     $('#div_id').click(function () {
-        $('html, body').animate({scrollTop: $(document).height()-1200}, 1000);
+        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
     });
 </script>
