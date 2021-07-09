@@ -55,14 +55,8 @@ namespace CountryWeb.Controllers
             return View();
         }
 
-        // [ServiceContract]
-        // public interface ISayHello
-        // {
-        //     [OperationContract]
-        //     string Hello(string name);
-        // }
+
         [HttpPost]
-        [Route("Test")]
         //button 送出時做的事
         public async Task<IActionResult> Test(dto3 dto)
         {
@@ -91,20 +85,32 @@ namespace CountryWeb.Controllers
             ViewBag.RtnCode = res2.RtnCode;
             ViewBag.oVaccLstData = res2.oVaccLstData;
 
-            var dto1 = new dto3();
-            dto1.id = "";
-            dto1.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
-            return View(dto1);
+            // var dto1 = new dto3();
+            // dto1.id = "";
+            // dto1.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
+            // return View("Test", dto1);
+            return RedirectToAction("Test", "Home", new { RtnCode = res2.RtnCode, oVaccLstData = res2.oVaccLstData });
 
         }
-        
+
         //Form load 時做的事
-        public IActionResult Test()
+        [HttpGet]
+        public IActionResult Test(string RtnCode = "", string oVaccLstData = "")
         {
-            var dto = new dto3();
-            dto.id = "F125600799";
-            dto.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
-            return View(dto);
+            if (RtnCode != "")
+            {
+                ViewBag.RtnCode = RtnCode;
+                ViewBag.oVaccLstData = oVaccLstData;
+            }
+            else
+            {
+                ViewBag.RtnCode = "";
+                ViewBag.oVaccLstData = "";
+            }
+            var dto3 = new dto3();
+            dto3.id = "F125600799";
+            dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
+            return View(dto3);
         }
     }
 

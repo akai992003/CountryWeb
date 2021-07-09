@@ -80,13 +80,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="id">&nbsp; 身份證字號</label>
-                            <input type="text" id="id" name="id" class="form-control" required>
+                            <input type="text" id="id" name="id" class="form-control" required >
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="name">&nbsp; 姓名</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" required >
                         </div>
                     </div>
                 </div>
@@ -94,28 +94,28 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_year">&nbsp; 生日</label>
-                            <input type="text" class="form-control" id="birthday_year" name="birthday_year"
+                            <input type="text" class="form-control" id="birthday_year" name="birthday_year" 
                                 placeholder="例:1982" maxlength="4" required>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_month">&nbsp; 月</label>
-                            <input type="text" class="form-control" id="birthday_month" name="birthday_month"
+                            <input type="text" class="form-control" id="birthday_month" name="birthday_month" 
                                 placeholder="例:06" maxlength="2" required>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_day">&nbsp; 日</label>
-                            <input type="text" class="form-control" id="birthday_day" name="birthday_day"
+                            <input type="text" class="form-control" id="birthday_day" name="birthday_day" 
                                 placeholder="例:24" maxlength="2" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="phone">&nbsp; 聯絡電話</label>
-                            <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9#]*"
+                            <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9#]*" 
                                 placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
                         </div>
                     </div>
@@ -125,21 +125,21 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_country">&nbsp; 居住地-縣市</label>
-                            <input type="text" class="form-control" id="addr_country" name="addr_country"
+                            <input type="text" class="form-control" id="addr_country" name="addr_country" 
                                 placeholder="例:台北市" required>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_city">&nbsp; 居住地-鄉鎮市區</label>
-                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區"
+                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區" 
                                 required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="addr_detal">&nbsp; 居住地-街道地址</label>
-                            <input type="text" class="form-control" id="addr_detal" name="addr_detal"
+                            <input type="text" class="form-control" id="addr_detal" name="addr_detal" 
                                 placeholder="例:仁愛路四段61號" required>
 
                         </div>
@@ -211,13 +211,19 @@
     </div> -->
 </section>
 
-<script>
+<div id='loader' style='display: none;'>
+  <h1>wait</h1>
+
+</div>
+
+<script type='text/javascript'>
     const contentType = "application/json; charset=utf-8";
     let reload = 0;
+    let answer2;
+        let token;
 
     $(document).ready(function () {
-        let answer2;
-        let token;
+        
 
         $('#clean').click(function () {
             $('form').trigger('reset');
@@ -258,115 +264,123 @@
             },
         });
 
-        $('form').submit(function (e) {
-            e.preventDefault();
+    });
 
-            let idLength = $('#id').val().length;
-            if (idLength < 8) {
+    $('form').submit(function (e) {
+        e.preventDefault();
+
+
+        let idLength = $('#id').val().length;
+        if (idLength < 8) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">身分證字號長度需大於8碼</p>');
+            return;
+        }
+
+        let brLength_Y = $('#birthday_year').val().length;
+        if (brLength_Y !== 4) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">西元年格式需為4碼</p>');
+            return;
+        }
+
+        let brLength_M = $('#birthday_month').val().length;
+        if (brLength_M !== 2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">月份格式需為2碼</p>');
+            return;
+        }
+
+        let brLength_D = $('#birthday_day').val().length;
+        if (brLength_D !== 2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">日格式需為2碼</p>');
+            return;
+        }
+
+        const answer1 = $('#answer').val();
+        if (answer1 !== answer2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>安全確認碼');
+            $('.modal-body').html('<p class="m-0">安全確認碼錯誤</p>');
+            return;
+        }
+
+        const vpid = $('#vpid option:selected').val();
+        const pa = {
+            "id": $('#id').val(),
+            "name": $('#name').val(),
+            "birthday_year": $('#birthday_year').val(),
+            "birthday_month": $('#birthday_month').val(),
+            "birthday_day": $('#birthday_day').val(),
+            "phone": $('#phone').val(),
+            "vpid": vpid,
+            "sECURITY": "",
+            "addr_country": $('#addr_country').val(),
+            "addr_city": $('#addr_city').val(),
+            "addr_detal": $('#addr_detal').val(),
+            "idtypes": $('#idtypes').val(),
+        }
+
+        const data1 = JSON.stringify(pa);
+        const urlx = '@ViewBag.uRI' + 'CheckOne';
+
+        $.ajax({
+            url: urlx,
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + token + ""
+            },
+            contentType: contentType,
+            dataType: "json",
+            data: data1,
+            timeout: 3000,
+            async: true,
+            beforeSend: function(){
                 $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">身分證字號長度需大於8碼</p>');
-                return;
-            }
-
-            let brLength_Y = $('#birthday_year').val().length;
-            if (brLength_Y !== 4) {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">西元年格式需為4碼</p>');
-                return;
-            }
-
-            let brLength_M = $('#birthday_month').val().length;
-            if (brLength_M !== 2) {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">月份格式需為2碼</p>');
-                return;
-            }
-
-            let brLength_D = $('#birthday_day').val().length;
-            if (brLength_D !== 2) {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-                $('.modal-body').html('<p class="m-0">日格式需為2碼</p>');
-                return;
-            }
-
-            const answer1 = $('#answer').val();
-            if (answer1 !== answer2) {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>安全確認碼');
-                $('.modal-body').html('<p class="m-0">安全確認碼錯誤</p>');
-                return;
-            }
-
-            const vpid = $('#vpid option:selected').val();
-            const pa = {
-                "id": $('#id').val(),
-                "name": $('#name').val(),
-                "birthday_year": $('#birthday_year').val(),
-                "birthday_month": $('#birthday_month').val(),
-                "birthday_day": $('#birthday_day').val(),
-                "phone": $('#phone').val(),
-                "vpid": vpid,
-                "sECURITY": "",
-                "addr_country": $('#addr_country').val(),
-                "addr_city": $('#addr_city').val(),
-                "addr_detal": $('#addr_detal').val(),
-                "idtypes": $('#idtypes').val(),
-            }
-
-            const data1 = JSON.stringify(pa);
-            const urlx = '@ViewBag.uRI' + 'CheckOne';
-
-            $.ajax({
-                url: urlx,
-                type: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token + ""
-                },
-                contentType: contentType,
-                dataType: "json",
-                data: data1,
-                timeout: 3000,
-                async: false,
-                success: function (data) {
-
-                    if (data.code === "200") {
-                        reload = 1;
-                        $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約成功');
-                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                    } else if (data.code === "300") {
-                        $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                    } else if (data.code === "400") {
-                        $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                    } else if (data.code === "700") {
-                        $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                    } else {
-                        $('.modal').modal('show');
-                        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>重覆預約');
-                        $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                    }
-                },
-
-                error: function (xhr) {
-                    console.log('預約錯誤');
-                    console.log(xhr);
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
+                $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
+                $("#mf").hide();
+            },
+            success: function (data) {
+                $("#mf").show();
+                if (data.code === "200") {
+                    reload = 1;
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約成功');
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                } else if (data.code === "300") {
                     $('.modal').modal('show');
                     $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
-                    $('.modal-body').html('<p class="m-0">不正確的操作方式</p>');
-                }
-            });
-
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                } else if (data.code === "400") {
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                } else if (data.code === "700") {
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                } else {
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>重覆預約');
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                };
+            },
+            error: function (xhr) {
+                console.log('預約錯誤');
+                console.log(xhr);
+                $('.modal').modal('show');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                $('.modal-body').html('<p class="m-0">不正確的操作方式</p>');
+                $("#mf").show();
+            }
         });
+
     });
 
     function btnSearch() {
@@ -406,6 +420,14 @@
             window.location.reload();
         }
     };
+
+    $('#back-to-bottom').click(function () {
+        $('html, body').animate({scrollTop: $(document).height()}, 1000);
+    });
+
+    $('#div_id').click(function () {
+        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
+    });
 </script>
 
 <div class="modal fade">
@@ -413,196 +435,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
-                <button type="button" class="close" data-dismiss="modal"><b>×</b></button>
+                @* <button type="button" class="close" data-dismiss="modal"><b>×</b></button> *@
             </div>
             <div class="modal-body">
             </div>
-            <div class="modal-footer"><a class="btn btn-primary text-white" title="關閉" data-dismiss="modal"
+            <div class="modal-footer" id="mf">
+                <a class="btn btn-primary text-white" title="關閉" data-dismiss="modal"
                     onclick="rl()">關閉</a>
             </div>
         </div>
     </div>
 </div>
 
-@* <section>
-    <div class="sitemap-bg-color cursor text-center text-white py-2" aria-expanded="true" aria-controls="sitemap"
-    data-target="#sitemap" data-toggle="collapse">
-    <a title="展開 / 收合"><i class="fas fa-chevron-down fa-2x sitemap-arrow"></i></a>
-    </div>
-    <div id="sitemap" class="collapse show sitemap-bg-color pt-3">
-    <div class="container">
-    <div class="row">
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="訊息專區">
-    <h4 class="sitemap-title">訊息專區</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/最新消息" title="最新消息">最新消息</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/公告訊息" title="公告訊息">公告訊息</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/訊息專區/得獎訊息" title="得獎訊息">得獎訊息</a>
-    </li>
-    </ul>
-    </li>
-    </div>
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="認識宏恩">
-    <h4 class="sitemap-title">認識宏恩</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/管理團隊" title="管理團隊">管理團隊</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/願景使命" title="願景使命">願景使命</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/重大事記" title="重大事記">重大事記</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/認識宏恩/組織架構" title="組織架構">組織架構</a>
-    </li>
-    </ul>
-    </li>
-    </div>
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="就醫指南">
-    <h4 class="sitemap-title">就醫指南</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/網路掛號" title="網路掛號">網路掛號</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/掛號查詢" title="網路掛號">掛號查詢</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看診進度" title="看診進度">看診進度</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/門診時間" title="門診時間">門診時間</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/看哪一科" title="看哪一科">看哪一科</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/就醫權益與須知"
-    title="就醫權益與須知">就醫權益與須知</a></li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/住院服務" title="住院服務">住院服務</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/急診服務" title="急診服務">急診服務</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/就醫指南/收費說明" title="收費說明">收費說明</a>
-    </li>
-    </ul>
-    </li>
-    </div>
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="醫療中心">
-    <h4 class="sitemap-title">醫療中心</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫療團隊" title="醫療團隊">醫療團隊</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/醫事團隊" title="醫事團隊">醫事團隊</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/醫療中心/特色醫療" title="特色醫療">特色醫療</a>
-    </li>
-    </ul>
-    </li>
-    </div>
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="衛教園地">
-    <h4 class="sitemap-title">衛教園地</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/衛教園地/衛教單張" title="衛教單張">衛教單張</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/衛教園地/防疫新知" title="防疫新知">防疫新知</a>
-    </li>
 
-
-    </ul>
-    </li>
-    </div>
-    <div class="col-6 col-md-2">
-    <li class="list-unstyled">
-    <a class="text-white" title="為民服務">
-    <h4 class="sitemap-title">為民服務</h4>
-    </a>
-    <ul class="list-unstyled sitemap-content">
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/就醫資料申請"
-    title="就醫資料申請">就醫資料申請</a></li>
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/社會服務" title="社會服務">社會服務</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/病友分享" title="病友分享">病友分享</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/滿意度調查"
-    title="滿意度調查">滿意度調查</a></li>
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/到院指南" title="到院指南">到院指南</a>
-    </li>
-    <li><a class="text-white" href="https://www.country.org.tw/為民服務/常見問題" title="常見問題">常見問題</a>
-    </li>
-    </ul>
-    </li>
-    </div>
-    </div>
-    </div>
-    </div>
-    </section>
-
-    <footer class="footer-bg-color text-white">
-    <div class="container pt-2">
-    <div class="row">
-    <div class="col-12 col-lg-4 col-md-6">
-    <ul class="list-unstyled">
-    <li><i class="fas fa-hospital-alt px-2"></i>醫院位置 臺北市大安區仁愛路四段71巷1號</li>
-    <li><i class="fas fa-phone fa-flip-horizontal px-2"></i>總機專線 (+886)2 2771-3161</li>
-    <li><i class="fas fa-headset px-2"></i>語音掛號 (+886)2 2771-3161 #2</li>
-    </ul>
-    </div>
-    <div class="col-12 col-lg-4 col-md-6">
-    <ul class="list-unstyled">
-    <li><i class="fas fa-headset px-2"></i>人工掛號 (+886)2 2771-3161 #3</li>
-    <li><i class="fas fa-envelope px-2"></i>醫院信箱 country@country.org.tw</li>
-    <li><i class="fas fa-fax px-2"></i>傳真專線 (+886)2 2771-8052</li>
-    </ul>
-    </div>
-    <div class="col-12 col-lg-4">
-    <div class="row footer-btn-height">
-    <div class="col-4 align-self-center">
-    <a class="btn footer-btn text-white"
-    href="https://docs.google.com/forms/d/e/1FAIpQLSc6tcYmtMzxj87BqPfCNOu5VenI4w7URqjUfJhPhSCnCb57XA/viewform?c=0&amp;w=1"
-    title="院長信箱" target="_blank">
-    <i class="fas fa-mail-bulk fa-2x pb-1"></i><br>
-    院長信箱
-    </a>
-    </div>
-    <div class="col-4 align-self-center">
-    <a class="btn footer-btn text-white"
-    href="https://www.facebook.com/%E5%AE%8F%E6%81%A9%E9%86%AB%E7%99%82%E8%B2%A1%E5%9C%98%E6%B3%95%E4%BA%BA%E5%AE%8F%E6%81%A9%E7%B6%9C%E5%90%88%E9%86%AB%E9%99%A2-170125373906915/"
-    title="粉絲團">
-    <i class="fab fa-facebook-square fa-2x pb-1"></i><br>
-    粉絲團
-    </a>
-    </div>
-    <div class="col-4 align-self-center">
-    <a class="btn footer-btn text-white" href="#" title="瀏覽人次">
-    <i class="fas fa-eye fa-2x pb-1"></i><br>
-    464138
-    </a>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="pb-2 text-center">
-    版權所有 © 2019 本網站內容屬「宏恩醫療財團法人宏恩綜合醫院」所有，未經授權禁止以任何形式儲存、散佈或重製。<br>
-    本網站建議以 Internet Explorer 10、Firefox 或 Google Chrome 等瀏覽器瀏覽。
-    </div>
-    </div>
-    </footer> *@
-
-<script>
-    $('#back-to-bottom').click(function () {
-        $('html, body').animate({scrollTop: $(document).height()}, 1000);
-    });
-    $('#div_id').click(function () {
-        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
-    });
-</script>
