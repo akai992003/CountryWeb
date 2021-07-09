@@ -68,38 +68,47 @@ namespace CountryWeb.Data
         /// <returns></returns>
         public List<dtovP2> GetvP1()
         {
-            var SqlStr = string.Format("execute SP_GetVP");
-            using (var cn = new SqlConnection(this._dapperconn))
+            var l = new List<dtovP2>();
+            try
             {
-                var q = cn.Query<dtoVP>(SqlStr);
-
-                var l = new List<dtovP2>();
-                foreach (var p in q)
+                var SqlStr = string.Format("execute SP_GetVP");
+                using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    if (DateTime.Today < p.date1)
+                    var q = cn.Query<dtoVP>(SqlStr);
+
+                    foreach (var p in q)
                     {
-                        var vp = new dtovP2();
-                        vp.id = p.id;
-
-                        var c = "";
-                        if (p.cnt2 >= p.cnt)
+                        if (DateTime.Today < p.date1)
                         {
-                            c = "已額滿";
-                            vp.Fulls = true;
-                        }
-                        else
-                        {
-                            vp.Fulls = false;
-                        }
-                        var head = string.Format("{0} {1}年{2}月{3}日 {4} {5}", p.head, p.date1.ToString("yyyy"), p.date1.ToString("MM"), p.date1.ToString("dd"), p.week, c);
+                            var vp = new dtovP2();
+                            vp.id = p.id;
 
-                        vp.head = head;
-                        l.Add(vp);
+                            var c = "";
+                            if (p.cnt2 >= p.cnt)
+                            {
+                                c = "已額滿";
+                                vp.Fulls = true;
+                            }
+                            else
+                            {
+                                vp.Fulls = false;
+                            }
+                            var head = string.Format("{0} {1}年{2}月{3}日 {4} {5}", p.head, p.date1.ToString("yyyy"), p.date1.ToString("MM"), p.date1.ToString("dd"), p.week, c);
+
+                            vp.head = head;
+                            l.Add(vp);
+                        }
+
                     }
-
+                    return l;
                 }
-                return l;
             }
+            catch (System.Exception)
+            {
+                return l;
+                //throw;
+            }
+
 
         }
 
@@ -113,26 +122,35 @@ namespace CountryWeb.Data
             {
                 return null;
             }
-            var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
-            using (var cn = new SqlConnection(this._dapperconn))
+            try
             {
-                var q = cn.Query<dtoVP>(SqlStr);
-                var p = q.FirstOrDefault();
-                if (p != null)
+                var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
+                using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    // if (p.Cnt2 >= p.Cnt)
-                    // {
-                    //     // 已額滿
-                    //     return true;
-                    // } else {
-                    //     return false;
-                    // }
-                    return p;
+                    var q = cn.Query<dtoVP>(SqlStr);
+                    var p = q.FirstOrDefault();
+                    if (p != null)
+                    {
+                        // if (p.Cnt2 >= p.Cnt)
+                        // {
+                        //     // 已額滿
+                        //     return true;
+                        // } else {
+                        //     return false;
+                        // }
+                        return p;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }
+
+            }
+            catch (System.Exception)
+            {
+                return null;
+                // throw;
             }
 
         }

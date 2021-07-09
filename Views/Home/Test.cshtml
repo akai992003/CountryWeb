@@ -1,4 +1,4 @@
-﻿@model CountryWeb.Controllers.dto3;
+﻿@model CountryWeb.Models.dto3;
 @{
     ViewData["Title"] = "Privacy Policy";
 }
@@ -8,5 +8,6 @@
 <p>oVaccLstData = @ViewBag.oVaccLstData</p>
 <form asp-controller="Home" asp-action="Test" method="post" id="Test" name="Test">
     <input type="text" name="id" id="id" value="@Model.id"/>
+    <input type="text" name="sValidSDate" id="sValidSDate" value="@Model.sValidSDate" hidden/>
     <input type="submit" value='Search' />
 </form>

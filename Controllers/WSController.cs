@@ -1,13 +1,16 @@
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CountryWeb.Data;
 using CountryWeb.Helper;
+using CountryWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using ServiceReference;
 
 namespace CountryWeb.Controllers
 {
@@ -21,6 +24,8 @@ namespace CountryWeb.Controllers
         private IConfiguration Iconf { get; }
         private string issuer { get; }
         private string signKey { get; }
+        private string sClientRandom { get; }
+        private string sSignature { get; }
 
         public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers)
         {
@@ -30,6 +35,8 @@ namespace CountryWeb.Controllers
             this.Iconf = Configuration;
             this.issuer = UStore.GetUStore(Iconf["JwtSettings:Issuer"], "Issuer");
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
+            this.sClientRandom = UStore.GetUStore(Iconf["api:sClientRandom"], "sClientRandom");
+            this.sSignature = UStore.GetUStore(Iconf["api:sSignature"], "sSignature");
         }
 
         [HttpPost("~/Fetch")]
@@ -121,17 +128,26 @@ namespace CountryWeb.Controllers
                     return result;
                 }
 
-                /* 預約成功 */
-                // 預約完要出現提醒示窗。(預約施打的日期時間，提醒事項)
-
-                result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
-                result["code"] = "200";
-                this.ICovid19.NewOne(dto);
-
+                // call 健保局 api 確認是否有造冊
+                var _dto3 = new dto3();
+                _dto3.id = dto.id;
+                _dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
+                var q = GetVaccLstDataAsync(_dto3).Result;
+                if (q.RtnCode == "00" && q.oVaccLstData == "Y")
+                {
+                    /* 預約成功 */
+                    // 預約完要出現提醒示窗。(預約施打的日期時間，提醒事項)
+                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                    result["code"] = "200";
+                    this.ICovid19.NewOne(dto);
+                } else {
+                    result["msg"] = "查無符合身份類別，如有疑義請循序洽造冊單位、衛生局、疾管署釐清，謝謝";
+                    result["code"] = "700";
+                    return result;
+                }
             }
 
             return result;
-
 
         }
 
@@ -211,11 +227,45 @@ namespace CountryWeb.Controllers
             {
                 result["msg"] = msg;
 
-            } else {
+            }
+            else
+            {
                 result["msg"] = "查無紀錄";
             }
 
             return result;
+        }
+
+        private async Task<dto1> GetVaccLstDataAsync(dto3 dto)
+        {
+
+            NHIQP701SoapClient.EndpointConfiguration endpoint = new NHIQP701SoapClient.EndpointConfiguration();
+            NHIQP701SoapClient myService = new NHIQP701SoapClient(endpoint, "https://medvpnws.nhi.gov.tw:7008/qp7e2000/NHIQP701.asmx");
+            // AuthorizationSoapHeader MyAuthHeader = new AuthorizationSoapHeader();
+
+            // MyAuthHeader.AppName = FDSServiceAppName;
+            // MyAuthHeader.AppID = Guid.Parse(MyAppID);
+            var q = new dto2();
+
+            q.sHospId = "1101020036";
+            q.sPatId = dto.id;
+            q.sValidSDate = dto.sValidSDate;
+            q.sClientRandom = this.sClientRandom;
+            q.sSignature = this.sSignature;
+            q.sSamId = "000000081174";
+            var json = JsonSerializer.Serialize(q);
+
+            var entries = await myService.GetVaccLstDataAsync(json);
+            var res = entries.Body.GetVaccLstDataResult;
+            // {"RtnCode":"01","oVaccLstData":null}
+
+            var res2 = JsonSerializer.Deserialize<dto1>(res);
+            // ViewBag.RtnCode = res2.RtnCode;
+            // ViewBag.oVaccLstData = res2.oVaccLstData;
+            // var dto1 = new dto3();
+            // dto1.id = "";
+            return res2;
+
         }
 
     }
