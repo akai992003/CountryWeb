@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using ServiceReference;
 
 namespace CountryWeb
 {
@@ -98,7 +99,7 @@ namespace CountryWeb
 
                     // 一般我們都會驗證 Token 的有效期間
                     ValidateLifetime = true,
-                     
+
 
                     // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
                     ValidateIssuerSigningKey = false,
@@ -169,6 +170,13 @@ namespace CountryWeb
             app.UseCors(sAllowS); // UseCors 要在 驗證授權 前面
             app.UseAuthentication(); // 先驗證
             app.UseAuthorization(); // 再授權
+
+            // app.Run(async (context) =>
+            //    {
+            //        var client = new GetVaccLstDataAsync();
+            //        var response = await client.GetVaccLstDataAsync();
+            //        await context.Response.WriteAsync(response);
+            //    });
 
             app.UseEndpoints(endpoints =>
             {
