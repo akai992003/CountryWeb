@@ -20,14 +20,13 @@ namespace CountryWeb.Controllers
     {
         private readonly IvPService IvP;
         private readonly ICovid19Service ICovid19;
+        private readonly INHIQP701Service INHIQP701;
         private readonly JwtHelpers IJwt;
         private IConfiguration Iconf { get; }
         private string issuer { get; }
         private string signKey { get; }
-        private string sClientRandom { get; }
-        private string sSignature { get; }
 
-        public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers)
+        public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
             this.IvP = IvPService;
             this.ICovid19 = ICovid19Service;
@@ -35,8 +34,7 @@ namespace CountryWeb.Controllers
             this.Iconf = Configuration;
             this.issuer = UStore.GetUStore(Iconf["JwtSettings:Issuer"], "Issuer");
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
-            this.sClientRandom = UStore.GetUStore(Iconf["api:sClientRandom"], "sClientRandom");
-            this.sSignature = UStore.GetUStore(Iconf["api:sSignature"], "sSignature");
+            this.INHIQP701 = INHIQP701Service;
         }
 
         [HttpPost("~/Fetch")]
@@ -195,7 +193,7 @@ namespace CountryWeb.Controllers
                     return result;
                 }
 
-                /* TODO 已預約過的不可再預約 */
+                /* 已預約過的不可再預約 */
                 var cod = this.ICovid19.GetA2E(dto.id);
                 if (cod != "")
                 {
@@ -271,13 +269,15 @@ namespace CountryWeb.Controllers
 
             // MyAuthHeader.AppName = FDSServiceAppName;
             // MyAuthHeader.AppID = Guid.Parse(MyAppID);
+
+            var NHIQ = this.INHIQP701.GetOne();
             var q = new dto2();
 
             q.sHospId = "1101020036";
             q.sPatId = dto.id;
             q.sValidSDate = dto.sValidSDate;
-            q.sClientRandom = this.sClientRandom;
-            q.sSignature = this.sSignature;
+            q.sClientRandom = NHIQ.sClientRandom;
+            q.sSignature = NHIQ.sSignature;
             q.sSamId = "000000081174";
             var json = JsonSerializer.Serialize(q);
 

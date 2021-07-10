@@ -21,21 +21,18 @@ namespace CountryWeb.Controllers
         private IConfiguration Iconf { get; }
         private string uRI { get; }
         private readonly ICovid19Service ICovid19;
-        private string sClientRandom { get; }
-        private string sSignature { get; }
+        private readonly INHIQP701Service INHIQP701;
 
-        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service)
+        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service,INHIQP701Service INHIQP701Service)
         {
             this.Iconf = Configuration;
             this.uRI = UStore.GetUStore(Iconf["ConnectionStrings:uRI"], "uRI");
             this.ICovid19 = ICovid19Service;
-            this.sClientRandom = UStore.GetUStore(Iconf["api:sClientRandom"], "sClientRandom");
-            this.sSignature = UStore.GetUStore(Iconf["api:sSignature"], "sSignature");
+            this.INHIQP701 = INHIQP701Service;
         }
 
         public IActionResult A2E()
         {
-
             var cnt = this.ICovid19.GetA2ECnt();
             // 830 + done = 0
             ViewBag.Cnt = 1316 + cnt;
@@ -67,13 +64,14 @@ namespace CountryWeb.Controllers
 
             // MyAuthHeader.AppName = FDSServiceAppName;
             // MyAuthHeader.AppID = Guid.Parse(MyAppID);
+            var NHIQ = this.INHIQP701.GetOne();
             var q = new dto2();
 
             q.sHospId = "1101020036";
             q.sPatId = dto.id;
             q.sValidSDate = DateTime.Now.ToString("yyyyMMdd"); // "20210709"
-            q.sClientRandom = this.sClientRandom;
-            q.sSignature = this.sSignature;
+            q.sClientRandom = NHIQ.sClientRandom;
+            q.sSignature = NHIQ.sSignature;
             q.sSamId = "000000081174";
             var json = JsonSerializer.Serialize(q);
 

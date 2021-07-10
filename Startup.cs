@@ -50,7 +50,8 @@ namespace CountryWeb
             });
             services.AddScoped<InewsListsService, newsListsService>();
             services.AddScoped<IvPService, vPService>();
-            services.AddScoped<ICovid19Service, Covid19Service>();
+            services.AddScoped<ICovid19Service, Covid19Service>(); 
+            services.AddScoped<INHIQP701Service, NHIQP701Service>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //* get IP */
