@@ -178,6 +178,12 @@
                                 <option value="4"> 第5類 洗腎患者 </option>
                                 <option value="5"> 第6類 孕婦 </option>
                                 <option value="6"> 110/5/9前已接種第一劑者 </option>
+                                @* @{
+                                    foreach (var p in ViewBag.ct)
+                                    {
+                                        <option value="@p.Id"> @p.Name </option>
+                                    }
+                                } *@
                             </select>
                         </div>
                     </div>

@@ -22,13 +22,15 @@ namespace CountryWeb.Controllers
         private string uRI { get; }
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
+        private readonly IvPService IvP;
 
-        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service,INHIQP701Service INHIQP701Service)
+        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service,INHIQP701Service INHIQP701Service,IvPService IvPService)
         {
             this.Iconf = Configuration;
             this.uRI = UStore.GetUStore(Iconf["ConnectionStrings:uRI"], "uRI");
             this.ICovid19 = ICovid19Service;
             this.INHIQP701 = INHIQP701Service;
+            this.IvP = IvPService;
         }
 
         public IActionResult A2E()
@@ -42,6 +44,7 @@ namespace CountryWeb.Controllers
 
         public IActionResult Index()
         {
+            // var ct = this.IvP.GetVPCategoryList();
             var disableds = "disabled";
             if (DateTime.Now >= new DateTime(2021, 7, 1, 12, 0, 0))
             {
@@ -49,6 +52,7 @@ namespace CountryWeb.Controllers
             }
             ViewBag.disableds = disableds;
             ViewBag.uRI = this.uRI;
+            // ViewBag.ct = ct;
             return View();
         }
 

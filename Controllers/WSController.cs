@@ -86,9 +86,11 @@ namespace CountryWeb.Controllers
                 { "code", "300" }, // 
             };
 
+            /* 5分鐘時效*/
             if (currentUser.HasClaim(c => c.Type == "DateOfJoing"))
             {
-                /* 判斷token的時間與 call api 的時間差*/
+
+                #region 判斷token的時間與 call api 的時間差
                 DateTime date = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "DateOfJoing").Value);
                 TimeSpan ts = DateTime.Now - date;
 
@@ -98,8 +100,9 @@ namespace CountryWeb.Controllers
                     result["code"] = "300";
                     return result;
                 }
+                #endregion
 
-                /* 可能會額滿 */
+                #region 可能會額滿
                 var vP2 = this.IvP.GetvP2(dto.vpid);
                 if (vP2 == null)
                 {
@@ -116,8 +119,9 @@ namespace CountryWeb.Controllers
                     result["code"] = "400";
                     return result;
                 }
+                #endregion
 
-                /* 已預約過的不可再預約 */
+                #region 已預約過的不可再預約
                 var cod = this.ICovid19.GetOne(dto.id);
                 if (cod != null)
                 {
@@ -125,22 +129,25 @@ namespace CountryWeb.Controllers
                     result["code"] = "500";
                     return result;
                 }
+                #endregion
 
-                // call 健保局 api 確認是否有造冊
+                #region call 健保局 api 確認是否有造冊
                 var _dto3 = new dto3();
                 _dto3.id = dto.id;
                 _dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
                 var q = GetVaccLstDataAsync(_dto3).Result;
+                #endregion
+
                 if (q.RtnCode == "00" && q.oVaccLstData == "Y")
                 {
                     /* 預約成功 */
-                    // 預約完要出現提醒示窗。(預約施打的日期時間，提醒事項)
                     result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
                     result["code"] = "200";
                     this.ICovid19.NewOne(dto);
                 }
                 else
                 {
+                    /* 預約失敗 */
                     result["msg"] = "查無符合身份類別，如有疑義請循序洽造冊單位、衛生局、疾管署釐清，謝謝";
                     result["code"] = "700";
                     return result;

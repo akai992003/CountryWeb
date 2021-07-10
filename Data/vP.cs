@@ -21,6 +21,14 @@ namespace CountryWeb.Data
         public int Cnt { get; set; }
     }
 
+    public class VPCategory
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int deleted { get; set; }
+    }
+
     public class dtoVP
     {
         public int id { get; set; }
@@ -50,6 +58,12 @@ namespace CountryWeb.Data
         /// 用id取得單一預約日期的資訊
         /// </summary>
         dtoVP GetvP2(string id);
+
+
+        /// <summary>
+        /// 取得接種身份類別
+        /// </summary>
+        List<VPCategory> GetVPCategoryList();
     }
 
     public class vPService : IvPService
@@ -151,6 +165,21 @@ namespace CountryWeb.Data
                 // throw;
             }
 
+        }
+
+        /// <summary>
+        /// 取得接種身份類別
+        /// </summary>
+        public List<VPCategory> GetVPCategoryList()
+        {
+            using (var context = new TgContext())
+            {
+                var q = (from p in context.VPCategory
+                         where p.deleted == 0
+                         orderby p.Id
+                         select p).AsEnumerable().AsQueryable();
+                return q.ToList();
+            }
         }
     }
 }
