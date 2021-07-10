@@ -32,22 +32,36 @@
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
                 </p>
-                <div class="row">
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="id">&nbsp; 預約查詢</label>
-                            <input type="text" id="id1" name="id1" class="form-control" placeholder="請輸入身份證字號">
+                <div class="row" style="margin-left:1px;">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label for="id">&nbsp; 預約查詢</label>
+                                    <input type="text" id="id1" name="id1" class="form-control" placeholder="請輸入身份證字號">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <a href="#" id="search1" name="search1" class="btn btn-primary mx-2"
+                                        onclick="btnSearch()">查詢預約</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                </div>
-                <div class="row">
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <a href="#" id="search1" name="search1" class="btn btn-danger mx-2" onclick="btnSearch()">
-                                查詢</a>
+                    <div class="col-md-6 col-sm-12" id='cancelDiv' style='display: none;'>
+                        <div class="row" style="color: #332fe3;">
+                            <div class="col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label for="res">&nbsp; 查詢結果</label><br>
+                                    <label id="res" style="margin-left:8px;"></label><br>
+                                    <a href="#" id="cancel1" name="cancel1" class="btn btn-danger mx-2"
+                                        onclick="btnCancel()">取消預約</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,13 +94,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="id">&nbsp; 身份證字號</label>
-                            <input type="text" id="id" name="id" class="form-control" required >
+                            <input type="text" id="id" name="id" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="name">&nbsp; 姓名</label>
-                            <input type="text" id="name" name="name" class="form-control" required >
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -94,28 +108,28 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_year">&nbsp; 生日</label>
-                            <input type="text" class="form-control" id="birthday_year" name="birthday_year" 
+                            <input type="text" class="form-control" id="birthday_year" name="birthday_year"
                                 placeholder="例:1982" maxlength="4" required>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_month">&nbsp; 月</label>
-                            <input type="text" class="form-control" id="birthday_month" name="birthday_month" 
+                            <input type="text" class="form-control" id="birthday_month" name="birthday_month"
                                 placeholder="例:06" maxlength="2" required>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="birthday_day">&nbsp; 日</label>
-                            <input type="text" class="form-control" id="birthday_day" name="birthday_day" 
+                            <input type="text" class="form-control" id="birthday_day" name="birthday_day"
                                 placeholder="例:24" maxlength="2" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="phone">&nbsp; 聯絡電話</label>
-                            <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9#]*" 
+                            <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9#]*"
                                 placeholder="例:0988123456 或 0227713161#9" title="僅能輸入數字或是#。" required>
                         </div>
                     </div>
@@ -125,21 +139,21 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_country">&nbsp; 居住地-縣市</label>
-                            <input type="text" class="form-control" id="addr_country" name="addr_country" 
+                            <input type="text" class="form-control" id="addr_country" name="addr_country"
                                 placeholder="例:台北市" required>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="addr_city">&nbsp; 居住地-鄉鎮市區</label>
-                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區" 
+                            <input type="text" class="form-control" id="addr_city" name="addr_city" placeholder="例:大安區"
                                 required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="addr_detal">&nbsp; 居住地-街道地址</label>
-                            <input type="text" class="form-control" id="addr_detal" name="addr_detal" 
+                            <input type="text" class="form-control" id="addr_detal" name="addr_detal"
                                 placeholder="例:仁愛路四段61號" required>
 
                         </div>
@@ -170,7 +184,7 @@
                 </div>
 
                 <div class="row">
-                     <div class="col-sm-6">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label for="answer" id="security" name="security">安全確認碼</label>
                             <input type="text" id="answer" name="answer" class="form-control" placeholder='請輸入安全確認碼'
@@ -180,28 +194,25 @@
 
                     <div class="col-sm-6">
                         <label style="color: orangered;margin-top: 20px;">
-                                施打當天請提交在職證明或識別證影本備查。<br>
-                                第四類、第七類為為專案申請件，本院不受理預約。<br>
-                                倘民眾對預約疫苗身份不符有疑義，請循序洽造冊單位、衛生局、疾管署釐清。
+                            施打當天請提交在職證明或識別證影本備查。<br>
+                            第四類、第七類為為專案申請件，本院不受理預約。<br>
+                            倘民眾對預約疫苗身份不符有疑義，請循序洽造冊單位、衛生局、疾管署釐清。
                         </label>
                     </div>
                 </div>
             </div>
             <br>
-            
-            @if(ViewBag.disableds != "")
+
+            @if (ViewBag.disableds != "")
             {
                 <p style="margin-left: 20px;color: orangered;">預計於 7/1 中午 12:00 開放疫苗預約,在此期間前預約皆屬測試階段</p>
             }
             <div class="row justify-content-center">
-                
                 <a href="#" id="clean" class="btn btn-danger mx-2" title="取消">
                     <i class="fas fa-undo-alt pr-1"></i>清除</a>
-
                 <input type="submit" class="btn btn-primary mx-2" value="  送出" @ViewBag.disableds>
                 <i class="check fas fa-check" style="left: -72px;"></i>
             </div>
-
             <br>
         </div>
     </form>
@@ -211,19 +222,14 @@
     </div> -->
 </section>
 
-<div id='loader' style='display: none;'>
-  <h1>wait</h1>
-
-</div>
-
 <script type='text/javascript'>
     const contentType = "application/json; charset=utf-8";
     let reload = 0;
     let answer2;
-        let token;
+    let token;
 
     $(document).ready(function () {
-        
+        localStorage.removeItem('guid');
 
         $('#clean').click(function () {
             $('form').trigger('reset');
@@ -240,7 +246,7 @@
                 token = data.token;
                 answer2 = data.answer;
 
-                document.getElementById("security").innerText =  ' 安全確認碼: ' + data.security;
+                document.getElementById("security").innerText = ' 安全確認碼: ' + data.security;
 
                 const vp1 = data.vp1;
                 var formoption = "";
@@ -268,7 +274,7 @@
 
     $('form').submit(function (e) {
         e.preventDefault();
-
+        localStorage.removeItem('guid');
 
         let idLength = $('#id').val().length;
         if (idLength < 8) {
@@ -340,7 +346,7 @@
             data: data1,
             timeout: 3000,
             async: true,
-            beforeSend: function(){
+            beforeSend: function () {
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
                 $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
@@ -384,7 +390,12 @@
     });
 
     function btnSearch() {
-        let id1 = $('#id1').val().length;
+        localStorage.removeItem('guid');
+
+        if ($('#id1').val() === "") {
+            return;
+        };
+
         const pa1 = {
             "id": $('#id1').val(),
         };
@@ -398,21 +409,75 @@
             dataType: "json",
             data: JSON.stringify(pa1),
             timeout: 30000,
-            success: function (data) {
-                let msg = data.msg;
-
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約紀錄');
-                $('.modal-body').html('<p class="m-0">' + msg + '</p>');
-
+            beforeSend: function () {
+                $('#cancelDiv').hide();
+                $('#res').html('');
+                localStorage.removeItem('guid');
             },
+            success: function (data) {
+                let res = '';
+                if (data.idcod === 1) {
+                    res = data.id + '&nbsp;&nbsp;' + data.name + '<br>' + data.msg;
+                } else {
+                    res = data.msg;
+                }
 
+                if (data.show1 === 1) {
+                    localStorage.setItem('guid', data.guid);
+                    $('#cancel1').show();
+                } else {
+                    $('#cancel1').hide();
+                }
+
+                $('#cancelDiv').show();
+                $('#res').html(res);
+            },
+            complete: function () {
+                $('#id1').val('')
+            },
             error: function (xhr, textStatus) {
                 console.log(xhr);
                 console.log(textStatus);
             },
         });
 
+    }
+
+    // localStorage.getItem('guid')
+    function btnCancel() {
+        const guid = localStorage.getItem('guid');
+        if (guid === null || guid === undefined || guid === ''){
+            return;
+        }
+
+        const pac = {
+            guid:guid
+        };
+
+        const urlp1 = '@ViewBag.uRI' + 'Cancel1';
+        $.ajax({
+            url: urlp1,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(pac),
+            timeout: 30000,
+            success: function (data) {
+                $('.modal').modal('show');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>取消預約');
+                $('.modal-body').html('<p class="m-0">您的預約已取消</p>');
+                 
+            }, complete: function () {
+                $('#cancelDiv').hide();
+                $('#res').html('');
+                localStorage.removeItem('guid');
+            },
+            error: function (xhr, textStatus) {
+                console.log(xhr);
+                console.log(textStatus);
+            },
+        });
+            
     }
 
     function rl() {
@@ -440,11 +505,8 @@
             <div class="modal-body">
             </div>
             <div class="modal-footer" id="mf">
-                <a class="btn btn-primary text-white" title="關閉" data-dismiss="modal"
-                    onclick="rl()">關閉</a>
+                <a class="btn btn-primary text-white" title="關閉" data-dismiss="modal" onclick="rl()">關閉</a>
             </div>
         </div>
     </div>
 </div>
-
-

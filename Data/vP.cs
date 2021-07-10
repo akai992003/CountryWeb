@@ -41,7 +41,14 @@ namespace CountryWeb.Data
 
     public interface IvPService
     {
+        /// <summary>
+        /// 取得預約日期列表
+        /// </summary>
         List<dtovP2> GetvP1();
+
+        /// <summary>
+        /// 用id取得單一預約日期的資訊
+        /// </summary>
         dtoVP GetvP2(string id);
     }
 
@@ -65,7 +72,6 @@ namespace CountryWeb.Data
         /// <summary>
         /// 取得預約日期列表
         /// </summary>
-        /// <returns></returns>
         public List<dtovP2> GetvP1()
         {
             var l = new List<dtovP2>();
@@ -115,7 +121,6 @@ namespace CountryWeb.Data
         /// <summary>
         /// 用id取得單一預約日期的資訊
         /// </summary>
-        /// <returns></returns>
         public dtoVP GetvP2(string id)
         {
             if (id == null || id == "")
@@ -131,13 +136,6 @@ namespace CountryWeb.Data
                     var p = q.FirstOrDefault();
                     if (p != null)
                     {
-                        // if (p.Cnt2 >= p.Cnt)
-                        // {
-                        //     // 已額滿
-                        //     return true;
-                        // } else {
-                        //     return false;
-                        // }
                         return p;
                     }
                     else

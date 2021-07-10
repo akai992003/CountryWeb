@@ -121,9 +121,9 @@ namespace CountryWeb.Controllers
 
                 /* 已預約過的不可再預約 */
                 var cod = this.ICovid19.GetOne(dto.id);
-                if (cod != "")
+                if (cod != null)
                 {
-                    result["msg"] = cod;
+                    result["msg"] = string.Format("您已預約 {0} - {1} 的時段", cod.date2, cod.week); ;
                     result["code"] = "500";
                     return result;
                 }
@@ -140,7 +140,9 @@ namespace CountryWeb.Controllers
                     result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
                     result["code"] = "200";
                     this.ICovid19.NewOne(dto);
-                } else {
+                }
+                else
+                {
                     result["msg"] = "查無符合身份類別，如有疑義請循序洽造冊單位、衛生局、疾管署釐清，謝謝";
                     result["code"] = "700";
                     return result;
@@ -214,7 +216,6 @@ namespace CountryWeb.Controllers
 
         }
 
-        //
         [HttpPost("~/Search1")]
         public JObject Search1(dtoId dto)
         {
@@ -222,16 +223,41 @@ namespace CountryWeb.Controllers
                 { "msg", "" },
             };
 
-            var msg = this.ICovid19.GetOne(dto.id);
-            if (msg != "")
+            var q = this.ICovid19.GetOne(dto.id);
+            if (q != null)
             {
-                result["msg"] = msg;
-
+                result["guid"] = q.guid;
+                result["id"] = q.id;
+                result["name"] = q.name;
+                result["msg"] = string.Format("已預約 {0} - {1} 的時段", q.date2, q.week);
+                if (q.date1 > DateTime.Now)
+                {
+                    result["show1"] = 1;
+                }
+                else
+                {
+                    result["show1"] = 0;
+                }
+                result["idcod"] = 1;
             }
             else
             {
+                result["idcod"] = 0;
                 result["msg"] = "查無紀錄";
+                result["show1"] = 0;
             }
+
+            return result;
+        }
+
+        [HttpPost("~/Cancel1")]
+        public JObject Cancel1(dtoGuid dto)
+        {
+            var result = new JObject { // 
+                { "msg", "" },
+            };
+
+            this.ICovid19.CancelOne(dto.guid);
 
             return result;
         }

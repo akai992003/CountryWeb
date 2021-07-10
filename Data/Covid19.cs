@@ -20,7 +20,7 @@ namespace CountryWeb.Data
         public string Addr_city { get; set; }
         public string Addr_detal { get; set; }
         public int VPId { get; set; }
-        public int  Idtypes{ get; set; }
+        public int Idtypes { get; set; }
     }
 
     public class A2E
@@ -67,16 +67,58 @@ namespace CountryWeb.Data
         public string addr_detal { get; set; }
     }
 
- public class   dtoId {
-     public string id { get; set; }
- }
+    public class dtoId
+    {
+        public string id { get; set; }
+    }
+
+    public class dtoGuid
+    {
+        public Guid guid { get; set; }
+    }
+
+    public class dtoCovid19VIP
+    {
+        public Guid guid { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public DateTime date1 { get; set; }
+        public string date2 { get; set; }
+        public string week { get; set; }
+
+
+    }
 
     public interface ICovid19Service
     {
+        /// <summary>
+        /// 新增疫苗預約
+        /// </summary>
         Task NewOne(dtoCovid19 dto);
-        string GetOne(string id);
+
+        /// <summary>
+        /// 判斷是否有預約疫苗
+        /// </summary>
+        dtoCovid19VIP GetOne(string id);
+
+        /// <summary>
+        /// 取消疫苗預約
+        /// </summary>
+        void CancelOne(Guid guid);
+
+        /// <summary>
+        /// 是否殘劑預約
+        /// </summary>
         string GetA2E(string id);
+
+        /// <summary>
+        /// 新增殘劑預約
+        /// </summary>
         Task NewA2E(dtoA2E dto);
+
+        /// <summary>
+        /// 殘劑預約人數
+        /// </summary>
         int GetA2ECnt();
     }
 
@@ -97,6 +139,9 @@ namespace CountryWeb.Data
             }
         }
 
+        /// <summary>
+        /// 新增疫苗預約
+        /// </summary>
         public async Task NewOne(dtoCovid19 dto)
         {
             var d = new Covid19();
@@ -110,7 +155,7 @@ namespace CountryWeb.Data
             d.Addr_detal = dto.addr_detal;
             d.Phone = dto.phone;
             d.VPId = int.Parse(dto.vpid);
-            d.Idtypes= int.Parse(dto.idtypes);
+            d.Idtypes = int.Parse(dto.idtypes);
 
             using (var context = new TgContext())
             {
@@ -119,6 +164,61 @@ namespace CountryWeb.Data
             }
         }
 
+
+        /// <summary>
+        /// 判斷是否有預約疫苗
+        /// </summary>
+        public dtoCovid19VIP GetOne(string id)
+        {
+            using (var context = new TgContext())
+            {
+                var q = (from p in context.Covid19
+                         join p2 in context.VP on p.VPId equals p2.Id
+                         where p.Id == id
+                         && p.VPId > 0
+                         select new dtoCovid19VIP
+                         {
+                             guid = p.Guid,
+                             id = p.Id,
+                             name = p.Name,
+                             date1 = p2.Date1,
+                             date2 = p2.Date1.ToString("yyyy-MM-dd"),
+                             week = p2.Week
+                         }).FirstOrDefault();
+                if (q != null)
+                {
+                    // 已預約
+                    return q;
+                    // return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 取消疫苗預約
+        /// </summary>
+        public void CancelOne(Guid guid)
+        {
+            using (var context = new TgContext())
+            {
+                var q = context.Covid19.Find(guid);
+                if (q != null)
+                {
+                    context.Covid19.Attach(q);
+                    q.VPId = 0;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 新增殘劑預約
+        /// </summary>
         public async Task NewA2E(dtoA2E dto)
         {
             var d = new A2E();
@@ -139,7 +239,9 @@ namespace CountryWeb.Data
             }
         }
 
-
+        /// <summary>
+        /// 是否殘劑預約
+        /// </summary>
         public string GetA2E(string id)
         {
             using (var context = new TgContext())
@@ -159,31 +261,9 @@ namespace CountryWeb.Data
             }
         }
 
-        public string GetOne(string id)
-        {
-            using (var context = new TgContext())
-            {
-                var q = (from p in context.Covid19
-                         join p2 in context.VP on p.VPId equals p2.Id
-                         where p.Id == id
-                         select new
-                         {
-                             date = p2.Date1.ToString("yyyy-MM-dd"),
-                             week = p2.Week
-                         }).FirstOrDefault();
-                if (q != null)
-                {
-                    // 已預約
-                    return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
-                }
-                else
-                {
-                    return "";
-                }
-            }
-
-        }
-
+        /// <summary>
+        /// 殘劑預約人數
+        /// </summary>
         public int GetA2ECnt()
         {
             using (var context = new TgContext())
