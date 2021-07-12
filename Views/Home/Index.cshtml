@@ -23,11 +23,13 @@
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
                 <p style="margin-left: 20px;color: orangered;">
-                    本院院內開打疫苗 說明<br>
-                    為第1類至第3類、第5類洗腎患者、第6類孕婦、110年5月9日前接種第一劑者，請至「下方表單填寫預約資料」<br>
-                    依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗<br>
-                    本院所提供AZ疫苗，時間為周二至周六上午9時至11時<br>
-                    為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式<br>
+                    本院院內開打疫苗 說明 : <br>
+                    為第1類至第3類、第5類洗腎患者、第6類孕婦、110年5月9日前接種第一劑者(或距第一劑施打已滿10週)請至「下方表單填寫預約資料」。<br>
+                    依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗。<br>
+                    本院所提供AZ疫苗，時間為周二至周六上午9時至11時。<br>
+                    為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。<br>
+                    本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br>
+                    另外疫苗量不穩定，僅開放7日內預約掛號，若疫苗短缺本院保有取消您掛號的權利，請隨時追蹤本院官網公告。<br>
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
@@ -352,12 +354,13 @@
             data: data1,
             timeout: 3000,
             async: true,
-            beforeSend: function () {
-                $('.modal').modal('show');
-                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
-                $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
-                $("#mf").hide();
-            },
+            //akai 110.07.12暫時移除使用健保API檢核身份類別
+            //beforeSend: function () {
+            //    $('.modal').modal('show');
+            //    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
+            //    $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
+            //    $("#mf").hide();  
+            //},
             success: function (data) {
                 $("#mf").show();
                 if (data.code === "200") {
