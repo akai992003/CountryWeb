@@ -140,10 +140,10 @@ namespace CountryWeb.Controllers
 
                 // if (q.RtnCode == "00" && q.oVaccLstData == "Y")
                 // {
-                    /* 預約成功 */
-                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
-                    result["code"] = "200";
-                    this.ICovid19.NewOne(dto);
+                /* 預約成功 */
+                result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                result["code"] = "200";
+                this.ICovid19.NewOne(dto);
                 // }
                 // else
                 // {
@@ -229,13 +229,20 @@ namespace CountryWeb.Controllers
             };
 
             var q = this.ICovid19.GetOne(dto.id);
+
             if (q != null)
             {
                 result["guid"] = q.guid;
                 result["id"] = q.id;
                 result["name"] = q.name;
                 result["msg"] = string.Format("已預約 {0} - {1} 的時段", q.date2, q.week);
-                if (q.date1 > DateTime.Now)
+                var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                var _date1 = new DateTime(q.date1.Year, q.date1.Month, q.date1.Day, 0, 0, 0);
+                if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
+                {
+                    result["show1"] = 0;
+                }
+                else if (q.date1 > DateTime.Now)
                 {
                     result["show1"] = 1;
                 }

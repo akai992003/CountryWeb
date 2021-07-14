@@ -30,6 +30,7 @@
                     為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。<br>
                     本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br>
                     另外疫苗量不穩定，僅開放7日內預約掛號，若疫苗短缺本院保有取消您掛號的權利，請隨時追蹤本院官網公告。<br>
+                    
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
@@ -183,9 +184,9 @@
                                 @* @{
                                     foreach (var p in ViewBag.ct)
                                     {
-                                        <option value="@p.Id"> @p.Name </option>
+                                    <option value="@p.Id"> @p.Name </option>
                                     }
-                                } *@
+                                    } *@
                             </select>
                         </div>
                     </div>
@@ -430,7 +431,6 @@
                 } else {
                     res = data.msg;
                 }
-
                 if (data.show1 === 1) {
                     localStorage.setItem('guid', data.guid);
                     $('#cancel1').show();
@@ -455,12 +455,12 @@
     // localStorage.getItem('guid')
     function btnCancel() {
         const guid = localStorage.getItem('guid');
-        if (guid === null || guid === undefined || guid === ''){
+        if (guid === null || guid === undefined || guid === '') {
             return;
         }
 
         const pac = {
-            guid:guid
+            guid: guid
         };
 
         const urlp1 = '@ViewBag.uRI' + 'Cancel1';
@@ -475,7 +475,7 @@
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>取消預約');
                 $('.modal-body').html('<p class="m-0">您的預約已取消</p>');
-                 
+
             }, complete: function () {
                 $('#cancelDiv').hide();
                 $('#res').html('');
@@ -486,7 +486,7 @@
                 console.log(textStatus);
             },
         });
-            
+
     }
 
     function rl() {
@@ -496,11 +496,11 @@
     };
 
     $('#back-to-bottom').click(function () {
-        $('html, body').animate({scrollTop: $(document).height()}, 1000);
+        $('html, body').animate({ scrollTop: $(document).height() }, 1000);
     });
 
     $('#div_id').click(function () {
-        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
+        $('html, body').animate({ scrollTop: $(document).height() - 1200 }, 1000);
     });
 </script>
 
