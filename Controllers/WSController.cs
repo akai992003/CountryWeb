@@ -148,7 +148,6 @@ namespace CountryWeb.Controllers
                     #endregion
                 }
 
-
                 if (doChecked == true || dto.idtypes == "6")
                 {
                     /* 預約成功 */

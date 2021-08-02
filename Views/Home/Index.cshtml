@@ -359,16 +359,20 @@
             contentType: contentType,
             dataType: "json",
             data: data1,
-            timeout: 3000,
-            async: true,
+            // echo 110.08.02 , 設成 0 , 永不超時
+            timeout: 0,
+            async: true ,
+            // echo 110.08.02 oepen
             //akai 110.07.12暫時移除使用健保API檢核身份類別
-            //beforeSend: function () {
-            //    $('.modal').modal('show');
-            //    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
-            //    $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
-            //    $("#mf").hide();  
-            //},
+            beforeSend: function () {
+
+                $('.modal').modal('show');
+                $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
+                $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
+                $("#mf").hide();  
+            },
             success: function (data) {
+
                 $("#mf").show();
                 if (data.code === "200") {
                     reload = 1;
@@ -394,6 +398,7 @@
                 };
             },
             error: function (xhr) {
+                console.log('3');
                 console.log('預約錯誤');
                 console.log(xhr);
                 $('.modal').modal('show');
