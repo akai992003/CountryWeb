@@ -130,21 +130,31 @@ namespace CountryWeb.Controllers
                     return result;
                 }
                 #endregion
-                //akai 110.07.12暫時移除使用健保API檢核身份類別
-                //akai 110.08.02 加回api檢核機制。
-                #region call 健保局 api 確認是否有造冊
-                var _dto3 = new dto3();
-                _dto3.id = dto.id;
-                _dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
-                var q = GetVaccLstDataAsync(_dto3).Result;
-                #endregion
 
-                if (q.RtnCode == "00" && q.oVaccLstData == "Y")
+                // Echo 110.08.02 第二劑不需call Api
+                var doChecked = false;
+                if (dto.idtypes != "6")
                 {
-                /* 預約成功 */
-                result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
-                result["code"] = "200";
-                this.ICovid19.NewOne(dto);
+                    //akai 110.07.12暫時移除使用健保API檢核身份類別
+                    //akai 110.08.02 加回api檢核機制。
+                    #region call 健保局 api 確認是否有造冊
+                    var _dto3 = new dto3();
+                    _dto3.id = dto.id;
+                    _dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
+                    var q = GetVaccLstDataAsync(_dto3).Result;
+                    if (q.RtnCode == "00" && q.oVaccLstData == "Y") {
+                        doChecked = true;
+                    }
+                    #endregion
+                }
+
+
+                if (doChecked == true || dto.idtypes == "6")
+                {
+                    /* 預約成功 */
+                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                    result["code"] = "200";
+                    this.ICovid19.NewOne(dto);
                 }
                 else
                 {
