@@ -261,6 +261,46 @@
     let answer2;
     let token;
 
+    // Echo Add on 2021-08-06
+    let vpAZ;
+    let vpMO;
+
+    // Echo Add on 2021-08-06 點下MO之後帶出日期
+    $('#MO').click(function () {
+        console.log('MO');
+        console.log(vpMO);
+        var formoption = "";
+        $.each(vpMO, function (v) {
+            var val1 = vpMO[v].id;
+            var val2 = vpMO[v].head;
+            if (vpMO[v].disabled === true) {
+                formoption += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+
+        });
+        $('#vpid').html(formoption);
+    });
+
+    // Echo Add on 2021-08-06 點下AZ之後帶出日期
+    $('#AZ').click(function () {
+         console.log('AZ');
+        var formoption = "";
+        $.each(vpAZ, function (v) {
+            var val1 = vpAZ[v].id;
+            var val2 = vpAZ[v].head;
+            if (vpAZ[v].disabled === true) {
+                formoption += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+
+        });
+        $('#vpid').html(formoption);
+    });
+
+
     $(document).ready(function () {
         localStorage.removeItem('guid');
 
@@ -280,6 +320,10 @@
                 answer2 = data.answer;
 
                 document.getElementById("security").innerText = ' 安全確認碼: ' + data.security;
+                
+                // Echo Add on 2021-08-06 將日期先放到共用變數裡
+                vpAZ = data.vp1;
+                vpMO = data.vpMo;
 
                 const vp1 = data.vp1;
                 var formoption = "";
@@ -304,9 +348,12 @@
         });
 
     });
-    $('#MO').click(function(){
-        
-    });
+
+    // Echo Add on 2021-08-06 Mark
+    // $('#MO').click(function(){
+    //     
+    // });
+
     $('form').submit(function (e) {
         e.preventDefault();
         localStorage.removeItem('guid');

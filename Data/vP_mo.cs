@@ -73,7 +73,9 @@ namespace CountryWeb.Data
             var l = new List<dtovP2>();
             try
             {
-                var SqlStr = string.Format("execute SP_GetVP");
+                // Echo Add on 2021-08-06 這裡沒改到sp名稱
+                // var SqlStr = string.Format("execute SP_GetVP");
+                var SqlStr = string.Format("execute SP_GetVP_mo");
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
                     var q = cn.Query<dtoVP>(SqlStr);

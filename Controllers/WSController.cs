@@ -19,6 +19,10 @@ namespace CountryWeb.Controllers
     public class WSController : ControllerBase
     {
         private readonly IvPService IvP;
+
+        // Echo Add on 2021-08-06 宣告相依性注入
+        private readonly IvPService_mo IvP_Mo;
+
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
         private readonly JwtHelpers IJwt;
@@ -26,7 +30,9 @@ namespace CountryWeb.Controllers
         private string issuer { get; }
         private string signKey { get; }
 
-        public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
+        public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service
+         // Echo Add on 2021-08-06 加入相依性注入
+         , IvPService_mo IvPService_mo)
         {
             this.IvP = IvPService;
             this.ICovid19 = ICovid19Service;
@@ -35,6 +41,9 @@ namespace CountryWeb.Controllers
             this.issuer = UStore.GetUStore(Iconf["JwtSettings:Issuer"], "Issuer");
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
             this.INHIQP701 = INHIQP701Service;
+
+            // Echo Add on 2021-08-06 使用相依性注入
+            this.IvP_Mo = IvPService_mo;
         }
 
         [HttpPost("~/Fetch")]
@@ -45,15 +54,14 @@ namespace CountryWeb.Controllers
             var SECURITY = sec[0];
             var Answer = sec[1];
 
-            // 預約日期清單
+            // AZ 預約日期清單
             var VP = this.IvP.GetvP1();
             JArray Data1 = new JArray();
             foreach (var p in VP)
             {
-                var J = new JObject { //
-                        { "head", p.head }, //
-                        { "id", p.id.ToString() }, //
-                        
+                var J = new JObject {
+                        { "head", p.head },
+                        { "id", p.id.ToString() },
                     };
 
                 if (p.Fulls == true)
@@ -64,6 +72,24 @@ namespace CountryWeb.Controllers
                 Data1.Add(J);
             }
 
+            // Echo Add on 2021-08-06 莫得那 預約日期清單
+            var MP = this.IvP_Mo.GetvP1();
+            JArray Data_Mo = new JArray();
+            foreach (var p in MP)
+            {
+                var J = new JObject {
+                        { "head", p.head },
+                        { "id", p.id.ToString() },
+                    };
+
+                if (p.Fulls == true)
+                {
+                    J["disabled"] = true;
+                }
+
+                Data_Mo.Add(J);
+            }
+
             // token
             string token = this.IJwt.GenerateToken_3min(issuer, signKey);
             var result = new JObject { // 
@@ -71,6 +97,7 @@ namespace CountryWeb.Controllers
                 { "answer", Answer },
                 { "vp1", Data1 },
                 { "token", token },
+                { "vpMo", Data_Mo }, // Echo Add on 2021-08-06 將莫得那 預約日期清單回傳到前端
             };
 
             return result;
@@ -142,7 +169,8 @@ namespace CountryWeb.Controllers
                     _dto3.id = dto.id;
                     _dto3.sValidSDate = DateTime.Now.ToString("yyyyMMdd");
                     var q = GetVaccLstDataAsync(_dto3).Result;
-                    if (q.RtnCode == "00" && q.oVaccLstData == "Y") {
+                    if (q.RtnCode == "00" && q.oVaccLstData == "Y")
+                    {
                         doChecked = true;
                     }
                     #endregion
