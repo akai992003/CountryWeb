@@ -25,7 +25,7 @@
                 <p style="margin-left: 20px;color: blue;">
 
                     ＊每週一上午10:00開放該週Covid19疫苗接種登記。<br><br>
-                    
+
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
                     本院院內開打疫苗 說明 : <br>
@@ -35,7 +35,7 @@
                     為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。<br>
                     本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br>
                     另外疫苗量不穩定，僅開放7日內預約掛號，若疫苗短缺本院保有取消您掛號的權利，請隨時追蹤本院官網公告。<br>
-                    
+
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
@@ -46,6 +46,8 @@
                     8/3: <a href="https://forms.gle/gjciz9zsMdttJGk47">https://forms.gle/gjciz9zsMdttJGk47</a><br>
                     8/4: <a href="https://forms.gle/59o7s6484NVcPFCu5">https://forms.gle/59o7s6484NVcPFCu5</a> <br>
                     8/5: <a href="https://forms.gle/v6VwLrgqvefqR5ep8">https://forms.gle/v6VwLrgqvefqR5ep8</a> <br>
+                    8/6: <a href="https://forms.gle/da3c1Ab6n6J4CVRU8">https://forms.gle/da3c1Ab6n6J4CVRU8</a> <br>
+                    8/7: <a href="https://forms.gle/GR48tVTCkKuTDr5C8">https://forms.gle/GR48tVTCkKuTDr5C8</a> <br>
                 </p>
                 <div class="row" style="margin-left:1px;">
                     <div class="col-md-6 col-sm-12">
@@ -105,6 +107,15 @@
 
             <br><br>
             <div lass="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                             &nbsp; <label for="label1">疫苗種類 : </label>  &nbsp;
+                            <input type="radio" id="AZ" name = "vaccType" value="AZ" checked id="AZ">AZ  &nbsp;  &nbsp;
+                            <input type="radio" id="MO" name = "vaccType" value="MO" id="MO">Moderna
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -191,7 +202,7 @@
                                 <option value="2"> 第2類 中央及地方政府防疫人員 </option>
                                 <option value="3"> 第3類 高接觸風險第一線工作人員 </option>
                                 @* <option value="4"> 第5類 洗腎患者 </option>
-                                <option value="5"> 第6類 孕婦 </option> *@
+                                    <option value="5"> 第6類 孕婦 </option> *@
                                 <option value="6"> 距第一劑施打已滿10週 </option>
                                 @* @{
                                     foreach (var p in ViewBag.ct)
@@ -293,7 +304,9 @@
         });
 
     });
-
+    $('#MO').click(function(){
+        
+    });
     $('form').submit(function (e) {
         e.preventDefault();
         localStorage.removeItem('guid');
@@ -368,7 +381,7 @@
             data: data1,
             // echo 110.08.02 , 設成 0 , 永不超時
             timeout: 0,
-            async: true ,
+            async: true,
             // echo 110.08.02 oepen
             //akai 110.07.12暫時移除使用健保API檢核身份類別
             beforeSend: function () {
@@ -376,7 +389,7 @@
                 $('.modal').modal('show');
                 $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份檢核中');
                 $('.modal-body').html('<p class="m-0">身份類別確認中</p>');
-                $("#mf").hide();  
+                $("#mf").hide();
             },
             success: function (data) {
 
