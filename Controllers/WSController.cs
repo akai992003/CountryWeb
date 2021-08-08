@@ -20,7 +20,7 @@ namespace CountryWeb.Controllers
     {
         private readonly IvPService IvP;
 
-        // Echo Add on 2021-08-06 宣告相依性注入
+        // Echo 2021-08-06 宣告相依性注入
         private readonly IvPService_mo IvP_Mo;
 
         private readonly ICovid19Service ICovid19;
@@ -31,7 +31,7 @@ namespace CountryWeb.Controllers
         private string signKey { get; }
 
         public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service
-         // Echo Add on 2021-08-06 加入相依性注入
+         // Echo 2021-08-06 加入相依性注入
          , IvPService_mo IvPService_mo)
         {
             this.IvP = IvPService;
@@ -42,7 +42,7 @@ namespace CountryWeb.Controllers
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
             this.INHIQP701 = INHIQP701Service;
 
-            // Echo Add on 2021-08-06 使用相依性注入
+            // Echo 2021-08-06 使用相依性注入
             this.IvP_Mo = IvPService_mo;
         }
 
@@ -72,7 +72,7 @@ namespace CountryWeb.Controllers
                 Data1.Add(J);
             }
 
-            // Echo Add on 2021-08-06 莫得那 預約日期清單
+            // Echo 2021-08-06 莫得那 預約日期清單
             var MP = this.IvP_Mo.GetvP1();
             JArray Data_Mo = new JArray();
             foreach (var p in MP)
@@ -97,7 +97,7 @@ namespace CountryWeb.Controllers
                 { "answer", Answer },
                 { "vp1", Data1 },
                 { "token", token },
-                { "vpMo", Data_Mo }, // Echo Add on 2021-08-06 將莫得那 預約日期清單回傳到前端
+                { "vpMo", Data_Mo }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
             };
 
             return result;
@@ -112,6 +112,8 @@ namespace CountryWeb.Controllers
                 { "msg", "" },
                 { "code", "300" }, // 
             };
+            var dateS = "";
+            var weekS = "";
 
             /* 5分鐘時效*/
             if (currentUser.HasClaim(c => c.Type == "DateOfJoing"))
@@ -129,33 +131,70 @@ namespace CountryWeb.Controllers
                 }
                 #endregion
 
+                // * Echo 2021-08-08 判斷疫苗種類
                 #region 可能會額滿
-                var vP2 = this.IvP.GetvP2(dto.vpid);
-                if (vP2 == null)
+                if (dto.vptype == "1")
                 {
-                    result["msg"] = "不正確的操作方式";
-                    result["code"] = "600";
-                    return result;
+                    var vP2 = this.IvP.GetvP2(dto.vpid);
+                    if (vP2 == null)
+                    {
+                        result["msg"] = "不正確的操作方式";
+                        result["code"] = "600";
+                        return result;
+                    }
+                    if (vP2.cnt2 >= vP2.cnt)
+                    {
+                        // 已額滿
+                        result["msg"] = string.Format("{0} {1} 已額滿", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                        result["code"] = "400";
+                        return result;
+                    }
 
+                    dateS = vP2.date1.ToString("yyyy-MM-dd");
+                    weekS = vP2.week;
+                }
+                else if (dto.vptype == "2")
+                {
+                    var vP2 = this.IvP_Mo.GetvP2(dto.vpid);
+                    if (vP2 == null)
+                    {
+                        result["msg"] = "不正確的操作方式";
+                        result["code"] = "600";
+                        return result;
+                    }
+                    if (vP2.cnt2 >= vP2.cnt)
+                    {
+                        // 已額滿
+                        result["msg"] = string.Format("{0} {1} 已額滿", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                        result["code"] = "400";
+                        return result;
+                    }
+
+                    dateS = vP2.date1.ToString("yyyy-MM-dd");
+                    weekS = vP2.week;
                 }
 
-                if (vP2.cnt2 >= vP2.cnt)
-                {
-                    // 已額滿
-                    result["msg"] = string.Format("{0} {1} 已額滿", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
-                    result["code"] = "400";
-                    return result;
-                }
                 #endregion
 
+                // * Echo 2021-08-08 判斷疫苗種類
                 #region 已預約過的不可再預約
-                var cod = this.ICovid19.GetOne(dto.id);
+
+                var cod = this.ICovid19.GetOneAZ(dto.id);
                 if (cod != null)
                 {
-                    result["msg"] = string.Format("您已預約 {0} - {1} 的時段", cod.date2, cod.week); ;
+                    result["msg"] = string.Format("您已預約AZ {0} - {1} 的時段", cod.date2, cod.week); ;
                     result["code"] = "500";
                     return result;
                 }
+
+                var codMO = this.ICovid19.GetOneMO(dto.id);
+                if (codMO != null)
+                {
+                    result["msg"] = string.Format("您已預約默德納 {0} - {1} 的時段", codMO.date2, codMO.week); ;
+                    result["code"] = "500";
+                    return result;
+                }
+
                 #endregion
 
                 // Echo 110.08.02 第二劑不需call Api
@@ -179,9 +218,18 @@ namespace CountryWeb.Controllers
                 if (doChecked == true || dto.idtypes == "6")
                 {
                     /* 預約成功 */
-                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
+                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", dateS, weekS);
                     result["code"] = "200";
-                    this.ICovid19.NewOne(dto);
+                    if (dto.vptype == "1")
+                    {
+                        this.ICovid19.NewOneAZ(dto);
+                    }
+                    else
+                    {
+                        this.ICovid19.NewOneMO(dto);
+
+                    }
+
                 }
                 else
                 {
@@ -266,7 +314,7 @@ namespace CountryWeb.Controllers
                 { "msg", "" },
             };
 
-            var q = this.ICovid19.GetOne(dto.id);
+            var q = this.ICovid19.GetOneAZ(dto.id);
 
             if (q != null)
             {
@@ -307,7 +355,7 @@ namespace CountryWeb.Controllers
                 { "msg", "" },
             };
 
-            this.ICovid19.CancelOne(dto.guid);
+            this.ICovid19.CancelOneAZ(dto.guid);
 
             return result;
         }

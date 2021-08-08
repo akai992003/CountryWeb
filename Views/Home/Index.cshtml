@@ -110,9 +110,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                             &nbsp; <label for="label1">疫苗種類 : </label>  &nbsp;
-                            <input type="radio" id="AZ" name = "vaccType" value="AZ" checked id="AZ">AZ  &nbsp;  &nbsp;
-                            <input type="radio" id="MO" name = "vaccType" value="MO" id="MO">Moderna
+                            &nbsp; <label for="label1">疫苗種類 : </label> &nbsp;
+                            <input type="radio" id="AZ" name="vaccType" value="AZ" checked id="AZ">AZ &nbsp; &nbsp;
+                            <input type="radio" id="MO" name="vaccType" value="MO" id="MO">Moderna
                         </div>
                     </div>
                 </div>
@@ -265,10 +265,13 @@
     let vpAZ;
     let vpMO;
 
+    // Echo 2021-08-08 Add
+    let vptype = '1';
+
     // Echo Add on 2021-08-06 點下MO之後帶出日期
     $('#MO').click(function () {
-        console.log('MO');
-        console.log(vpMO);
+        // Echo 2021-08-08 Add
+        vptype = '2';
         var formoption = "";
         $.each(vpMO, function (v) {
             var val1 = vpMO[v].id;
@@ -285,8 +288,8 @@
 
     // Echo Add on 2021-08-06 點下AZ之後帶出日期
     $('#AZ').click(function () {
-         console.log('AZ');
-        var formoption = "";
+        // Echo 2021-08-08 Add
+        vptype = '1';
         $.each(vpAZ, function (v) {
             var val1 = vpAZ[v].id;
             var val2 = vpAZ[v].head;
@@ -295,11 +298,9 @@
             } else {
                 formoption += "<option value='" + val1 + "'>" + val2 + "</option>";
             }
-
         });
         $('#vpid').html(formoption);
     });
-
 
     $(document).ready(function () {
         localStorage.removeItem('guid');
@@ -320,7 +321,7 @@
                 answer2 = data.answer;
 
                 document.getElementById("security").innerText = ' 安全確認碼: ' + data.security;
-                
+
                 // Echo Add on 2021-08-06 將日期先放到共用變數裡
                 vpAZ = data.vp1;
                 vpMO = data.vpMo;
@@ -412,6 +413,7 @@
             "addr_city": $('#addr_city').val(),
             "addr_detal": $('#addr_detal').val(),
             "idtypes": $('#idtypes').val(),
+            "vptype": vptype // Echo 2021-08-08 Add
         }
 
         const data1 = JSON.stringify(pa);
@@ -574,11 +576,11 @@
     };
 
     $('#back-to-bottom').click(function () {
-        $('html, body').animate({ scrollTop: $(document).height() }, 1000);
+        $('html, body').animate({scrollTop: $(document).height()}, 1000);
     });
 
     $('#div_id').click(function () {
-        $('html, body').animate({ scrollTop: $(document).height() - 1200 }, 1000);
+        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
     });
 </script>
 

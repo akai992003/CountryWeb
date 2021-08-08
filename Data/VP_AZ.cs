@@ -11,7 +11,7 @@ using Dapper;
 
 namespace CountryWeb.Data
 {
-    public class VP
+    public class VP_AZ
     {
         [Key]
         public int Id { get; set; }
@@ -91,7 +91,8 @@ namespace CountryWeb.Data
             var l = new List<dtovP2>();
             try
             {
-                var SqlStr = string.Format("execute SP_GetVP");
+                // * Echo 2021-08-08 Rename SP
+                var SqlStr = string.Format("execute SP_GetVPAZ");
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
                     var q = cn.Query<dtoVP>(SqlStr);
@@ -143,7 +144,8 @@ namespace CountryWeb.Data
             }
             try
             {
-                var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
+                // * Echo 2021-08-08 Rename SP
+                var SqlStr = string.Format("execute SP_GetVPAZCnt {0}", id);
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
                     var q = cn.Query<dtoVP>(SqlStr);

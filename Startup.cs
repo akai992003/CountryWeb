@@ -53,7 +53,7 @@ namespace CountryWeb
             services.AddScoped<ICovid19Service, Covid19Service>();
             services.AddScoped<INHIQP701Service, NHIQP701Service>();
 
-            // Echo Add on 2021-08-06 使用相依性注入
+            // Echo 2021-08-06 使用相依性注入
             services.AddScoped<IvPService_mo, vPService_mo>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

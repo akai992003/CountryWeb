@@ -8,7 +8,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace CountryWeb.Data
 {
-    public class Covid19
+    // * Echo 2021-08-08 Rename
+    public class Covid19_AZ
     {
         [Key]
         public Guid Guid { get; set; }
@@ -21,6 +22,26 @@ namespace CountryWeb.Data
         public string Addr_detal { get; set; }
         public int VPId { get; set; }
         public int Idtypes { get; set; }
+
+        // * Echo 2021-08-08 新增結構
+        public DateTime CreateTime { get; set; }
+    }
+
+    // * Echo 2021-08-08 Add
+    public class Covid19_MO
+    {
+        [Key]
+        public Guid Guid { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Birthday { get; set; }
+        public string Phone { get; set; }
+        public string Addr_country { get; set; }
+        public string Addr_city { get; set; }
+        public string Addr_detal { get; set; }
+        public int VPId { get; set; }
+        public int Idtypes { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 
     public class A2E
@@ -51,6 +72,9 @@ namespace CountryWeb.Data
         public string addr_city { get; set; }
         public string addr_detal { get; set; }
         public string idtypes { get; set; }
+
+        // * Echo 2021-08-08 Add
+        public string vptype { get; set; } // 疫苗種類 1=AZ , 2=MO
     }
 
     public class dtoA2E
@@ -94,17 +118,34 @@ namespace CountryWeb.Data
         /// <summary>
         /// 新增疫苗預約
         /// </summary>
-        Task NewOne(dtoCovid19 dto);
+        Task NewOneAZ(dtoCovid19 dto);
 
         /// <summary>
         /// 判斷是否有預約疫苗
         /// </summary>
-        dtoCovid19VIP GetOne(string id);
+        dtoCovid19VIP GetOneAZ(string id);
 
         /// <summary>
         /// 取消疫苗預約
         /// </summary>
-        void CancelOne(Guid guid);
+        void CancelOneAZ(Guid guid);
+
+        // * Echo 2021-08-08 Add
+        #region MO
+        /// <summary>
+        /// 新增疫苗預約MO
+        /// </summary>
+        Task NewOneMO(dtoCovid19 dto);
+
+        /// <summary>
+        /// 判斷是否有預約疫苗MO
+        /// </summary>
+        dtoCovid19VIP GetOneMO(string id);
+        /// <summary>
+        /// 取消疫苗預約MO
+        /// </summary>
+        void CancelOneMO(Guid guid);
+        #endregion
 
         /// <summary>
         /// 是否殘劑預約
@@ -139,12 +180,14 @@ namespace CountryWeb.Data
             }
         }
 
+        // * Echo 2021-08-08 改名AZ
+        #region AZ
         /// <summary>
         /// 新增疫苗預約
         /// </summary>
-        public async Task NewOne(dtoCovid19 dto)
+        public async Task NewOneAZ(dtoCovid19 dto)
         {
-            var d = new Covid19();
+            var d = new Covid19_AZ();
             d.Guid = Guid.NewGuid();
             d.Id = dto.id;
             d.Name = dto.name;
@@ -156,24 +199,24 @@ namespace CountryWeb.Data
             d.Phone = dto.phone;
             d.VPId = int.Parse(dto.vpid);
             d.Idtypes = int.Parse(dto.idtypes);
+            d.CreateTime = DateTime.Now; // echo
 
             using (var context = new TgContext())
             {
-                await context.Covid19.AddAsync(d);
+                await context.Covid19_AZ.AddAsync(d);
                 await context.SaveChangesAsync();
             }
         }
 
-
         /// <summary>
         /// 判斷是否有預約疫苗
         /// </summary>
-        public dtoCovid19VIP GetOne(string id)
+        public dtoCovid19VIP GetOneAZ(string id)
         {
             using (var context = new TgContext())
             {
-                var q = (from p in context.Covid19
-                         join p2 in context.VP on p.VPId equals p2.Id
+                var q = (from p in context.Covid19_AZ
+                         join p2 in context.VP_AZ on p.VPId equals p2.Id
                          where p.Id == id
                          && p.VPId > 0
                          select new dtoCovid19VIP
@@ -202,19 +245,106 @@ namespace CountryWeb.Data
         /// <summary>
         /// 取消疫苗預約
         /// </summary>
-        public void CancelOne(Guid guid)
+        public void CancelOneAZ(Guid guid)
         {
             using (var context = new TgContext())
             {
-                var q = context.Covid19.Find(guid);
+                var q = context.Covid19_AZ.Find(guid);
                 if (q != null)
                 {
-                    context.Covid19.Attach(q);
+                    context.Covid19_AZ.Attach(q);
                     q.VPId = 0;
+                    q.CreateTime = DateTime.Now; // * Echo 2021-08-08 Add
                     context.SaveChanges();
                 }
             }
         }
+
+        #endregion
+
+        // * Echo 2021-08-08 新增MO段
+        #region MO
+        /// <summary>
+        /// 新增疫苗預約MO
+        /// </summary>
+        public async Task NewOneMO(dtoCovid19 dto)
+        {
+            var d = new Covid19_MO();
+            d.Guid = Guid.NewGuid();
+            d.Id = dto.id;
+            d.Name = dto.name;
+            var bir = new DateTime(int.Parse(dto.birthday_year), int.Parse(dto.birthday_month), int.Parse(dto.birthday_day), 0, 0, 0);
+            d.Birthday = bir.ToString("yyyyMMdd");
+            d.Addr_country = dto.addr_country;
+            d.Addr_city = dto.addr_city;
+            d.Addr_detal = dto.addr_detal;
+            d.Phone = dto.phone;
+            d.VPId = int.Parse(dto.vpid);
+            d.Idtypes = int.Parse(dto.idtypes);
+            d.CreateTime = DateTime.Now;
+
+            using (var context = new TgContext())
+            {
+                await context.Covid19_MO.AddAsync(d);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// 判斷是否有預約疫苗
+        /// </summary>
+        public dtoCovid19VIP GetOneMO(string id)
+        {
+            using (var context = new TgContext())
+            {
+                var q = (from p in context.Covid19_MO
+                         join p2 in context.VP_MO on p.VPId equals p2.Id
+                         where p.Id == id
+                         && p.VPId > 0
+                         select new dtoCovid19VIP
+                         {
+                             guid = p.Guid,
+                             id = p.Id,
+                             name = p.Name,
+                             date1 = p2.Date1,
+                             date2 = p2.Date1.ToString("yyyy-MM-dd"),
+                             week = p2.Week
+                         }).FirstOrDefault();
+                if (q != null)
+                {
+                    // 已預約
+                    return q;
+                    // return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 取消疫苗預約
+        /// </summary>
+        public void CancelOneMO(Guid guid)
+        {
+            using (var context = new TgContext())
+            {
+                var q = context.Covid19_MO.Find(guid);
+                if (q != null)
+                {
+                    context.Covid19_MO.Attach(q);
+                    q.VPId = 0;
+                    q.CreateTime = DateTime.Now;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        #endregion
+
+        #region 殘劑
 
         /// <summary>
         /// 新增殘劑預約
@@ -282,6 +412,8 @@ namespace CountryWeb.Data
                 }
             }
         }
+
+        #endregion
 
 
     }

@@ -11,7 +11,7 @@ using Dapper;
 
 namespace CountryWeb.Data
 {
-    public class vP_mo
+    public class VP_MO
     {
         [Key]
         public int Id { get; set; }
@@ -74,8 +74,8 @@ namespace CountryWeb.Data
             try
             {
                 // Echo Add on 2021-08-06 這裡沒改到sp名稱
-                // var SqlStr = string.Format("execute SP_GetVP");
-                var SqlStr = string.Format("execute SP_GetVP_mo");
+                // * Echo 2021-08-08 Rename SP
+                var SqlStr = string.Format("execute SP_GetVPMO");
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
                     var q = cn.Query<dtoVP>(SqlStr);
@@ -127,7 +127,7 @@ namespace CountryWeb.Data
             }
             try
             {
-                var SqlStr = string.Format("execute SP_GetvP2 {0}", id);
+                var SqlStr = string.Format("execute SP_GetVPMOCnt {0}", id);
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
                     var q = cn.Query<dtoVP>(SqlStr);
