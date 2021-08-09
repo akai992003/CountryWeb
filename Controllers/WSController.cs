@@ -18,10 +18,7 @@ namespace CountryWeb.Controllers
     [EnableCors("CorsDomain")]
     public class WSController : ControllerBase
     {
-        private readonly IVPAZService IvP;
-
-        // Echo 2021-08-06 宣告相依性注入
-        private readonly IVPMOService IvP_Mo;
+        private readonly IVPService IVP;
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
         private readonly JwtHelpers IJwt;
@@ -29,11 +26,9 @@ namespace CountryWeb.Controllers
         private string issuer { get; }
         private string signKey { get; }
 
-        public WSController(IVPAZService IVPAZService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service
-         // Echo 2021-08-06 加入相依性注入
-         , IVPMOService IVPMOService)
+        public WSController(IVPService IVPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
-            this.IvP = IVPAZService;
+            this.IVP = IVPService;
             this.ICovid19 = ICovid19Service;
             this.IJwt = JwtHelpers;
             this.Iconf = Configuration;
@@ -41,20 +36,22 @@ namespace CountryWeb.Controllers
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
             this.INHIQP701 = INHIQP701Service;
 
-            // Echo 2021-08-06 使用相依性注入
-            this.IvP_Mo = IVPMOService;
         }
 
         [HttpPost("~/Fetch")]
         public JObject Fetch()
         {
-            // 安全驗證碼
+            #region 安全驗證碼
+
             var sec = SecurityModule.CreateRecaptchaString();
             var SECURITY = sec[0];
             var Answer = sec[1];
 
-            // AZ 預約日期清單
-            var VP = this.IvP.GetvP1();
+            #endregion
+
+            #region AZ預約日期清單
+            
+            var VP = this.IVP.GetVPAZ1();
             JArray Data1 = new JArray();
             foreach (var p in VP)
             {
@@ -71,8 +68,12 @@ namespace CountryWeb.Controllers
                 Data1.Add(J);
             }
 
+            #endregion
+
             // Echo 2021-08-06 莫得那 預約日期清單
-            var MP = this.IvP_Mo.GetvP1();
+            #region Moderna預約日期清單
+
+            var MP = this.IVP.GetVPMO1();
             JArray Data_Mo = new JArray();
             foreach (var p in MP)
             {
@@ -89,7 +90,10 @@ namespace CountryWeb.Controllers
                 Data_Mo.Add(J);
             }
 
-            // token
+            #endregion
+
+            #region token
+
             string token = this.IJwt.GenerateToken_3min(issuer, signKey);
             var result = new JObject { // 
                 { "security", SECURITY },
@@ -98,6 +102,8 @@ namespace CountryWeb.Controllers
                 { "token", token },
                 { "vpMo", Data_Mo }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
             };
+
+            #endregion
 
             return result;
         }
@@ -134,7 +140,7 @@ namespace CountryWeb.Controllers
                 #region 可能會額滿
                 if (dto.vptype == "1")
                 {
-                    var vP2 = this.IvP.GetvP2(dto.vpid);
+                    var vP2 = this.IVP.GetVPAZ2(dto.vpid);
                     if (vP2 == null)
                     {
                         result["msg"] = "不正確的操作方式";
@@ -154,7 +160,7 @@ namespace CountryWeb.Controllers
                 }
                 else if (dto.vptype == "2")
                 {
-                    var vP2 = this.IvP_Mo.GetvP2(dto.vpid);
+                    var vP2 = this.IVP.GetVPMO2(dto.vpid);
                     if (vP2 == null)
                     {
                         result["msg"] = "不正確的操作方式";
@@ -181,7 +187,7 @@ namespace CountryWeb.Controllers
                 var cod = this.ICovid19.GetOneAZ(dto.id);
                 if (cod != null)
                 {
-                    result["msg"] = string.Format("您已預約AZ {0} - {1} 的時段", cod.date2, cod.week); ;
+                    result["msg"] = string.Format("您已預約 AZ {0} - {1} 的時段", cod.date2, cod.week); ;
                     result["code"] = "500";
                     return result;
                 }
@@ -189,7 +195,7 @@ namespace CountryWeb.Controllers
                 var codMO = this.ICovid19.GetOneMO(dto.id);
                 if (codMO != null)
                 {
-                    result["msg"] = string.Format("您已預約默德納 {0} - {1} 的時段", codMO.date2, codMO.week); ;
+                    result["msg"] = string.Format("您已預約 Moderna {0} - {1} 的時段", codMO.date2, codMO.week); ;
                     result["code"] = "500";
                     return result;
                 }
@@ -197,6 +203,7 @@ namespace CountryWeb.Controllers
                 #endregion
 
                 // Echo 110.08.02 第二劑不需call Api
+                #region 第二劑
                 var doChecked = false;
                 if (dto.idtypes != "6")
                 {
@@ -213,6 +220,7 @@ namespace CountryWeb.Controllers
                     }
                     #endregion
                 }
+                #endregion
 
                 if (doChecked == true || dto.idtypes == "6")
                 {
@@ -228,7 +236,6 @@ namespace CountryWeb.Controllers
                         this.ICovid19.NewOneMO(dto);
 
                     }
-
                 }
                 else
                 {
@@ -319,7 +326,7 @@ namespace CountryWeb.Controllers
                 result["guid"] = qAZ.guid;
                 result["id"] = qAZ.id;
                 result["name"] = qAZ.name;
-                result["msg"] = string.Format("已預約AZ {0} - {1} 的時段", qAZ.date2, qAZ.week);
+                result["msg"] = string.Format("已預約 AZ {0} - {1} 的時段", qAZ.date2, qAZ.week);
                 var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 var _date1 = new DateTime(qAZ.date1.Year, qAZ.date1.Month, qAZ.date1.Day, 0, 0, 0);
                 if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
@@ -346,7 +353,7 @@ namespace CountryWeb.Controllers
                 result["guid"] = qMo.guid;
                 result["id"] = qMo.id;
                 result["name"] = qMo.name;
-                result["msg"] = string.Format("已預約Moderna {0} - {1} 的時段", qMo.date2, qMo.week);
+                result["msg"] = string.Format("已預約 Moderna {0} - {1} 的時段", qMo.date2, qMo.week);
                 var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 var _date1 = new DateTime(qMo.date1.Year, qMo.date1.Month, qMo.date1.Day, 0, 0, 0);
                 if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
@@ -380,6 +387,9 @@ namespace CountryWeb.Controllers
             };
 
             this.ICovid19.CancelOneAZ(dto.guid);
+
+            // Echo 2021-08-09 取消莫得那預約
+            this.ICovid19.CancelOneMO(dto.guid);
 
             return result;
         }

@@ -22,15 +22,16 @@ namespace CountryWeb.Controllers
         private string uRI { get; }
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
-        private readonly IVPAZService IvP;
+        private readonly IVPService IvP;
 
-        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service,INHIQP701Service INHIQP701Service,IVPAZService IVPAZService)
+        public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service
+        , INHIQP701Service INHIQP701Service, IVPService IVPService)
         {
             this.Iconf = Configuration;
             this.uRI = UStore.GetUStore(Iconf["ConnectionStrings:uRI"], "uRI");
             this.ICovid19 = ICovid19Service;
             this.INHIQP701 = INHIQP701Service;
-            this.IvP = IVPAZService;
+            this.IvP = IVPService;
         }
 
         public IActionResult A2E()

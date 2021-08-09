@@ -35,7 +35,6 @@ namespace CountryWeb.Data
         // * Echo 2021-08-08 Add
         public DbSet<Covid19_MO> Covid19_MO { get; set; }
         public DbSet<VP_MO> VP_MO { get; set; }
-
         public DbSet<VPCategory> VPCategory { get; set; }
         public DbSet<A2E> A2E { get; set; }
         public DbSet<NHIQP701> NHIQP701 { get; set; }

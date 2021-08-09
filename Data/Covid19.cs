@@ -115,51 +115,35 @@ namespace CountryWeb.Data
 
     public interface ICovid19Service
     {
-        /// <summary>
-        /// 新增疫苗預約
-        /// </summary>
+
+        // 新增AZ疫苗預約
         Task NewOneAZ(dtoCovid19 dto);
 
-        /// <summary>
-        /// 判斷是否有預約疫苗
-        /// </summary>
+        // 判斷是否有預約AZ疫苗
         dtoCovid19VIP GetOneAZ(string id);
 
-        /// <summary>
-        /// 取消疫苗預約
-        /// </summary>
+        // 取消AZ疫苗預約
         void CancelOneAZ(Guid guid);
 
         // * Echo 2021-08-08 Add
-        #region MO
-        /// <summary>
-        /// 新增疫苗預約MO
-        /// </summary>
+        #region Moderna
+        // 新增Moderna疫苗預約
         Task NewOneMO(dtoCovid19 dto);
 
-        /// <summary>
-        /// 判斷是否有預約疫苗MO
-        /// </summary>
+        // 判斷是否有預約Moderna疫苗
         dtoCovid19VIP GetOneMO(string id);
-        /// <summary>
-        /// 取消疫苗預約MO
-        /// </summary>
+
+        // 取消Moderna疫苗預約
         void CancelOneMO(Guid guid);
         #endregion
 
-        /// <summary>
-        /// 是否殘劑預約
-        /// </summary>
+        // 是否殘劑預約
         string GetA2E(string id);
 
-        /// <summary>
-        /// 新增殘劑預約
-        /// </summary>
+        // 新增殘劑預約
         Task NewA2E(dtoA2E dto);
 
-        /// <summary>
-        /// 殘劑預約人數
-        /// </summary>
+        // 殘劑預約人數
         int GetA2ECnt();
     }
 
@@ -182,9 +166,7 @@ namespace CountryWeb.Data
 
         // * Echo 2021-08-08 改名AZ
         #region AZ
-        /// <summary>
-        /// 新增疫苗預約
-        /// </summary>
+        // 新增疫苗預約
         public async Task NewOneAZ(dtoCovid19 dto)
         {
             var d = new Covid19_AZ();
@@ -208,9 +190,7 @@ namespace CountryWeb.Data
             }
         }
 
-        /// <summary>
-        /// 判斷是否有預約疫苗
-        /// </summary>
+        // 判斷是否有預約AZ疫苗
         public dtoCovid19VIP GetOneAZ(string id)
         {
             using (var context = new TgContext())
@@ -242,9 +222,7 @@ namespace CountryWeb.Data
 
         }
 
-        /// <summary>
-        /// 取消疫苗預約
-        /// </summary>
+        // 取消AZ疫苗預約
         public void CancelOneAZ(Guid guid)
         {
             using (var context = new TgContext())
@@ -262,11 +240,10 @@ namespace CountryWeb.Data
 
         #endregion
 
-        // * Echo 2021-08-08 新增MO段
-        #region MO
-        /// <summary>
-        /// 新增疫苗預約MO
-        /// </summary>
+        // * Echo 2021-08-08 新增Moderna段
+        #region Moderna
+
+        // 新增Moderna疫苗預約
         public async Task NewOneMO(dtoCovid19 dto)
         {
             var d = new Covid19_MO();
@@ -290,9 +267,7 @@ namespace CountryWeb.Data
             }
         }
 
-        /// <summary>
-        /// 判斷是否有預約疫苗
-        /// </summary>
+        // 判斷是否有預約Moderna疫苗
         public dtoCovid19VIP GetOneMO(string id)
         {
             using (var context = new TgContext())
@@ -324,9 +299,7 @@ namespace CountryWeb.Data
 
         }
 
-        /// <summary>
-        /// 取消疫苗預約
-        /// </summary>
+        // 取消Moderna疫苗預約
         public void CancelOneMO(Guid guid)
         {
             using (var context = new TgContext())
@@ -346,9 +319,7 @@ namespace CountryWeb.Data
 
         #region 殘劑
 
-        /// <summary>
-        /// 新增殘劑預約
-        /// </summary>
+        // 新增殘劑預約
         public async Task NewA2E(dtoA2E dto)
         {
             var d = new A2E();
@@ -369,9 +340,7 @@ namespace CountryWeb.Data
             }
         }
 
-        /// <summary>
-        /// 是否殘劑預約
-        /// </summary>
+        // 是否殘劑預約
         public string GetA2E(string id)
         {
             using (var context = new TgContext())
@@ -391,9 +360,7 @@ namespace CountryWeb.Data
             }
         }
 
-        /// <summary>
-        /// 殘劑預約人數
-        /// </summary>
+        // 殘劑預約人數
         public int GetA2ECnt()
         {
             using (var context = new TgContext())

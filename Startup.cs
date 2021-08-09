@@ -49,12 +49,9 @@ namespace CountryWeb
                 options.UseSqlServer(connRoot);
             });
             services.AddScoped<InewsListsService, newsListsService>();
-            services.AddScoped<IVPAZService, VPAZService>();
+            services.AddScoped<IVPService, IVPService>();
             services.AddScoped<ICovid19Service, Covid19Service>();
             services.AddScoped<INHIQP701Service, NHIQP701Service>();
-
-            // Echo 2021-08-06 使用相依性注入
-            services.AddScoped<IVPMOService, VPMOService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //* get IP */
