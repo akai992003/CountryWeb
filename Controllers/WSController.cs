@@ -346,7 +346,7 @@ namespace CountryWeb.Controllers
                 result["guid"] = qMo.guid;
                 result["id"] = qMo.id;
                 result["name"] = qMo.name;
-                result["msg"] = string.Format("已預約莫得那 {0} - {1} 的時段", qMo.date2, qMo.week);
+                result["msg"] = string.Format("已預約Moderna {0} - {1} 的時段", qMo.date2, qMo.week);
                 var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 var _date1 = new DateTime(qMo.date1.Year, qMo.date1.Month, qMo.date1.Day, 0, 0, 0);
                 if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
