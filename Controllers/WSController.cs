@@ -18,11 +18,10 @@ namespace CountryWeb.Controllers
     [EnableCors("CorsDomain")]
     public class WSController : ControllerBase
     {
-        private readonly IvPService IvP;
+        private readonly IVPAZService IvP;
 
         // Echo 2021-08-06 宣告相依性注入
-        private readonly IvPService_mo IvP_Mo;
-
+        private readonly IVPMOService IvP_Mo;
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
         private readonly JwtHelpers IJwt;
@@ -30,11 +29,11 @@ namespace CountryWeb.Controllers
         private string issuer { get; }
         private string signKey { get; }
 
-        public WSController(IvPService IvPService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service
+        public WSController(IVPAZService IVPAZService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service
          // Echo 2021-08-06 加入相依性注入
-         , IvPService_mo IvPService_mo)
+         , IVPMOService IVPMOService)
         {
-            this.IvP = IvPService;
+            this.IvP = IVPAZService;
             this.ICovid19 = ICovid19Service;
             this.IJwt = JwtHelpers;
             this.Iconf = Configuration;
@@ -43,7 +42,7 @@ namespace CountryWeb.Controllers
             this.INHIQP701 = INHIQP701Service;
 
             // Echo 2021-08-06 使用相依性注入
-            this.IvP_Mo = IvPService_mo;
+            this.IvP_Mo = IVPMOService;
         }
 
         [HttpPost("~/Fetch")]
@@ -314,21 +313,20 @@ namespace CountryWeb.Controllers
                 { "msg", "" },
             };
 
-            var q = this.ICovid19.GetOneAZ(dto.id);
-
-            if (q != null)
+            var qAZ = this.ICovid19.GetOneAZ(dto.id);
+            if (qAZ != null)
             {
-                result["guid"] = q.guid;
-                result["id"] = q.id;
-                result["name"] = q.name;
-                result["msg"] = string.Format("已預約 {0} - {1} 的時段", q.date2, q.week);
+                result["guid"] = qAZ.guid;
+                result["id"] = qAZ.id;
+                result["name"] = qAZ.name;
+                result["msg"] = string.Format("已預約AZ {0} - {1} 的時段", qAZ.date2, qAZ.week);
                 var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                var _date1 = new DateTime(q.date1.Year, q.date1.Month, q.date1.Day, 0, 0, 0);
+                var _date1 = new DateTime(qAZ.date1.Year, qAZ.date1.Month, qAZ.date1.Day, 0, 0, 0);
                 if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
                 {
                     result["show1"] = 0;
                 }
-                else if (q.date1 > DateTime.Now)
+                else if (qAZ.date1 > DateTime.Now)
                 {
                     result["show1"] = 1;
                 }
@@ -337,15 +335,41 @@ namespace CountryWeb.Controllers
                     result["show1"] = 0;
                 }
                 result["idcod"] = 1;
-            }
-            else
-            {
-                result["idcod"] = 0;
-                result["msg"] = "查無紀錄";
-                result["show1"] = 0;
+
+                return result;
             }
 
+            // Echo 2021-08-09 Add
+            var qMo = this.ICovid19.GetOneMO(dto.id);
+            if (qMo != null)
+            {
+                result["guid"] = qMo.guid;
+                result["id"] = qMo.id;
+                result["name"] = qMo.name;
+                result["msg"] = string.Format("已預約莫得那 {0} - {1} 的時段", qMo.date2, qMo.week);
+                var dNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                var _date1 = new DateTime(qMo.date1.Year, qMo.date1.Month, qMo.date1.Day, 0, 0, 0);
+                if (_date1 == dNow.AddDays(1) && DateTime.Now.Hour > 15)
+                {
+                    result["show1"] = 0;
+                }
+                else if (qMo.date1 > DateTime.Now)
+                {
+                    result["show1"] = 1;
+                }
+                else
+                {
+                    result["show1"] = 0;
+                }
+                result["idcod"] = 1;
+                return result;
+            }
+
+            result["idcod"] = 0;
+            result["msg"] = "查無紀錄";
+            result["show1"] = 0;
             return result;
+
         }
 
         [HttpPost("~/Cancel1")]

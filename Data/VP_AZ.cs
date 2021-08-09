@@ -29,7 +29,7 @@ namespace CountryWeb.Data
         public int deleted { get; set; }
     }
 
-    public class dtoVP
+    public class dtoVPAZ
     {
         public int id { get; set; }
         public string head { get; set; }
@@ -37,27 +37,26 @@ namespace CountryWeb.Data
         public string week { get; set; }
         public int cnt { get; set; }
         public int cnt2 { get; set; }
-
     }
 
-    public class dtovP2
+    public class dtoVP2AZ
     {
         public int id { get; set; }
         public string head { get; set; }
         public bool Fulls { get; set; }
     }
 
-    public interface IvPService
+    public interface IVPAZService
     {
         /// <summary>
         /// 取得預約日期列表
         /// </summary>
-        List<dtovP2> GetvP1();
+        List<dtoVP2AZ> GetvP1();
 
         /// <summary>
         /// 用id取得單一預約日期的資訊
         /// </summary>
-        dtoVP GetvP2(string id);
+        dtoVPAZ GetvP2(string id);
 
 
         /// <summary>
@@ -66,11 +65,11 @@ namespace CountryWeb.Data
         List<VPCategory> GetVPCategoryList();
     }
 
-    public class vPService : IvPService
+    public class VPAZService : IVPAZService
     {
         private IConfiguration IConf { get; }
         private string _dapperconn { get; set; }
-        public vPService(IConfiguration IConfiguration, TgContext TgContext)
+        public VPAZService(IConfiguration IConfiguration, TgContext TgContext)
         {
             this.IConf = IConfiguration;
             if (TgContext.ConnS == null || TgContext.ConnS == "")
@@ -86,22 +85,22 @@ namespace CountryWeb.Data
         /// <summary>
         /// 取得預約日期列表
         /// </summary>
-        public List<dtovP2> GetvP1()
+        public List<dtoVP2AZ> GetvP1()
         {
-            var l = new List<dtovP2>();
+            var l = new List<dtoVP2AZ>();
             try
             {
                 // * Echo 2021-08-08 Rename SP
                 var SqlStr = string.Format("execute SP_GetVPAZ");
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    var q = cn.Query<dtoVP>(SqlStr);
+                    var q = cn.Query<dtoVPAZ>(SqlStr);
 
                     foreach (var p in q)
                     {
                         if (DateTime.Today < p.date1)
                         {
-                            var vp = new dtovP2();
+                            var vp = new dtoVP2AZ();
                             vp.id = p.id;
 
                             var c = "";
@@ -136,7 +135,7 @@ namespace CountryWeb.Data
         /// <summary>
         /// 用id取得單一預約日期的資訊
         /// </summary>
-        public dtoVP GetvP2(string id)
+        public dtoVPAZ GetvP2(string id)
         {
             if (id == null || id == "")
             {
@@ -148,7 +147,7 @@ namespace CountryWeb.Data
                 var SqlStr = string.Format("execute SP_GetVPAZCnt {0}", id);
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    var q = cn.Query<dtoVP>(SqlStr);
+                    var q = cn.Query<dtoVPAZ>(SqlStr);
                     var p = q.FirstOrDefault();
                     if (p != null)
                     {

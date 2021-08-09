@@ -21,24 +21,34 @@ namespace CountryWeb.Data
         public int Cnt { get; set; }
     }
 
-    public class dtovP2_mo
+    public class dtoVPMO
+    {
+        public int id { get; set; }
+        public string head { get; set; }
+        public DateTime date1 { get; set; }
+        public string week { get; set; }
+        public int cnt { get; set; }
+        public int cnt2 { get; set; }
+    }
+
+    public class dtoVP2MO
     {
         public int id { get; set; }
         public string head { get; set; }
         public bool Fulls { get; set; }
     }
 
-    public interface IvPService_mo
+    public interface IVPMOService
     {
         /// <summary>
         /// 取得預約日期列表
         /// </summary>
-        List<dtovP2> GetvP1();
+        List<dtoVP2MO> GetvP1();
 
         /// <summary>
         /// 用id取得單一預約日期的資訊
         /// </summary>
-        dtoVP GetvP2(string id);
+        dtoVPMO GetvP2(string id);
 
 
         /// <summary>
@@ -48,11 +58,11 @@ namespace CountryWeb.Data
     }
 
 
-     public class vPService_mo : IvPService_mo
+    public class VPMOService : IVPMOService
     {
         private IConfiguration IConf { get; }
         private string _dapperconn { get; set; }
-        public vPService_mo(IConfiguration IConfiguration, TgContext TgContext)
+        public VPMOService(IConfiguration IConfiguration, TgContext TgContext)
         {
             this.IConf = IConfiguration;
             if (TgContext.ConnS == null || TgContext.ConnS == "")
@@ -68,9 +78,9 @@ namespace CountryWeb.Data
         /// <summary>
         /// 取得預約日期列表
         /// </summary>
-        public List<dtovP2> GetvP1()
+        public List<dtoVP2MO> GetvP1()
         {
-            var l = new List<dtovP2>();
+            var l = new List<dtoVP2MO>();
             try
             {
                 // Echo Add on 2021-08-06 這裡沒改到sp名稱
@@ -78,13 +88,13 @@ namespace CountryWeb.Data
                 var SqlStr = string.Format("execute SP_GetVPMO");
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    var q = cn.Query<dtoVP>(SqlStr);
+                    var q = cn.Query<dtoVPMO>(SqlStr);
 
                     foreach (var p in q)
                     {
                         if (DateTime.Today < p.date1)
                         {
-                            var vp = new dtovP2();
+                            var vp = new dtoVP2MO();
                             vp.id = p.id;
 
                             var c = "";
@@ -119,7 +129,7 @@ namespace CountryWeb.Data
         /// <summary>
         /// 用id取得單一預約日期的資訊
         /// </summary>
-        public dtoVP GetvP2(string id)
+        public dtoVPMO GetvP2(string id)
         {
             if (id == null || id == "")
             {
@@ -130,7 +140,7 @@ namespace CountryWeb.Data
                 var SqlStr = string.Format("execute SP_GetVPMOCnt {0}", id);
                 using (var cn = new SqlConnection(this._dapperconn))
                 {
-                    var q = cn.Query<dtoVP>(SqlStr);
+                    var q = cn.Query<dtoVPMO>(SqlStr);
                     var p = q.FirstOrDefault();
                     if (p != null)
                     {
