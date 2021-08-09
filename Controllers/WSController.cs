@@ -38,6 +38,7 @@ namespace CountryWeb.Controllers
 
         }
 
+        /* 畫面一開起來時.先load的資料 */
         [HttpPost("~/Fetch")]
         public async Task<JObject> FetchAsync()
         {
@@ -108,6 +109,7 @@ namespace CountryWeb.Controllers
             return result;
         }
 
+        /* 使用者按下送出後執行的動作 */
         [Authorize]
         [HttpPost("~/CheckOne")]
         public async Task<JObject> CheckOneAsync(dtoCovid19 dto)
@@ -142,13 +144,14 @@ namespace CountryWeb.Controllers
                 var vP2 = await this.IVPDate.GetVP2(dto.vpid);
                 if (vP2 == null)
                 {
+                    /* 會有此錯誤 多半是 預約檔裡沒有對應的預約id */
                     result["msg"] = "不正確的操作方式";
                     result["code"] = "600";
                     return result;
                 }
                 if (vP2.cnt2 >= vP2.cnt)
                 {
-                    // 已額滿
+                    /* 已額滿 */
                     result["msg"] = string.Format("{0} {1} 已額滿", vP2.date1.ToString("yyyy-MM-dd"), vP2.week);
                     result["code"] = "400";
                     return result;
@@ -193,12 +196,12 @@ namespace CountryWeb.Controllers
                 }
                 #endregion
 
+                /* 如果身份不是第二劑 , 或是有造冊 , 則可預約 */
                 if (doChecked == true || dto.idtypes == "6")
                 {
                     /* 預約成功 */
                     result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", dateS, weekS);
                     result["code"] = "200";
-
                     await this.ICovid19.NewOne(dto);
                 }
                 else
@@ -214,6 +217,7 @@ namespace CountryWeb.Controllers
 
         }
 
+        /* 預約殘劑  畫面一開起來時.先load的資料 */
         [HttpPost("~/FetchA2E")]
         public JObject FetchA2E()
         {
@@ -233,6 +237,7 @@ namespace CountryWeb.Controllers
             return result;
         }
 
+        /* 預約殘劑 使用者按下送出後執行的動作 */
         [Authorize]
         [HttpPost("~/CheckA2E")]
         public async Task<JObject> CheckA2EAsync(dtoA2E dto)
@@ -270,13 +275,13 @@ namespace CountryWeb.Controllers
                 result["msg"] = string.Format("登記成功,謝謝");
                 result["code"] = "200";
                 await this.ICovid19.NewA2E(dto);
-
             }
 
             return result;
 
         }
 
+        /* 查詢預約 */
         [HttpPost("~/Search1")]
         public async Task<JObject> Search1Async(dtoId dto)
         {
@@ -287,8 +292,8 @@ namespace CountryWeb.Controllers
             var q = await this.ICovid19.GetOne(dto.id);
             if (q != null)
             {
+                /* 有預約資料 */
                 var vptype = await this.IVPDate.GetVPType(q.vptype);
-
                 result["guid"] = q.guid;
                 result["id"] = q.id;
                 result["name"] = q.name;
@@ -319,6 +324,7 @@ namespace CountryWeb.Controllers
 
         }
 
+        /* 取消預約 */
         [HttpPost("~/Cancel1")]
         public JObject Cancel1(dtoGuid dto)
         {
@@ -331,16 +337,13 @@ namespace CountryWeb.Controllers
             return result;
         }
 
+
+        /* 健保局API */
         private async Task<dto1> GetVaccLstDataAsync(dto3 dto)
         {
-
             NHIQP701SoapClient.EndpointConfiguration endpoint = new NHIQP701SoapClient.EndpointConfiguration();
             NHIQP701SoapClient myService = new NHIQP701SoapClient(endpoint, "https://medvpnws.nhi.gov.tw:7008/qp7e2000/NHIQP701.asmx");
-            // AuthorizationSoapHeader MyAuthHeader = new AuthorizationSoapHeader();
-
-            // MyAuthHeader.AppName = FDSServiceAppName;
-            // MyAuthHeader.AppID = Guid.Parse(MyAppID);
-
+ 
             var NHIQ = this.INHIQP701.GetOne();
             var q = new dto2();
 
@@ -354,15 +357,9 @@ namespace CountryWeb.Controllers
 
             var entries = await myService.GetVaccLstDataAsync(json);
             var res = entries.Body.GetVaccLstDataResult;
-            // {"RtnCode":"01","oVaccLstData":null}
 
             var res2 = JsonSerializer.Deserialize<dto1>(res);
-            // ViewBag.RtnCode = res2.RtnCode;
-            // ViewBag.oVaccLstData = res2.oVaccLstData;
-            // var dto1 = new dto3();
-            // dto1.id = "";
             return res2;
-
         }
 
     }

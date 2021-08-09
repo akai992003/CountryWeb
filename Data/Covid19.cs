@@ -24,8 +24,8 @@ namespace CountryWeb.Data
         public int VPId { get; set; }
         public int Idtypes { get; set; }
 
-        // 疫苗種類
-        public int VPtypes { get; set; }
+        // * Echo 2021-08-09 新增結構
+        public int VPtypes { get; set; } // 疫苗種類
 
         // * Echo 2021-08-08 新增結構
         public DateTime CreateTime { get; set; }
@@ -138,7 +138,7 @@ namespace CountryWeb.Data
             }
         }
 
-        // 新增疫苗預約
+        // * 新增疫苗預約
         public async Task NewOne(dtoCovid19 dto)
         {
             var d = new Covid19();
@@ -163,7 +163,7 @@ namespace CountryWeb.Data
             }
         }
 
-        // 判斷是否有預約疫苗
+        // * 判斷是否有預約疫苗
         public async Task<dtoCovid19VIP> GetOne(string id)
         {
             using (var context = new TgContext())
@@ -195,7 +195,7 @@ namespace CountryWeb.Data
 
         }
 
-        // 取消疫苗預約
+        // * 取消疫苗預約
         public async Task CancelOne(Guid guid)
         {
             using (var context = new TgContext())
