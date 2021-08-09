@@ -49,7 +49,7 @@ namespace CountryWeb
                 options.UseSqlServer(connRoot);
             });
             services.AddScoped<InewsListsService, newsListsService>();
-            services.AddScoped<IVPService, IVPService>();
+            services.AddScoped<IVPDateService, VPDateService>();
             services.AddScoped<ICovid19Service, Covid19Service>();
             services.AddScoped<INHIQP701Service, NHIQP701Service>();
 

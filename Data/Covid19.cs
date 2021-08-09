@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using CountryWeb.Helper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace CountryWeb.Data
 {
-    // * Echo 2021-08-08 Rename
-    public class Covid19_AZ
+    // * Echo 2021-08-09
+    public class Covid19
     {
         [Key]
         public Guid Guid { get; set; }
@@ -22,25 +23,11 @@ namespace CountryWeb.Data
         public string Addr_detal { get; set; }
         public int VPId { get; set; }
         public int Idtypes { get; set; }
+
+        // 疫苗種類
+        public int VPtypes { get; set; }
 
         // * Echo 2021-08-08 新增結構
-        public DateTime CreateTime { get; set; }
-    }
-
-    // * Echo 2021-08-08 Add
-    public class Covid19_MO
-    {
-        [Key]
-        public Guid Guid { get; set; }
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Birthday { get; set; }
-        public string Phone { get; set; }
-        public string Addr_country { get; set; }
-        public string Addr_city { get; set; }
-        public string Addr_detal { get; set; }
-        public int VPId { get; set; }
-        public int Idtypes { get; set; }
         public DateTime CreateTime { get; set; }
     }
 
@@ -74,7 +61,7 @@ namespace CountryWeb.Data
         public string idtypes { get; set; }
 
         // * Echo 2021-08-08 Add
-        public string vptype { get; set; } // 疫苗種類 1=AZ , 2=MO
+        public string vptype { get; set; } // 疫苗種類 1=AZ , 2=Moderna , 3=高端 , 4=BNT
     }
 
     public class dtoA2E
@@ -109,42 +96,29 @@ namespace CountryWeb.Data
         public DateTime date1 { get; set; }
         public string date2 { get; set; }
         public string week { get; set; }
-
-
+        public int vptype { get; set; } // 疫苗種類 1=AZ , 2=Moderna , 3=高端 , 4=BNT
     }
 
     public interface ICovid19Service
     {
 
-        // 新增AZ疫苗預約
-        Task NewOneAZ(dtoCovid19 dto);
+        // 新增疫苗預約
+        Task NewOne(dtoCovid19 dto);
 
-        // 判斷是否有預約AZ疫苗
-        dtoCovid19VIP GetOneAZ(string id);
+        // 判斷是否有預約疫苗
+        Task<dtoCovid19VIP> GetOne(string id);
 
-        // 取消AZ疫苗預約
-        void CancelOneAZ(Guid guid);
-
-        // * Echo 2021-08-08 Add
-        #region Moderna
-        // 新增Moderna疫苗預約
-        Task NewOneMO(dtoCovid19 dto);
-
-        // 判斷是否有預約Moderna疫苗
-        dtoCovid19VIP GetOneMO(string id);
-
-        // 取消Moderna疫苗預約
-        void CancelOneMO(Guid guid);
-        #endregion
+        // 取消疫苗預約
+        Task CancelOne(Guid guid);
 
         // 是否殘劑預約
-        string GetA2E(string id);
+        Task<string> GetA2E(string id);
 
         // 新增殘劑預約
         Task NewA2E(dtoA2E dto);
 
         // 殘劑預約人數
-        int GetA2ECnt();
+        Task<int> GetA2ECnt();
     }
 
     public class Covid19Service : ICovid19Service
@@ -164,12 +138,10 @@ namespace CountryWeb.Data
             }
         }
 
-        // * Echo 2021-08-08 改名AZ
-        #region AZ
         // 新增疫苗預約
-        public async Task NewOneAZ(dtoCovid19 dto)
+        public async Task NewOne(dtoCovid19 dto)
         {
-            var d = new Covid19_AZ();
+            var d = new Covid19();
             d.Guid = Guid.NewGuid();
             d.Id = dto.id;
             d.Name = dto.name;
@@ -181,38 +153,39 @@ namespace CountryWeb.Data
             d.Phone = dto.phone;
             d.VPId = int.Parse(dto.vpid);
             d.Idtypes = int.Parse(dto.idtypes);
+            d.VPtypes = int.Parse(dto.vptype); // echo
             d.CreateTime = DateTime.Now; // echo
 
             using (var context = new TgContext())
             {
-                await context.Covid19_AZ.AddAsync(d);
+                await context.Covid19.AddAsync(d);
                 await context.SaveChangesAsync();
             }
         }
 
-        // 判斷是否有預約AZ疫苗
-        public dtoCovid19VIP GetOneAZ(string id)
+        // 判斷是否有預約疫苗
+        public async Task<dtoCovid19VIP> GetOne(string id)
         {
             using (var context = new TgContext())
             {
-                var q = (from p in context.Covid19_AZ
-                         join p2 in context.VP_AZ on p.VPId equals p2.Id
-                         where p.Id == id
-                         && p.VPId > 0
-                         select new dtoCovid19VIP
-                         {
-                             guid = p.Guid,
-                             id = p.Id,
-                             name = p.Name,
-                             date1 = p2.Date1,
-                             date2 = p2.Date1.ToString("yyyy-MM-dd"),
-                             week = p2.Week
-                         }).FirstOrDefault();
+                var q = await (from p in context.Covid19
+                               join p2 in context.VPDate on p.VPId equals p2.Id
+                               where p.Id == id
+                               && p.VPId > 0
+                               select new dtoCovid19VIP
+                               {
+                                   guid = p.Guid,
+                                   id = p.Id,
+                                   name = p.Name,
+                                   date1 = p2.Date1,
+                                   date2 = p2.Date1.ToString("yyyy-MM-dd"),
+                                   week = p2.Week,
+                                   vptype = p.VPtypes
+                               }).FirstOrDefaultAsync();
                 if (q != null)
                 {
                     // 已預約
                     return q;
-                    // return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
                 }
                 else
                 {
@@ -222,100 +195,21 @@ namespace CountryWeb.Data
 
         }
 
-        // 取消AZ疫苗預約
-        public void CancelOneAZ(Guid guid)
+        // 取消疫苗預約
+        public async Task CancelOne(Guid guid)
         {
             using (var context = new TgContext())
             {
-                var q = context.Covid19_AZ.Find(guid);
+                var q = context.Covid19.Find(guid);
                 if (q != null)
                 {
-                    context.Covid19_AZ.Attach(q);
+                    context.Covid19.Attach(q);
                     q.VPId = 0;
                     q.CreateTime = DateTime.Now; // * Echo 2021-08-08 Add
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
         }
-
-        #endregion
-
-        // * Echo 2021-08-08 新增Moderna段
-        #region Moderna
-
-        // 新增Moderna疫苗預約
-        public async Task NewOneMO(dtoCovid19 dto)
-        {
-            var d = new Covid19_MO();
-            d.Guid = Guid.NewGuid();
-            d.Id = dto.id;
-            d.Name = dto.name;
-            var bir = new DateTime(int.Parse(dto.birthday_year), int.Parse(dto.birthday_month), int.Parse(dto.birthday_day), 0, 0, 0);
-            d.Birthday = bir.ToString("yyyyMMdd");
-            d.Addr_country = dto.addr_country;
-            d.Addr_city = dto.addr_city;
-            d.Addr_detal = dto.addr_detal;
-            d.Phone = dto.phone;
-            d.VPId = int.Parse(dto.vpid);
-            d.Idtypes = int.Parse(dto.idtypes);
-            d.CreateTime = DateTime.Now;
-
-            using (var context = new TgContext())
-            {
-                await context.Covid19_MO.AddAsync(d);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        // 判斷是否有預約Moderna疫苗
-        public dtoCovid19VIP GetOneMO(string id)
-        {
-            using (var context = new TgContext())
-            {
-                var q = (from p in context.Covid19_MO
-                         join p2 in context.VP_MO on p.VPId equals p2.Id
-                         where p.Id == id
-                         && p.VPId > 0
-                         select new dtoCovid19VIP
-                         {
-                             guid = p.Guid,
-                             id = p.Id,
-                             name = p.Name,
-                             date1 = p2.Date1,
-                             date2 = p2.Date1.ToString("yyyy-MM-dd"),
-                             week = p2.Week
-                         }).FirstOrDefault();
-                if (q != null)
-                {
-                    // 已預約
-                    return q;
-                    // return string.Format("已預約 {0} - {1} 的時段", q.date, q.week);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-
-        }
-
-        // 取消Moderna疫苗預約
-        public void CancelOneMO(Guid guid)
-        {
-            using (var context = new TgContext())
-            {
-                var q = context.Covid19_MO.Find(guid);
-                if (q != null)
-                {
-                    context.Covid19_MO.Attach(q);
-                    q.VPId = 0;
-                    q.CreateTime = DateTime.Now;
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        #endregion
 
         #region 殘劑
 
@@ -341,14 +235,14 @@ namespace CountryWeb.Data
         }
 
         // 是否殘劑預約
-        public string GetA2E(string id)
+        public async Task<string> GetA2E(string id)
         {
             using (var context = new TgContext())
             {
                 //A2E
-                var q = (from p in context.A2E
-                         where p.Id == id
-                         select p).FirstOrDefault();
+                var q = await (from p in context.A2E
+                               where p.Id == id
+                               select p).FirstOrDefaultAsync();
                 if (q != null)
                 {
                     return string.Format("您已有預約紀錄了");
@@ -361,13 +255,13 @@ namespace CountryWeb.Data
         }
 
         // 殘劑預約人數
-        public int GetA2ECnt()
+        public async Task<int> GetA2ECnt()
         {
             using (var context = new TgContext())
             {
-                var q = (from p in context.A2E
-                         where p.Done == 0
-                         select p);
+                var q = await (from p in context.A2E
+                               where p.Done == 0
+                               select p).ToListAsync();
                 if (q.FirstOrDefault() != null)
                 {
                     return q.ToList().Count;

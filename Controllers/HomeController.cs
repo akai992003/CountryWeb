@@ -22,21 +22,21 @@ namespace CountryWeb.Controllers
         private string uRI { get; }
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
-        private readonly IVPService IvP;
+        private readonly IVPDateService IvP;
 
         public HomeController(IConfiguration Configuration, ICovid19Service ICovid19Service
-        , INHIQP701Service INHIQP701Service, IVPService IVPService)
+        , INHIQP701Service INHIQP701Service, IVPDateService IVPDateService)
         {
             this.Iconf = Configuration;
             this.uRI = UStore.GetUStore(Iconf["ConnectionStrings:uRI"], "uRI");
             this.ICovid19 = ICovid19Service;
             this.INHIQP701 = INHIQP701Service;
-            this.IvP = IVPService;
+            this.IvP = IVPDateService;
         }
 
-        public IActionResult A2E()
+        public async Task<IActionResult> A2EAsync()
         {
-            var cnt = this.ICovid19.GetA2ECnt();
+            var cnt = await this.ICovid19.GetA2ECnt();
             // 830 + done = 0
             ViewBag.Cnt = 1316 + cnt;
             ViewBag.uRI = this.uRI;
