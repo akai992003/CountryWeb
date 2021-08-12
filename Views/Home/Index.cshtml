@@ -196,10 +196,10 @@
                             <label for="idtypes">&nbsp; 接種身份類別</label>
                             <select id="idtypes" name="idtypes" class="form-control required">
                                 @* <option value="1"> 第1類 醫事人員 </option>
-                                <option value="2"> 第2類 中央及地方政府防疫人員 </option>
-                                <option value="3"> 第3類 高接觸風險第一線工作人員 </option>
+                                    <option value="2"> 第2類 中央及地方政府防疫人員 </option>
+                                    <option value="3"> 第3類 高接觸風險第一線工作人員 </option>
 
-                                <option value="6"> 距第一劑施打已滿10週 </option> *@
+                                    <option value="6"> 距第一劑施打已滿10週 </option> *@
                                 @* @{
                                     foreach (var p in ViewBag.ct)
                                     {
@@ -262,7 +262,7 @@
     let vpMO;
 
     // Echo 2021-08-08 Add
-    let vptype = '1';
+    let vptype = '1'; //回寫db用
 
     //akai 2021-08-11 add
     let cateAZ;
@@ -284,7 +284,7 @@
 
         });
         $('#vpid').html(formoption);
-        
+
         var formoption1 = ""; // akai 2021-08-12 Add
         $.each(cateMO, function (v) {
             var val1 = cateMO[v].id;
@@ -442,8 +442,8 @@
             $('.modal-body').html('<p class="m-0">安全確認碼錯誤</p>');
             return;
         }
-
         const vpid = $('#vpid option:selected').val();
+        const idtypes = $('#idtypes option:selected').val();
         const pa = {
             "id": $('#id').val(),
             "name": $('#name').val(),
@@ -456,7 +456,7 @@
             "addr_country": $('#addr_country').val(),
             "addr_city": $('#addr_city').val(),
             "addr_detal": $('#addr_detal').val(),
-            "idtypes": $('#idtypes').val(),
+            "idtypes": idtypes,
             "vptype": vptype // Echo 2021-08-08 Add
         }
 

@@ -18,7 +18,6 @@ namespace CountryWeb.Controllers
     [EnableCors("CorsDomain")]
     public class WSController : ControllerBase
     {
-        private readonly IVPDateService IVPCategory; //2021-08-11小愷新增
         private readonly IVPDateService IVPDate;
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
@@ -27,9 +26,8 @@ namespace CountryWeb.Controllers
         private string issuer { get; }
         private string signKey { get; }
         //2021-08-11 小愷新增 (IVPDateService IVPCategory ...
-        public WSController(IVPDateService IVPCategory, IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
+        public WSController(IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
-            this.IVPCategory = IVPDateService;
             this.IVPDate = IVPDateService;
             this.ICovid19 = ICovid19Service;
             this.IJwt = JwtHelpers;
@@ -54,7 +52,7 @@ namespace CountryWeb.Controllers
 
             #region AZ預約日期清單
 
-            var VP = await this.IVPDate.GetVP1(1);
+            var VP = await this.IVPDate.GetVP1((int)VPTypename.AZ);
             JArray Data1 = new JArray();
             foreach (var p in VP)
             {
@@ -76,7 +74,7 @@ namespace CountryWeb.Controllers
             // Echo 2021-08-06 莫得那 預約日期清單
             #region Moderna預約日期清單
 
-            var MP = await this.IVPDate.GetVP1(2);
+            var MP = await this.IVPDate.GetVP1((int)VPTypename.Moderna);
             JArray Data_Mo = new JArray();
             foreach (var p in MP)
             {
@@ -94,10 +92,10 @@ namespace CountryWeb.Controllers
             }
             #endregion
 
-           
+
             //2021-08-11 小愷新增 取得預約身份類別
             #region 
-            var az = await this.IVPCategory.GetVPCategoryList(1);
+            var az = await this.IVPDate.GetVPCategoryList((int)VPTypename.AZ);
             JArray Category_AZ = new JArray();
             foreach (var p in az)
             {
@@ -110,7 +108,7 @@ namespace CountryWeb.Controllers
                 Category_AZ.Add(J);
             }
 
-            var mo = await this.IVPCategory.GetVPCategoryList(2);
+            var mo = await this.IVPDate.GetVPCategoryList((int)VPTypename.Moderna);
             JArray Category_MO = new JArray();
             foreach (var p in mo)
             {
@@ -118,7 +116,6 @@ namespace CountryWeb.Controllers
                         { "head", p.Name},
                         { "id", p.Id.ToString() },
                     };
-
 
                 Category_MO.Add(J);
             }
@@ -213,7 +210,8 @@ namespace CountryWeb.Controllers
                 // Echo 110.08.02 第二劑不需call Api
                 #region 第二劑
                 var doChecked = false;
-                if (dto.idtypes != "6")
+                var isCheck = await this.IVPDate.GetVPCategoryCheck(int.Parse(dto.idtypes));
+                if (isCheck == 1)
                 {
                     //akai 110.07.12暫時移除使用健保API檢核身份類別
                     //akai 110.08.02 加回api檢核機制。
@@ -231,7 +229,7 @@ namespace CountryWeb.Controllers
                 #endregion
 
                 /* 如果身份不是第二劑 , 或是有造冊 , 則可預約 */
-                if (doChecked == true || dto.idtypes == "6")
+                if (doChecked == true || isCheck == 0)
                 {
                     /* 預約成功 */
                     result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", dateS, weekS);

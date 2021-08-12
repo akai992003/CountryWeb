@@ -31,6 +31,7 @@ namespace CountryWeb.Data
         public string Name { get; set; }
         public int deleted { get; set; }
         public int VPtypeID { get; set; }
+        public int CheckAPI { get; set; }
     }
 
     /* 疫苗種類 */
@@ -40,6 +41,13 @@ namespace CountryWeb.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public int deleted { get; set; }
+    }
+    public enum VPTypename
+    {
+        AZ = 1,
+        Moderna = 2,
+        高端 = 3,
+        BNT = 4
     }
 
     public class dtoVP
@@ -72,6 +80,7 @@ namespace CountryWeb.Data
 
         // 取得疫苗種類
         Task<string> GetVPType(int id);
+        Task<int> GetVPCategoryCheck(int id);
     }
 
     public class VPDateService : IVPDateService
@@ -198,6 +207,25 @@ namespace CountryWeb.Data
                 else
                 {
                     return q.Name;
+                }
+            }
+        }
+        public async Task<int> GetVPCategoryCheck(int id)
+        {
+            using (var context = new TgContext())
+            {
+                var q = await (from p in context.VPCategory
+                               where p.Id == id
+                               && p.deleted == 0
+                               orderby p.Id
+                               select p).FirstOrDefaultAsync();
+                if (q != null)
+                {
+                    return q.CheckAPI;
+                }
+                else
+                {
+                    return 1;
                 }
             }
         }
