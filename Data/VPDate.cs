@@ -30,6 +30,7 @@ namespace CountryWeb.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public int deleted { get; set; }
+        public int VPtypeID { get; set; }
     }
 
     /* 疫苗種類 */
@@ -67,7 +68,7 @@ namespace CountryWeb.Data
         Task<dtoVP> GetVP2(string id);
 
         // 取得接種身份類別
-        Task<List<VPCategory>> GetVPCategoryList();
+        Task<List<VPCategory>> GetVPCategoryList(int id);
 
         // 取得疫苗種類
         Task<string> GetVPType(int id);
@@ -167,12 +168,13 @@ namespace CountryWeb.Data
         }
 
         // 取得接種身份類別
-        public async Task<List<VPCategory>> GetVPCategoryList()
+        public async Task<List<VPCategory>> GetVPCategoryList(int id)
         {
             using (var context = new TgContext())
             {
                 var q = await (from p in context.VPCategory
                                where p.deleted == 0
+                               && p.VPtypeID == id
                                orderby p.Id
                                select p).ToListAsync();
                 return q;

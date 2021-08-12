@@ -18,6 +18,7 @@ namespace CountryWeb.Controllers
     [EnableCors("CorsDomain")]
     public class WSController : ControllerBase
     {
+        private readonly IVPDateService IVPCategory; //2021-08-11小愷新增
         private readonly IVPDateService IVPDate;
         private readonly ICovid19Service ICovid19;
         private readonly INHIQP701Service INHIQP701;
@@ -25,9 +26,10 @@ namespace CountryWeb.Controllers
         private IConfiguration Iconf { get; }
         private string issuer { get; }
         private string signKey { get; }
-
-        public WSController(IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
+        //2021-08-11 小愷新增 (IVPDateService IVPCategory ...
+        public WSController(IVPDateService IVPCategory, IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
+            this.IVPCategory = IVPDateService;
             this.IVPDate = IVPDateService;
             this.ICovid19 = ICovid19Service;
             this.IJwt = JwtHelpers;
@@ -90,6 +92,36 @@ namespace CountryWeb.Controllers
 
                 Data_Mo.Add(J);
             }
+            #endregion
+
+           
+            //2021-08-11 小愷新增 取得預約身份類別
+            #region 
+            var az = await this.IVPCategory.GetVPCategoryList(1);
+            JArray Category_AZ = new JArray();
+            foreach (var p in az)
+            {
+                var J = new JObject {
+                        { "head", p.Name},
+                        { "id", p.Id.ToString() },
+                    };
+
+
+                Category_AZ.Add(J);
+            }
+
+            var mo = await this.IVPCategory.GetVPCategoryList(2);
+            JArray Category_MO = new JArray();
+            foreach (var p in mo)
+            {
+                var J = new JObject {
+                        { "head", p.Name},
+                        { "id", p.Id.ToString() },
+                    };
+
+
+                Category_MO.Add(J);
+            }
 
             #endregion
 
@@ -102,6 +134,8 @@ namespace CountryWeb.Controllers
                 { "vp1", Data1 },
                 { "token", token },
                 { "vpMo", Data_Mo }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
+                { "cateAZ", Category_AZ }, // akai 2021-08-11 將AZ 預約身份類別傳回前端
+                { "cateMO", Category_MO }, // akai 2021-08-11 將Moderna 預約身份類別傳回前端
             };
 
             #endregion
@@ -343,7 +377,7 @@ namespace CountryWeb.Controllers
         {
             NHIQP701SoapClient.EndpointConfiguration endpoint = new NHIQP701SoapClient.EndpointConfiguration();
             NHIQP701SoapClient myService = new NHIQP701SoapClient(endpoint, "https://medvpnws.nhi.gov.tw:7008/qp7e2000/NHIQP701.asmx");
- 
+
             var NHIQ = this.INHIQP701.GetOne();
             var q = new dto2();
 

@@ -45,7 +45,7 @@
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
                 </p>
-               
+
                 <div class="row" style="margin-left:1px;">
                     <div class="col-md-6 col-sm-12">
                         <div class="row">
@@ -195,12 +195,11 @@
                         <div class="form-group">
                             <label for="idtypes">&nbsp; 接種身份類別</label>
                             <select id="idtypes" name="idtypes" class="form-control required">
-                                <option value="1"> 第1類 醫事人員 </option>
+                                @* <option value="1"> 第1類 醫事人員 </option>
                                 <option value="2"> 第2類 中央及地方政府防疫人員 </option>
                                 <option value="3"> 第3類 高接觸風險第一線工作人員 </option>
-                                @* <option value="4"> 第5類 洗腎患者 </option>
-                                    <option value="5"> 第6類 孕婦 </option> *@
-                                <option value="6"> 距第一劑施打已滿10週 </option>
+
+                                <option value="6"> 距第一劑施打已滿10週 </option> *@
                                 @* @{
                                     foreach (var p in ViewBag.ct)
                                     {
@@ -265,6 +264,10 @@
     // Echo 2021-08-08 Add
     let vptype = '1';
 
+    //akai 2021-08-11 add
+    let cateAZ;
+    let cateMO;
+
     // Echo Add on 2021-08-06 點下MO之後帶出日期
     $('#MO').click(function () {
         // Echo 2021-08-08 Add
@@ -281,6 +284,18 @@
 
         });
         $('#vpid').html(formoption);
+        
+        var formoption1 = ""; // akai 2021-08-12 Add
+        $.each(cateMO, function (v) {
+            var val1 = cateMO[v].id;
+            var val2 = cateMO[v].head;
+            if (cateMO[v].disabled === true) {
+                formoption1 += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption1 += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+        });
+        $('#idtypes').html(formoption1);
     });
 
     // Echo Add on 2021-08-06 點下AZ之後帶出日期
@@ -298,6 +313,20 @@
             }
         });
         $('#vpid').html(formoption);
+
+        var formoption1 = ""; // akai 2021-08-12 Add
+        $.each(cateAZ, function (v) {
+            var val1 = cateAZ[v].id;
+            var val2 = cateAZ[v].head;
+            if (cateAZ[v].disabled === true) {
+                formoption1 += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption1 += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+        });
+        $('#idtypes').html(formoption1);
+
+
     });
 
     $(document).ready(function () {
@@ -324,6 +353,9 @@
                 vpAZ = data.vp1;
                 vpMO = data.vpMo;
 
+                cateAZ = data.cateAZ;
+                cateMO = data.cateMO;
+
                 const vp1 = data.vp1;
                 var formoption = "";
                 $.each(vp1, function (v) {
@@ -336,8 +368,22 @@
                     }
 
                 });
+
                 $('#vpid').html(formoption);
 
+                const cate1 = data.cateAZ;
+                var formoption1 = "";
+                $.each(cate1, function (v) {
+                    var val1 = cate1[v].id;
+                    var val2 = cate1[v].head;
+                    if (cate1[v].disabled === true) {
+                        formoption1 += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+                    } else {
+                        formoption1 += "<option value='" + val1 + "'>" + val2 + "</option>";
+                    }
+
+                });
+                $('#idtypes').html(formoption1);
             },
 
             error: function (xhr, textStatus) {
@@ -574,11 +620,11 @@
     };
 
     $('#back-to-bottom').click(function () {
-        $('html, body').animate({scrollTop: $(document).height()}, 1000);
+        $('html, body').animate({ scrollTop: $(document).height() }, 1000);
     });
 
     $('#div_id').click(function () {
-        $('html, body').animate({scrollTop: $(document).height() - 1200}, 1000);
+        $('html, body').animate({ scrollTop: $(document).height() - 1200 }, 1000);
     });
 </script>
 
