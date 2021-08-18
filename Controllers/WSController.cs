@@ -25,7 +25,7 @@ namespace CountryWeb.Controllers
         private IConfiguration Iconf { get; }
         private string issuer { get; }
         private string signKey { get; }
-        //2021-08-11 小愷新增 (IVPDateService IVPCategory ...
+       
         public WSController(IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
             this.IVPDate = IVPDateService;
@@ -38,7 +38,7 @@ namespace CountryWeb.Controllers
 
         }
 
-        /* 畫面一開起來時.先load的資料 */
+        /* 畫面一開起來時.先ajax load的資料 */
         [HttpPost("~/Fetch")]
         public async Task<JObject> FetchAsync()
         {
