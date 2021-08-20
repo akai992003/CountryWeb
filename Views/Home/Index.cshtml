@@ -23,24 +23,37 @@
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
                 <p style="margin-left: 20px;color: blue;">
-
-                    ＊每週一上午10:00開放該週Covid19疫苗接種登記。<br><br>
-
+                    ＊每週一上午10:00開放該週Covid19疫苗接種登記。<br>
+                    ＊110.08.24(二) 至 110.08.28(六) 僅開放Moderna第二劑預約，暫無AZ疫苗可供預約。<br>
+                    ＊恕暫無提供疫苗混打。<br>
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
-                    本院院內開打疫苗 說明 : <br>
-                    為第1類至第3類、距第一劑施打已滿10週，請至「下方表單填寫預約資料」。<br>
+                    本院院內COVID-19 各類疫苗 說明 :<br>
                     依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗。<br>
-                    本院所提供AZ與莫德納疫苗，時間為周二至周五上午8時至11時;週六上午9時至12時。<br>
-                    為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。<br>
-                    本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br>
-                    另外疫苗量不穩定，僅開放7日內預約掛號，若疫苗短缺本院保有取消您掛號的權利，請隨時追蹤本院官網公告。<br><br>
+                    本院目前僅提供莫德納疫苗，時間為周二至周五上午9時至12時;週六上午9時至12時。<br>
+                    為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。(目前殘劑預約額滿)<br>
+                    本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br><br>
 
-                    莫德納第二劑接種資格說明:<br>
+                    預約注意事項：<br>
+                    目前僅開放莫德納第二劑接種<br>
                     1.第一類至第三類人員距第一劑接種滿28天。<br>
                     2.有出國需求距第一劑接種滿28天(接種當天請備妥機票影本供查驗)。<br>
                     3.一般民眾距第一劑莫德納接種滿10週。<br>
-                    本院暫無提供疫苗混打。
+                    4.本院暫無提供疫苗混打。<br>
+                    5. 全面網路預約制，不開放現場、電話及臨櫃預約掛號；若系統顯示額滿，請選擇其他時段預約。<br>
+                    &thinsp; &thinsp; 如掛號頁面未顯示掛號日期，則表示尚未開放預約掛號。<br>
+                </p>
+                <p style="margin-left: 20px;color: #e0130e;">
+                    6.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(出國需求者)以利現場審核，<br>
+                    &thinsp; &thinsp; 若無法供以上文件、身分類別不符或未達接種間隔，則取消已預約接種資格且不予接種。
+                </p>
+                <p style="margin-left: 20px;color: orangered;">
+                    7. 請全程正確配戴口罩及確實防疫。<br>
+                    8. 接種民眾請穿著可輕鬆捲袖的短袖或無袖衣物，方便快速露出上臂接種。<br>
+                    9. 接種後若有嚴重不適或狀況緊急，請儘速至急診就醫。<br>
+                    10. 對疫苗成分有嚴重過敏反應史，須經醫師評估後方可接種。<br>
+                    ＊本院依照疫苗配給量，開放掛號人數。若疫苗短缺，本院保有取消掛號的權利。<br>
+                    ＊疫苗相關事項，請密切追蹤本院官網最新消息。<br>
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
@@ -441,6 +454,14 @@
     $('form').submit(function (e) {
         e.preventDefault();
         localStorage.removeItem('guid');
+        let id = $('#id').val();
+        if (twIdChk(id) === false) {
+            //return;
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份證格式錯誤');
+            $('.modal-body').html('<p class="m-0">身份證驗證失敗，請注意英文字是否為半型，或是否輸入正確之身份證號。</p>');
+            return;
+        }
 
         let idLength = $('#id').val().length;
         if (idLength < 8) {
@@ -665,6 +686,27 @@
     $('#div_id').click(function () {
         $('html, body').animate({ scrollTop: $(document).height() - 1200 }, 1000);
     });
+
+
+    function twIdChk(id) {
+
+        let city = new Array(1, 10, 19, 28, 37, 46, 55, 64, 39, 73, 82, 2, 11, 20, 48, 29, 38, 47, 56, 65, 74, 83, 21, 3, 12, 30);
+        if (id.search(/^[A-Z](1|2)\d{8}$/i) === -1) {
+            return false;
+        } else {
+            //將字串分割為陣列(IE必需這麼做才不會有問題)
+            const id1 = id.split('');
+            //計算總分
+            let total = city[id1[0].charCodeAt(0) - 65];
+            for (let i = 1; i <= 8; i++) {
+                total += eval((id1[i])) * (9 - i);
+            }
+            //補上檢查碼
+            total += eval(id1[9]);
+            return ((total % 10 === 0));
+        }
+    }
+
 </script>
 
 <div class="modal fade">
