@@ -25,7 +25,7 @@ namespace CountryWeb.Controllers
         private IConfiguration Iconf { get; }
         private string issuer { get; }
         private string signKey { get; }
-       
+
         public WSController(IVPDateService IVPDateService, IConfiguration Configuration, ICovid19Service ICovid19Service, JwtHelpers JwtHelpers, INHIQP701Service INHIQP701Service)
         {
             this.IVPDate = IVPDateService;
@@ -92,6 +92,26 @@ namespace CountryWeb.Controllers
             }
             #endregion
 
+            // akai 2021-09-03 高端 預約日期清單
+            #region 高端預約日期清單
+
+            var MVP = await this.IVPDate.GetVP1((int)VPTypename.高端);
+            JArray Data_MVP = new JArray();
+            foreach (var p in MVP)
+            {
+                var J = new JObject {
+                        { "head", p.head },
+                        { "id", p.id.ToString() },
+                    };
+
+                if (p.Fulls == true)
+                {
+                    J["disabled"] = true;
+                }
+
+                Data_MVP.Add(J);
+            }
+            #endregion
 
             //2021-08-11 小愷新增 取得預約身份類別
             #region 
@@ -119,6 +139,18 @@ namespace CountryWeb.Controllers
 
                 Category_MO.Add(J);
             }
+            //2021-09-03 小愷新增 取得高端預約身份類別
+            var mv = await this.IVPDate.GetVPCategoryList((int)VPTypename.高端);
+            JArray Category_MV = new JArray();
+            foreach (var p in mv)
+            {
+                var J = new JObject {
+                        { "head", p.Name},
+                        { "id", p.Id.ToString() },
+                    };
+
+                Category_MV.Add(J);
+            }
 
             #endregion
 
@@ -131,8 +163,10 @@ namespace CountryWeb.Controllers
                 { "vp1", Data1 },
                 { "token", token },
                 { "vpMo", Data_Mo }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
+                { "vpMv", Data_MVP }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
                 { "cateAZ", Category_AZ }, // akai 2021-08-11 將AZ 預約身份類別傳回前端
                 { "cateMO", Category_MO }, // akai 2021-08-11 將Moderna 預約身份類別傳回前端
+                { "cateMV", Category_MV }, // akai 2021-08-11 將Moderna 預約身份類別傳回前端
             };
 
             #endregion
