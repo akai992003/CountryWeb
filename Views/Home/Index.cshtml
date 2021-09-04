@@ -525,20 +525,18 @@
             $('.modal-body').html('<p class="m-0">西元年格式需為4碼</p>');
             return;
         }
-        //需要修改2021為今年年份
+
         let br = $('#birthday_year').val()
-        var today = new Date();
+
         var birth = $('#birthday_year').val() + '-' + $('#birthday_month').val() + '-' + $('#birthday_day').val();
-    @* console.log('birthday:' + birth); *@
-            birth = Date.parse(birth.replace('/-/g', "/"));
-    @* console.log('birthday.parse:' + birth); *@
-        var year = 1000 * 60 * 60 * 24 * 365;
-        var now = new Date();
-        var birthday = new Date(birth);
-        var age = parseInt((now - birthday) / year);
-        console.log('now:' + now);
+        var birthday = new Date(birth.replace('/-/g', "\/"));
+        var d = new Date();
+        var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
+        alert(age);
+
+    @* console.log('now:' + now);
         console.log('age:' + age);
-        console.log('now-birthday:' + (now - birthday));
+        console.log('now-birthday:' + (now - birthday)); *@
         if (age < 20) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
