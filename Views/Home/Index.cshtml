@@ -27,7 +27,7 @@
                     ＊110.08.21(二) 至 110.09.04(六) 僅開放Moderna第二劑預約，暫無AZ疫苗可供預約，<br>
                     &nbsp; &nbsp; 若有疫苗配發將再行開放預約，請持續關注本院網頁。<br>
                     ＊恕暫無提供疫苗混打。<br>
-                </p> *@
+                    </p> *@
                 <p style="margin-left: 20px;color: blue;">
                     ＊本週地方政府通知暫無配送疫苗，預計下週一(9/6)依疫苗配送量再行開發預約。謝謝<br>
                     ＊恕暫無提供疫苗混打。<br>
@@ -525,7 +525,16 @@
             $('.modal-body').html('<p class="m-0">西元年格式需為4碼</p>');
             return;
         }
+        //需要修改2021為今年年份
+        let br = $('#birthday_year').val()
+        var today = new Date();
 
+        if (today.getFullYear() - br < 20) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
+            $('.modal-body').html('<p class="m-0">施打疫苗需年滿20歲</p>');
+            return;
+        }
         let brLength_M = $('#birthday_month').val().length;
         if (brLength_M !== 2) {
             $('.modal').modal('show');
