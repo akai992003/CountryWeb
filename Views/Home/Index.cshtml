@@ -528,13 +528,24 @@
         //需要修改2021為今年年份
         let br = $('#birthday_year').val()
         var today = new Date();
-
-        if (today.getFullYear() - br < 20) {
+        var birth = $('#birthday_year').val() + '-' + $('#birthday_month').val() + '-' + $('#birthday_day').val();
+    @* console.log('birthday:' + birth); *@
+            birth = Date.parse(birth.replace('/-/g', "/"));
+    @* console.log('birthday.parse:' + birth); *@
+        var year = 1000 * 60 * 60 * 24 * 365;
+        var now = new Date();
+        var birthday = new Date(birth);
+        var age = parseInt((now - birthday) / year);
+        console.log('now:' + now);
+        console.log('age:' + age);
+        console.log('now-birthday:' + (now - birthday));
+        if (age < 20) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
             $('.modal-body').html('<p class="m-0">施打疫苗需年滿20歲</p>');
             return;
         }
+
         let brLength_M = $('#birthday_month').val().length;
         if (brLength_M !== 2) {
             $('.modal').modal('show');
