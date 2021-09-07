@@ -394,12 +394,14 @@ namespace CountryWeb.Controllers
         public JObject getSecCode () 
         {
             // 安全驗證碼
+            string token = this.IJwt.GenerateToken_3min(issuer, signKey);
             var sec = SecurityModule.CreateRecaptchaString();
             var SECURITY = sec[0];
             var Answer = sec[1];
             var result = new JObject { // 
                 { "security", SECURITY },
-                { "answer", Answer }
+                { "answer", Answer },
+                { "token", token },
             };
             return result;
         }
