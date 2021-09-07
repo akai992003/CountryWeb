@@ -29,23 +29,24 @@
                     ＊恕暫無提供疫苗混打。<br>
                     </p> *@
                 <p style="margin-left: 20px;color: blue;">
-                    ＊本週地方政府通知暫無配送疫苗，預計下週一(9/6)依疫苗配送量再行開放預約。謝謝<br>
-                    ＊恕暫無提供疫苗混打。<br>
+                    ＊本週地方政府臨時通知配送高端與莫德納疫苗，預計本週二(9/7)上午10點依疫苗配送量開放預約及公告。謝謝<br>
+                    @* ＊僅提供疫苗混打。<br> *@
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
                     本院院內COVID-19 各類疫苗 說明 :<br>
                     依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗。<br>
-                    本院目前僅提供莫德納疫苗，時間為周二至周五上午9時至12時;週六上午9時至12時。<br>
+                    @* 本院目前僅提供莫德納疫苗，時間為周二至周五上午9時至12時;週六上午9時至12時。<br> *@
+                    本院目前暫無提供疫苗門診 ; 疫苗注射時間為週一下午14點至17點，週二至週五上午9點至12點，並配合1922預約平台調整。<br>
                     為利疫苗有效使用，開放當日接種最後一瓶剩餘劑量候補名單登記方式。(目前殘劑預約額滿)<br>
                     本院不提供當日現場掛號或加號，當日僅能預約隔日以後之日期。若系統顯示額滿，則表示該時段無法再進行預約，請選擇其他時段預約。<br><br>
 
                     預約注意事項：<br>
-                    目前僅開放莫德納第二劑接種<br>
+                    目前開放莫德納第二劑接種<br>
                     1.第一類至第三類人員距第一劑接種滿28天。<br>
                     2.有出國需求距第一劑接種滿28天(接種當天請備妥機票影本供查驗)。<br>
                     3.一般民眾距第一劑莫德納接種滿10週。<br>
-                    4.本院暫無提供疫苗混打。<br>
-                    5. 全面網路預約制，不開放現場、電話及臨櫃預約掛號；若系統顯示額滿，請選擇其他時段預約。<br>
+                    4.本院僅提供第一類醫護等疫苗混打，距離第一劑AZ需滿十週。<br>
+                    5.全面網路預約制，不開放現場、電話及臨櫃預約掛號；若系統顯示額滿，請選擇其他時段預約。<br>
                     &thinsp; &thinsp; 如掛號頁面未顯示掛號日期，則表示尚未開放預約掛號。<br>
                 </p>
                 <p style="margin-left: 20px;color: #e0130e;">
@@ -98,11 +99,11 @@
                     </div>
                 </div>
 
-                <ol class="pl-4 pt-1 pb-2 m-0">
+                @* <ol class="pl-4 pt-1 pb-2 m-0">
                     <li class="pb-2"><span class="text-dark">攜帶文件：請攜帶健保卡、身份證 至一樓服務台報到</span></li>
                     <li class="pb-2"><span class="text-dark">預約方式：採網路預約制，暫不提供電話預約及現場預約</span></li>
                     <li class="pb-2"><span class="text-dark">施打時間：每週二、三、四、五、六 早上 08:00~12:00，請預約民眾準時報到</span></li>
-                </ol>
+                    </ol> *@
             </div>
 
             <div class="row">
@@ -121,7 +122,7 @@
             </div>
 
             <br><br>
-            <div lass="card-body">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -233,7 +234,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="answer" id="security" name="security">安全確認碼</label>
+                            <label for="answer" id="security" name="security">安全確認碼</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:void(0)" id="btnGetsecu" name="btnGetsecu" onclick="btnGetSecCode()"><i class="fas fa-undo-alt pr-1"></i>換一題</a>
                             <input type="text" id="answer" name="answer" class="form-control" placeholder='請輸入答案'
                                 autocomplete="off" required>
                         </div>
@@ -257,7 +259,7 @@
             }
             <div class="row justify-content-center">
                 <a href="javascript:void(0)" id="clean" class="btn btn-danger mx-2" title="取消">
-                    <i class="fas fa-undo-alt pr-1"></i>清除</a>
+                    <i class="fas fa-times"></i> &nbsp; 清除</a>
                 <input type="submit" class="btn btn-primary mx-2" value="  送出" @ViewBag.disableds>
                 <i class="check fas fa-check" style="left: -72px;"></i>
             </div>
@@ -532,7 +534,7 @@
         var birthday = new Date(birth.replace('/-/g', "\/"));
         var d = new Date();
         var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
-        @* alert(age); *@
+    @* alert(age); *@
 
     @* console.log('now:' + now);
         console.log('age:' + age);
@@ -561,6 +563,8 @@
         }
 
         const answer1 = $('#answer').val();
+        console.log(answer1)
+        console.log(answer2)
         if (answer1 !== answer2) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>安全確認碼');
@@ -771,7 +775,27 @@
             return ((total % 10 === 0));
         }
     }
+    function btnGetSecCode() {
 
+        @* localStorage.removeItem('guid'); *@
+        
+        const urlp = '@ViewBag.uRI' + 'getSecCode';
+        $.ajax({
+            url: urlp,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            timeout: 30000,
+            success: function (data) {
+                token = data.token;
+                answer2 = data.answer;
+
+                document.getElementById("security").innerText = ' 請回答: ' + data.security;
+
+                @* console.log(answer2) *@
+            }
+        });
+    }
 </script>
 
 <div class="modal fade">

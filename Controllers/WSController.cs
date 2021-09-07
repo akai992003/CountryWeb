@@ -389,6 +389,20 @@ namespace CountryWeb.Controllers
             return result;
 
         }
+        /*重新取得驗證碼*/
+        [HttpPost("~/getSecCode")]
+        public JObject getSecCode () 
+        {
+            // 安全驗證碼
+            var sec = SecurityModule.CreateRecaptchaString();
+            var SECURITY = sec[0];
+            var Answer = sec[1];
+            var result = new JObject { // 
+                { "security", SECURITY },
+                { "answer", Answer }
+            };
+            return result;
+        }
 
         /* 取消預約 */
         [HttpPost("~/Cancel1")]
