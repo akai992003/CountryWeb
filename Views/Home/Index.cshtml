@@ -21,10 +21,10 @@
                 Covid-19疫苗接種專區
             </div>
             <div class="py-2">
-                <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4><h6> &nbsp; &nbsp; &nbsp; 公告日期: 2021-10-04(一) 09:30</h6>
+                <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4><h6> &nbsp; &nbsp; &nbsp; 公告日期: 2021-10-07(四) 09:00</h6>
                 
                 <p style="margin-left: 20px;color: blue;">
-                    ＊本週開放莫德納第二劑疫苗接受1-3類人員預約 10-04 上午10:00開放疫苗接種登記。<br>
+                    ＊下周10/11~10/15 無配發額外疫苗可供預約。<br>
                     @* &nbsp; &nbsp; 若有疫苗配發將再行開放預約，請持續關注本院網頁。<br> *@
 
                     </p>
@@ -505,13 +505,14 @@
             console.log(vpid);
             return;
         }
+
         if (twIdChk(id) === false) {
             //return;
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>身份證格式錯誤');
             $('.modal-body').html('<p class="m-0">身份證驗證失敗，請注意英文字是否為半型，或是否輸入正確之身份證號。</p>');
             return;
-        }
+        } 
 
         let idLength = $('#id').val().length;
         if (idLength < 8) {
@@ -540,10 +541,11 @@
     @* console.log('now:' + now);
         console.log('age:' + age);
         console.log('now-birthday:' + (now - birthday)); *@
-        if (age < 20) {
+        @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
+        if (age < 18) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-            $('.modal-body').html('<p class="m-0">施打疫苗需年滿20歲</p>');
+            $('.modal-body').html('<p class="m-0">施打疫苗需年滿18歲</p>');
             return;
         }
 
