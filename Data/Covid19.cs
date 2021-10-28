@@ -43,6 +43,7 @@ namespace CountryWeb.Data
         public string Addr_city { get; set; }
         public string Addr_detal { get; set; }
         public int Done { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 
     public class dtoCovid19
@@ -227,6 +228,7 @@ namespace CountryWeb.Data
             d.Addr_detal = dto.addr_detal;
             d.Phone = dto.phone;
             d.Done = 0;
+            d.CreateTime = DateTime.Now; // echo
             using (var context = new TgContext())
             {
                 await context.A2E.AddAsync(d);

@@ -338,7 +338,7 @@ namespace CountryWeb.Controllers
 
                 /* 預約成功 */
                 // 預約完要出現提醒示窗。(預約施打的日期時間，提醒事項)
-                result["msg"] = string.Format("登記成功,謝謝");
+                result["msg"] = string.Format("登記成功，殘劑施打將於每日下午四點後安排，並以電話通知直接到院，謝謝");
                 result["code"] = "200";
                 await this.ICovid19.NewA2E(dto);
             }
