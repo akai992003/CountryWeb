@@ -113,6 +113,28 @@ namespace CountryWeb.Controllers
             }
             #endregion
 
+            // akai 2021-11-05 高端 預約日期清單
+            #region BNT預約日期清單
+
+            var BNT = await this.IVPDate.GetVP1((int)VPTypename.BNT);
+            JArray Data_BNT = new JArray();
+            foreach (var p in BNT)
+            {
+                var J = new JObject {
+                        { "head", p.head },
+                        { "id", p.id.ToString() },
+                    };
+
+                if (p.Fulls == true)
+                {
+                    J["disabled"] = true;
+                }
+
+                Data_BNT.Add(J);
+            }
+            #endregion
+
+
             //2021-08-11 小愷新增 取得預約身份類別
             #region 
             var az = await this.IVPDate.GetVPCategoryList((int)VPTypename.AZ);
@@ -152,6 +174,18 @@ namespace CountryWeb.Controllers
                 Category_MV.Add(J);
             }
 
+            //2021-09-03 小愷新增 取得BNT預約身份類別
+            var aBNT = await this.IVPDate.GetVPCategoryList((int)VPTypename.BNT);
+            JArray Category_BNT = new JArray();
+            foreach (var p in aBNT)
+            {
+                var J = new JObject {
+                        { "head", p.Name},
+                        { "id", p.Id.ToString() },
+                    };
+
+                Category_BNT.Add(J);
+            }
             #endregion
 
             #region Token
@@ -164,9 +198,11 @@ namespace CountryWeb.Controllers
                 { "token", token },
                 { "vpMo", Data_Mo }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
                 { "vpMv", Data_MVP }, // Echo 2021-08-06 將莫得那 預約日期清單回傳到前端
+                { "vpBNT", Data_BNT }, // Echo 2021-08-06 將BNT 預約日期清單回傳到前端
                 { "cateAZ", Category_AZ }, // akai 2021-08-11 將AZ 預約身份類別傳回前端
                 { "cateMO", Category_MO }, // akai 2021-08-11 將Moderna 預約身份類別傳回前端
                 { "cateMV", Category_MV }, // akai 2021-08-11 將Moderna 預約身份類別傳回前端
+                { "cateBNT", Category_BNT }, // akai 2021-11-05 將BNT 預約身份類別傳回前端
             };
 
             #endregion
