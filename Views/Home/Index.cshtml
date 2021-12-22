@@ -22,7 +22,7 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2021-12-21(二) 19:00</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2021-12-22(三) 14:00</h6>
 
                 <p style="margin-left: 20px;color: blue;">
                     注射站於一樓大廳，施打疫苗種類與服務時段如下表<br>
@@ -31,11 +31,10 @@
 
                 </p>
                 <div class="col-12">
-                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/time.jpg"
-                        alt="服務時段">
+                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/time.jpg" alt="服務時段">
                 </div>
                 <br>
-                <p style="margin-left: 20px;color: orangered;">
+                @* <p style="margin-left: 20px;color: orangered;">
                     本院院內COVID-19 各類疫苗 說明 :<br>
                     依中央疫情指揮中心建議，每次疫苗門診為預約6人以上始得開瓶施打疫苗。<br>
                     本院目前提供疫苗門診 ; 疫苗注射時間為配合1922預約平台調整。<br>
@@ -44,7 +43,7 @@
 
                     採網路預約制，若系統顯示額滿，請選擇其他時段預約。<br>
                     如掛號頁面未顯示掛號日期，則表示尚未開放預約掛號。<br>
-                </p>
+                    </p> *@
                 <p style="margin-left: 20px;color: #e0130e;">
                     1.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(有出國需求者)以利現場審核，<br>
                     &thinsp; &thinsp; 施打BNT第一劑、第二劑之12~19歲民眾請持<a
@@ -244,14 +243,14 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    @* <div class="col-sm-6">
                         <label style="color: orangered;margin-top: 20px;">
-                            施打當天請提交在職證明或識別證影本備查。<br>
-                            第四類、第七類為為專案申請件，本院不受理預約。<br>
-                            本院採用健保署API身份自動審核，倘民眾對預約疫苗身份不符有疑義 <br>
-                            請循序洽造冊單位、衛生局、疾管署釐清。
+                        施打當天請提交在職證明或識別證影本備查。<br>
+                        第四類、第七類為為專案申請件，本院不受理預約。<br>
+                        本院採用健保署API身份自動審核，倘民眾對預約疫苗身份不符有疑義 <br>
+                        請循序洽造冊單位、衛生局、疾管署釐清。
                         </label>
-                    </div>
+                        </div> *@
                 </div>
             </div>
             <br>
@@ -799,22 +798,24 @@
 
 
     function twIdChk(id) {
-
-        let city = new Array(1, 10, 19, 28, 37, 46, 55, 64, 39, 73, 82, 2, 11, 20, 48, 29, 38, 47, 56, 65, 74, 83, 21, 3, 12, 30);
+    @* 110.12.22 移除身份證號檢核，因為醫管室說應該不會有人亂預約 *@
+    @* let city = new Array(1, 10, 19, 28, 37, 46, 55, 64, 39, 73, 82, 2, 11, 20, 48, 29, 38, 47, 56, 65, 74, 83, 21, 3, 12, 30);
         if (id.search(/^[A-Z](1|2)\d{8}$/i) === -1) {
-            return false;
+        return false;
         } else {
-            //將字串分割為陣列(IE必需這麼做才不會有問題)
-            const id1 = id.split('');
-            //計算總分
-            let total = city[id1[0].charCodeAt(0) - 65];
-            for (let i = 1; i <= 8; i++) {
-                total += eval((id1[i])) * (9 - i);
-            }
-            //補上檢查碼
-            total += eval(id1[9]);
-            return ((total % 10 === 0));
+        //將字串分割為陣列(IE必需這麼做才不會有問題)
+        const id1 = id.split('');
+        //計算總分
+        let total = city[id1[0].charCodeAt(0) - 65];
+        for (let i = 1; i <= 8; i++) {
+        total += eval((id1[i])) * (9 - i);
         }
+        //補上檢查碼
+        total += eval(id1[9]);
+        return ((total % 10 === 0));
+        } *@
+
+            return true;
     }
     function btnGetSecCode() {
 
