@@ -22,12 +22,10 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-01-21(一) 19:00</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-01-25(二) 13:30</h6>
 
                 <p style="margin-left: 20px;color: blue;">
-                    衛生局今日通知暫停本院官網平台預約（包含殘劑登記）。<br>
-                    服務量能全數開至中央預約平台，以期加速本市追加劑涵蓋率。<br>
-                    已預約成功民眾請依原預約時段攜帶身分證、健保卡、黃卡到院施打。<br>
+                    本院疫苗預約已額滿，請配合至1922預約平台預約接種，謝謝。<br>
                     
                 </p>
 
@@ -59,7 +57,7 @@
                 <p style="margin-left: 20px;color: #e0130e;">
                     1.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(有出國需求者)以利現場審核，<br>
                     &thinsp; &thinsp; 施打BNT第一劑、第二劑之12~19歲民眾請持<a
-                        href="https://www.cdc.gov.tw/File/Get/0mbidab9_sIQWHUPGlWCWA" target="_blank">家長簽名同意書</a>。<br>
+                        href="https://www.cdc.gov.tw/File/Get/rj530AJTe4wWbKNVjY1tTA" target="_blank">家長簽名同意書</a>。<br>
                     &thinsp; &thinsp; 若無法供以上文件、身分類別不符或未達接種間隔，則取消已預約接種資格且不予接種。
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
@@ -148,10 +146,10 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             &nbsp; <label for="label1">疫苗種類 : </label> &nbsp;
-                            <input type="radio" disabled id="AZ" name="vaccType" value="AZ" checked id="AZ">AZ &nbsp; &nbsp;
-                            <input type="radio" disabled id="MO" name="vaccType" value="MO" id="MO">Moderna &nbsp; &nbsp;
-                            <input type="radio" disabled id="MV" name="vaccType" value="MV" id="MV">高端 &nbsp; &nbsp;
-                            <input type="radio" disabled id="BNT" name="vaccType" value="BNT" id="BNT">BNT
+                            <input type="radio" id="AZ" name="vaccType" value="AZ" checked id="AZ">AZ &nbsp; &nbsp;
+                            <input type="radio" id="MO" name="vaccType" value="MO" id="MO">Moderna &nbsp; &nbsp;
+                            <input type="radio" id="MV" name="vaccType" value="MV" id="MV">高端 &nbsp; &nbsp;
+                            <input type="radio" id="BNT" name="vaccType" value="BNT" id="BNT">BNT
                         </div>
                     </div>
                 </div>
@@ -265,13 +263,12 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    @* <div class="col-sm-6">
                         <label style="color: orangered;margin-top: 20px;">
-                        衛生局今日通知暫停本院官網平台預約（包含殘劑登記）。<br>
-                        服務量能全數開至中央預約平台，以期加速本市追加劑涵蓋率。<br>
-                        已預約成功民眾請依原預約時段攜帶身分證、健保卡、黃卡到院施打。<br>
+                        本院疫苗預約已額滿，請配合至1922預約平台預約接種，謝謝。<br>
+
                         </label>
-                    </div>
+                    </div> *@
                 </div>
             </div>
             <br>
@@ -283,7 +280,7 @@
             <div class="row justify-content-center">
                 <a href="javascript:void(0)" id="clean" class="btn btn-danger mx-2" title="取消">
                     <i class="fas fa-times"></i> &nbsp; 清除</a>
-                <input type="submit" class="btn btn-primary mx-2" disabled value="  送出" @ViewBag.disableds>
+                <input type="submit" class="btn btn-primary mx-2" value="  送出" @ViewBag.disableds>
                 <i class="check fas fa-check" style="left: -72px;"></i>
             </div>
             <br>
