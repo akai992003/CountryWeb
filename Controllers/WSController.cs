@@ -239,6 +239,23 @@ namespace CountryWeb.Controllers
                 }
                 #endregion
 
+                // * Echo 2022-01-27 判斷12-18歲才可預約
+                var age = DateTime.Now.Year - int.Parse(dto.birthday_year);
+                if (age > 18 || age < 12)
+                {
+                    result["msg"] = "目前僅開放12-18歲可預約";
+                    result["code"] = "900";
+                    return result;
+                }
+
+                // * Echo 2022-01-27 判斷 老師名單才可預約
+                var isT = await this.ICovid19.isTeacher(dto.id.ToUpper());
+                if (isT == false) {
+                    result["msg"] = "目前僅開放已造冊之教師可預約";
+                    result["code"] = "910";
+                    return result;
+                }
+
                 // * Echo 2021-08-08 判斷疫苗種類
                 #region 可能會額滿
 
@@ -427,7 +444,7 @@ namespace CountryWeb.Controllers
         }
         /*重新取得驗證碼*/
         [HttpPost("~/getSecCode")]
-        public JObject getSecCode () 
+        public JObject getSecCode()
         {
             // 安全驗證碼
             string token = this.IJwt.GenerateToken_3min(issuer, signKey);

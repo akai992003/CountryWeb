@@ -33,6 +33,7 @@ namespace CountryWeb.Data
         public DbSet<VPType> VPType { get; set; }
         public DbSet<A2E> A2E { get; set; }
         public DbSet<NHIQP701> NHIQP701 { get; set; }
+        public DbSet<chklist> chklist { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

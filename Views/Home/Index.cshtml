@@ -691,7 +691,12 @@
                     $('.modal').modal('show');
                     $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
                     $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
-                } else {
+                } else if (data.code === "900" || data.code === "910") {
+                    $('.modal').modal('show');
+                    $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>預約失敗');
+                    $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');
+                }
+                else {
                     $('.modal').modal('show');
                     $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>重覆預約');
                     $('.modal-body').html('<p class="m-0">' + data.msg + '</p>');

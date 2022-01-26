@@ -31,6 +31,19 @@ namespace CountryWeb.Data
         public DateTime CreateTime { get; set; }
     }
 
+    public class chklist
+    {
+        [Key]
+        public Guid Guid { get; set; }
+        public string 序號 { get; set; }
+        public string 姓名 { get; set; }
+        public string 身分證字號 { get; set; }
+        public string 生日 { get; set; }
+        public string 聯絡電話 { get; set; }
+        public string 機關名稱 { get; set; }
+        public string 職稱 { get; set; }
+    }
+
     public class A2E
     {
         [Key]
@@ -120,6 +133,9 @@ namespace CountryWeb.Data
 
         // 殘劑預約人數
         Task<int> GetA2ECnt();
+
+        // * Echo 2022-01-27 判斷是否是名冊上的老師
+        Task<bool> isTeacher(string id);
     }
 
     public class Covid19Service : ICovid19Service
@@ -136,6 +152,24 @@ namespace CountryWeb.Data
             else
             {
                 this._dapperconn = TgContext.ConnS;
+            }
+        }
+
+
+        // * Echo 2022-01-27 判斷是否是名冊上的老師
+        public async Task<bool> isTeacher(string id)
+        {
+            using (var context = new TgContext())
+            {
+                var q = await (from p in context.chklist
+                               where p.身分證字號 == id
+                               select p).FirstOrDefaultAsync();
+                if (q != null)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
