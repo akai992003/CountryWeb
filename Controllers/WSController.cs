@@ -239,19 +239,19 @@ namespace CountryWeb.Controllers
                 }
                 #endregion
 
-                // * Echo 2022-01-27 判斷12-18歲才可預約
-                var age = DateTime.Now.Year - int.Parse(dto.birthday_year);
-                if (age > 18 || age < 12)
-                {
-                    result["msg"] = "目前僅開放12-18歲可預約";
-                    result["code"] = "900";
-                    return result;
-                }
+                // * Echo 2022-01-27 判斷12-19歲才可預約
+                // var age = DateTime.Now.Year - int.Parse(dto.birthday_year);
+                // if (age > 19 || age < 12)
+                // {
+                //     result["msg"] = "目前僅開放12-19歲可預約";
+                //     result["code"] = "900";
+                //     return result;
+                // }
 
                 // * Echo 2022-01-27 判斷 老師名單才可預約
                 var isT = await this.ICovid19.isTeacher(dto.id.ToUpper());
                 if (isT == false) {
-                    result["msg"] = "目前僅開放已造冊之教師可預約";
+                    result["msg"] = "目前僅開放教育局已造冊之教職員可預約";
                     result["code"] = "910";
                     return result;
                 }
@@ -319,7 +319,7 @@ namespace CountryWeb.Controllers
                 if (doChecked == true || isCheck == 0)
                 {
                     /* 預約成功 */
-                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院疫苗門診 施打疫苗,謝謝", dateS, weekS);
+                    result["msg"] = string.Format("請於 {0} - {1} 至 懷生國中 施打疫苗,謝謝", dateS, weekS);
                     result["code"] = "200";
                     await this.ICovid19.NewOne(dto);
                 }
