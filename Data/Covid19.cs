@@ -35,7 +35,7 @@ namespace CountryWeb.Data
     {
         [Key]
         public Guid Guid { get; set; }
-        public string 序號 { get; set; }
+        public int 序號 { get; set; }
         public string 姓名 { get; set; }
         public string 身分證字號 { get; set; }
         public string 生日 { get; set; }
@@ -159,18 +159,27 @@ namespace CountryWeb.Data
         // * Echo 2022-01-27 判斷是否是名冊上的老師
         public async Task<bool> isTeacher(string id)
         {
-            using (var context = new TgContext())
+            try
             {
-                var q = await (from p in context.chklist
-                               where p.身分證字號 == id
-                               select p).FirstOrDefaultAsync();
-                if (q != null)
+                using (var context = new TgContext())
                 {
-                    return true;
-                }
+                    var q = await (from p in context.chklist
+                                   where p.身分證字號 == id
+                                   select p).FirstOrDefaultAsync();
+                    if (q != null)
+                    {
+                        return true;
+                    }
 
+                    return false;
+                }
+            }
+            catch (System.Exception e)
+            {
+                var s = e.Message.ToString();
                 return false;
             }
+
         }
 
         // * 新增疫苗預約
