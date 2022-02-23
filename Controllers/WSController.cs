@@ -239,22 +239,14 @@ namespace CountryWeb.Controllers
                 }
                 #endregion
 
-                // * Echo 2022-01-27 判斷12-19歲才可預約
-                // var age = DateTime.Now.Year - int.Parse(dto.birthday_year);
-                // if (age > 19 || age < 12)
-                // {
-                //     result["msg"] = "目前僅開放12-19歲可預約";
-                //     result["code"] = "900";
-                //     return result;
-                // }
 
                 // * Echo 2022-01-27 判斷 老師名單才可預約
-                var isT = await this.ICovid19.isTeacher(dto.id.ToUpper());
-                if (isT == false) {
-                    result["msg"] = "目前僅開放教育局已造冊之教職員可預約";
-                    result["code"] = "910";
-                    return result;
-                }
+                // var isT = await this.ICovid19.isTeacher(dto.id.ToUpper());
+                // if (isT == false) {
+                //     result["msg"] = "目前僅開放教育局已造冊之教職員可預約";
+                //     result["code"] = "910";
+                //     return result;
+                // }
 
                 // * Echo 2021-08-08 判斷疫苗種類
                 #region 可能會額滿

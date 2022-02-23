@@ -135,7 +135,7 @@ namespace CountryWeb.Data
         Task<int> GetA2ECnt();
 
         // * Echo 2022-01-27 判斷是否是名冊上的老師
-        Task<bool> isTeacher(string id);
+        // Task<bool> isTeacher(string id);
     }
 
     public class Covid19Service : ICovid19Service
@@ -157,30 +157,30 @@ namespace CountryWeb.Data
 
 
         // * Echo 2022-01-27 判斷是否是名冊上的老師
-        public async Task<bool> isTeacher(string id)
-        {
-            try
-            {
-                using (var context = new TgContext())
-                {
-                    var q = await (from p in context.chklist
-                                   where p.身分證字號 == id
-                                   select p).FirstOrDefaultAsync();
-                    if (q != null)
-                    {
-                        return true;
-                    }
+        // public async Task<bool> isTeacher(string id)
+        // {
+        //     try
+        //     {
+        //         using (var context = new TgContext())
+        //         {
+        //             var q = await (from p in context.chklist
+        //                            where p.身分證字號 == id
+        //                            select p).FirstOrDefaultAsync();
+        //             if (q != null)
+        //             {
+        //                 return true;
+        //             }
 
-                    return false;
-                }
-            }
-            catch (System.Exception e)
-            {
-                var s = e.Message.ToString();
-                return false;
-            }
+        //             return false;
+        //         }
+        //     }
+        //     catch (System.Exception e)
+        //     {
+        //         var s = e.Message.ToString();
+        //         return false;
+        //     }
 
-        }
+        // }
 
         // * 新增疫苗預約
         public async Task NewOne(dtoCovid19 dto)
