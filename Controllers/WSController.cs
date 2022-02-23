@@ -311,7 +311,7 @@ namespace CountryWeb.Controllers
                 if (doChecked == true || isCheck == 0)
                 {
                     /* 預約成功 */
-                    result["msg"] = string.Format("請於 {0} - {1} 至 懷生國中 施打疫苗,謝謝", dateS, weekS);
+                    result["msg"] = string.Format("請於 {0} - {1} 至 宏恩綜合醫院 施打疫苗,謝謝", dateS, weekS);
                     result["code"] = "200";
                     await this.ICovid19.NewOne(dto);
                 }
