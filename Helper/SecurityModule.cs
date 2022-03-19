@@ -40,5 +40,11 @@ namespace CountryWeb.Helper
         }
 
         #endregion
+
+        public static string Decrypt(string s)
+        {
+            var _Decrypt = System.Text.Encoding.Default.GetString(Convert.FromBase64String(s.ToString().Replace("+", "% 2B")));
+            return _Decrypt;
+        }
     }
 }

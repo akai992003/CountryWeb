@@ -33,7 +33,9 @@ namespace CountryWeb
             Configuration = configuration;
 
             // Echo:取得連線資訊
-            connRoot = UStore.GetUStore(Configuration["ConnectionStrings:Root"], "Root");
+            var connRoot1 = UStore.GetUStore(Configuration["ConnectionStrings:Root"], "Root");
+            connRoot = SecurityModule.Decrypt(connRoot1);
+
             issuer = UStore.GetUStore(Configuration["JwtSettings:Issuer"], "Issuer");
             signKey = UStore.GetUStore(Configuration["JwtSettings:SignKey"], "SignKey");
         }
