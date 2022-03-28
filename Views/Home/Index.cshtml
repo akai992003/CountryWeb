@@ -594,13 +594,14 @@
         console.log('now-birthday:' + (now - birthday)); *@
     @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
     @* 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可 *@
-        if (age < 18 & vptype = 2) {
+    
+        if (age < 18 && vptype == 2 ) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
             $('.modal-body').html('<p class="m-0">施打莫德納疫苗需年滿18歲</p>');
             return;
         }
-        if (age < 12 & vptype = 4) {
+        if (age < 12 && vptype == 4 ) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
             $('.modal-body').html('<p class="m-0">施打BNT疫苗需年滿12歲</p>');
