@@ -22,10 +22,10 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-03-17(四) 20:00</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-03-24(四) 18:30</h6>
 
                 <p style="margin-left: 20px;color: blue;">
-                    下週疫苗預約資訊：3/21(一)至3/23(三)BNT疫苗 ; 3/24(四)至3/25(五)Moderna疫苗，請至頁面下方預約。<br>
+                    下週疫苗預約資訊：3/28(一)至4/01(五)Moderna疫苗，請在3/28上午10:00後至頁面下方預約。<br>
                 </p>
 
                 @* <p style="margin-left: 20px;color: blue;">
@@ -36,12 +36,12 @@
                     相關接種間隔依據2021/12/20中央流行疫情指揮中心公告(圖1、圖2)<br>
                     請至本頁下方預約畫面預約。<br>
 
-                </p> *@
+                    </p> *@
 
 
                 @* <div class="col-12">
                     <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/time-7.jpg" alt="服務時段">
-                </div> *@
+                    </div> *@
                 <br>
                 @* <p style="margin-left: 20px;color: orangered;">
                     本院院內COVID-19 各類疫苗 說明 :<br>
@@ -120,13 +120,12 @@
                 </div>
                 <div class="col-6">
                     <label>&nbsp; &nbsp; <圖2></label>
-                    <img class="img-thumbnail" 
-                        src="https://www.country.org.tw/img/covid19/COVID19-8.jpg" alt="疫情指揮中心公告-2">
+                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-8.jpg"
+                        alt="疫情指揮中心公告-2">
                 </div>
                 <div class="col-6">
                     @* <label>&nbsp; &nbsp; <圖3></label> *@
-                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-6.png"
-                        alt="第三劑說明-1">
+                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-6.png" alt="第三劑說明-1">
                 </div>
                 <div class="col-6">
                     @* <label>&nbsp; &nbsp; <圖4></label> *@
@@ -267,7 +266,7 @@
                         本院疫苗預約已額滿，請配合至1922預約平台預約接種，謝謝。<br>
 
                         </label>
-                    </div> *@
+                        </div> *@
                 </div>
             </div>
             <br>
@@ -595,13 +594,18 @@
         console.log('now-birthday:' + (now - birthday)); *@
     @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
     @* 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可 *@
-        if (age < 12) {
+        if (age < 18 & vptype = 2) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-            $('.modal-body').html('<p class="m-0">施打疫苗需年滿12歲</p>');
+            $('.modal-body').html('<p class="m-0">施打莫德納疫苗需年滿18歲</p>');
             return;
         }
-
+        if (age < 12 & vptype = 4) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
+            $('.modal-body').html('<p class="m-0">施打BNT疫苗需年滿12歲</p>');
+            return;
+        }
         let brLength_M = $('#birthday_month').val().length;
         if (brLength_M !== 2) {
             $('.modal').modal('show');
