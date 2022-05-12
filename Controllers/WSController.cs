@@ -36,6 +36,8 @@ namespace CountryWeb.Controllers
             this.signKey = UStore.GetUStore(Iconf["JwtSettings:SignKey"], "SignKey");
             this.INHIQP701 = INHIQP701Service;
 
+
+
         }
 
         /* 畫面一開起來時.先ajax load的資料 */
