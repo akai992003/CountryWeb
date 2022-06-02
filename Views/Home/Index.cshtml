@@ -22,11 +22,14 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-05-06(五) 12:30</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-06-02(四) 09:00</h6>
 
                 <p style="margin-left: 20px;color: blue;">
-                    下週疫苗預約資訊： 預約時段為 5/9(二) - 5/13(五) 下午 13:30-16:30 莫德納疫苗。<br>
-                    開放預約時間為:5/6(五) 上午10:30<br>
+                    疫苗預約資訊： 預約時段為 6/6(一) - 6/9(四) 下午 13:30-16:30 BNT疫苗(12歲以上)。<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp;&nbsp;&nbsp; 預約時段為 6/10(五) 下午 13:30-16:30 莫德納疫苗。<br>
+                    以上皆開放第一劑、第二劑、基礎加強劑、第一次追加劑、第二次追加劑<br>
+                    開放預約時間為:6/2(四) 上午10:00<br>
                 </p>
 
                 @* <p style="margin-left: 20px;color: blue;">
@@ -70,7 +73,7 @@
                 </p>
                 @* <p style="margin-left: 20px;color: #e0130e;">
                     若要預約殘劑,請按<a asp-action="A2E">這裡</a>
-                </p> *@
+                    </p> *@
 
                 <div class="row" style="margin-left:1px;">
                     <div class="col-md-6 col-sm-12">
@@ -114,26 +117,31 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
-                    <label>&nbsp; &nbsp; <圖1></label>
-                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-4.jpeg"
+                <div class="col-md-6 col-sm-12">
+                    <label>&nbsp; &nbsp; </label>
+                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/covid19-9.jpg"
                         alt="疫情指揮中心公告-1">
                 </div>
-                <div class="col-6">
-                    <label>&nbsp; &nbsp; <圖2></label>
-                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-8.jpg"
-                        alt="疫情指揮中心公告-2">
+                <div class="col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <label>&nbsp; &nbsp; </label>
+                            <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/detail.jpg"
+                                alt="疫情指揮中心公告-2">
+                        </div>
+                        <div class="col-12">
+                            @* <label>&nbsp; &nbsp; <圖3></label> *@
+                            <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-6.png"
+                                alt="第三劑說明-1">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    @* <label>&nbsp; &nbsp; <圖3></label> *@
-                    <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-6.png" alt="第三劑說明-1">
-                </div>
-                <div class="col-6">
+                <div class="col-md-12 col-sm-12">
                     @* <label>&nbsp; &nbsp; <圖4></label> *@
                     <img class="img-thumbnail" style="width:100%;height:100%"
                         src="https://www.country.org.tw/img/covid19/COVID19-7.jpg" alt="第三劑說明-2">
                 </div>
-                <div class="col-12">
+                <div class="col-md-12 col-sm-12">
                     <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/COVID19-3.png"
                         alt="lang.COVID19接種後注意">
                 </div>
@@ -595,14 +603,14 @@
         console.log('now-birthday:' + (now - birthday)); *@
     @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
     @* 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可 *@
-    
-        @* if (age < 18 && vptype == 2 ) {
-            $('.modal').modal('show');
-            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-            $('.modal-body').html('<p class="m-0">施打莫德納疫苗需年滿18歲</p>');
-            return;
+
+    @* if (age < 18 && vptype == 2 ) {
+        $('.modal').modal('show');
+        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
+        $('.modal-body').html('<p class="m-0">施打莫德納疫苗需年滿18歲</p>');
+        return;
         } *@
-        if (age < 12 ) {
+        if (age < 12) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
             $('.modal-body').html('<p class="m-0">施打疫苗需年滿12歲</p>');
