@@ -22,7 +22,7 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-06-02(四) 09:00</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-06-08(三) 13:00</h6>
 
                 <p style="margin-left: 20px;color: blue;">
                     疫苗預約資訊： 預約時段為 6/6(一) - 6/9(四) 下午 13:30-16:30 BNT疫苗(12歲以上)。<br>
@@ -39,9 +39,7 @@
                     注射站於一樓大廳，施打疫苗種類與服務時段如下表<br>
                     相關接種間隔依據2021/12/20中央流行疫情指揮中心公告(圖1、圖2)<br>
                     請至本頁下方預約畫面預約。<br>
-
                     </p> *@
-
 
                 @* <div class="col-12">
                     <img class="img-thumbnail" src="https://www.country.org.tw/img/covid19/time-7.jpg" alt="服務時段">
@@ -585,6 +583,22 @@
             return;
         }
 
+        let brLength_D = $('#birthday_day').val().length;
+        if (brLength_D !== 2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">日格式需為2碼</p>');
+            return;
+        }
+
+        let brLength_M = $('#birthday_month').val().length;
+        if (brLength_M !== 2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
+            $('.modal-body').html('<p class="m-0">月份格式需為2碼</p>');
+            return;
+        }
+
         let brLength_Y = $('#birthday_year').val().length;
         if (brLength_Y !== 4) {
             $('.modal').modal('show');
@@ -599,17 +613,7 @@
         var birthday = new Date(birth.replace('/-/g', "\/"));
         var d = new Date();
         var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
-    
-        // Echo 2022.6.8 
-        var idtypestext = $('#idtypes option:selected').text();
-        var idtypes2 = idtypestext.indexOf("追加劑");
-        // 未滿18歲，選了莫德納之後不能選追加劑
-        if (age < 18 && vptype == 2 && idtypes2 >= 0) {
-            $('.modal').modal('show');
-            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-            $('.modal-body').html('<p class="m-0">你要警告的訊息</p>');
-            return;
-        }
+
 
         /* console.log('now:' + now);
             console.log('age:' + age);
@@ -617,10 +621,14 @@
         // 醫管室110.10.04從20歲下修為18歲以上可施打疫苗
         // 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可
         // 醫管室111.06.08 改為18歲以下不可預約莫德納追加劑，但第一劑第二劑可以
-        if (age < 18 && vptype == 2) {
+        // Echo 111.6.8 
+        var idtypestext = $('#idtypes option:selected').text();
+        var idtypes2 = idtypestext.indexOf("追加劑");
+        // 未滿18歲，選了莫德納之後不能選追加劑
+        if (age < 18 && vptype == 2 && idtypes2 >= 0) {
             $('.modal').modal('show');
-            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-            $('.modal-body').html('<p class="m-0">施打莫德納疫苗追加劑需年滿18歲</p>');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>未滿18歲不可選擇莫德納追加劑');
+            $('.modal-body').html('<p class="m-0">依據臺北市政府衛生局111年5月18日北市衛疾字第11131343181號函公告12-17歲青少年追加劑僅提供BNT疫苗接種</p>');
             return;
         }
         if (age < 12) {
@@ -629,21 +637,9 @@
             $('.modal-body').html('<p class="m-0">施打疫苗需年滿12歲</p>');
             return;
         }
-        let brLength_M = $('#birthday_month').val().length;
-        if (brLength_M !== 2) {
-            $('.modal').modal('show');
-            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-            $('.modal-body').html('<p class="m-0">月份格式需為2碼</p>');
-            return;
-        }
 
-        let brLength_D = $('#birthday_day').val().length;
-        if (brLength_D !== 2) {
-            $('.modal').modal('show');
-            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>格式錯誤');
-            $('.modal-body').html('<p class="m-0">日格式需為2碼</p>');
-            return;
-        }
+
+
 
         const answer1 = $('#answer').val();
 
