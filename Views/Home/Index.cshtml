@@ -58,16 +58,19 @@
                     如掛號頁面未顯示掛號日期，則表示尚未開放預約掛號。<br>
                     </p> *@
                 <p style="margin-left: 20px;color: #e0130e;">
-                    1.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(有出國需求者)以利現場審核，<br>
+                    1.依據臺北市政府衛生局111年5月18日北市衛疾字第11131343181號函公告 <br>
+                    &thinsp; &thinsp; 12-17歲青少年追加劑僅提供BNT疫苗接種，與最後一劑基礎劑接種後間隔至少5個月(150天)後可接種，<br>
+                    &thinsp; &thinsp; 並容許4天寬限期，視為有效劑次。<br>
+                    2.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(有出國需求者)以利現場審核，<br>
                     &thinsp; &thinsp; 施打BNT第一劑、第二劑之12~19歲民眾請持<a
                         href="https://www.cdc.gov.tw/File/Get/rj530AJTe4wWbKNVjY1tTA" target="_blank">家長簽名同意書</a>。<br>
                     &thinsp; &thinsp; 若無法供以上文件、身分類別不符或未達接種間隔，則取消已預約接種資格且不予接種。
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
-                    2. 請全程正確配戴口罩及確實防疫。<br>
-                    3. 接種民眾請穿著可輕鬆捲袖的短袖或無袖衣物，方便快速露出上臂接種。<br>
-                    4. 接種後若有嚴重不適或狀況緊急，請儘速至急診就醫。<br>
-                    5. 對疫苗成分有嚴重過敏反應史，須經醫師評估後方可接種。<br>
+                    3. 請全程正確配戴口罩及確實防疫。<br>
+                    4. 接種民眾請穿著可輕鬆捲袖的短袖或無袖衣物，方便快速露出上臂接種。<br>
+                    5. 接種後若有嚴重不適或狀況緊急，請儘速至急診就醫。<br>
+                    6. 對疫苗成分有嚴重過敏反應史，須經醫師評估後方可接種。<br>
                     ＊本院依照疫苗配給量，開放掛號人數。若疫苗短缺，本院保有取消掛號的權利。<br>
                     ＊疫苗相關事項，請密切追蹤本院官網最新消息。<br>
                 </p>
@@ -603,13 +606,13 @@
         console.log('now-birthday:' + (now - birthday)); *@
     @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
     @* 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可 *@
-
-    @* if (age < 18 && vptype == 2 ) {
-        $('.modal').modal('show');
-        $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
-        $('.modal-body').html('<p class="m-0">施打莫德納疫苗需年滿18歲</p>');
-        return;
-        } *@
+    @* 醫管室111.06.08 改為18歲以下不可預約莫德納追加劑，但第一劑第二劑可以 *@
+    if (age < 18 && vptype == 2) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
+            $('.modal-body').html('<p class="m-0">施打莫德納疫苗追加劑需年滿18歲</p>');
+            return;
+        }
         if (age < 12) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
