@@ -599,15 +599,25 @@
         var birthday = new Date(birth.replace('/-/g', "\/"));
         var d = new Date();
         var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
-    @* alert(age); *@
+    
+        // Echo 2022.6.8 
+        var idtypestext = $('#idtypes option:selected').text();
+        var idtypes2 = idtypestext.indexOf("追加劑");
+        // 未滿18歲，選了莫德納之後不能選追加劑
+        if (age < 18 && vptype == 2 && idtypes2 >= 0) {
+            $('.modal').modal('show');
+            $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
+            $('.modal-body').html('<p class="m-0">你要警告的訊息</p>');
+            return;
+        }
 
-    @* console.log('now:' + now);
-        console.log('age:' + age);
-        console.log('now-birthday:' + (now - birthday)); *@
-    @* 醫管室110.10.04從20歲下修為18歲以上可施打疫苗 *@
-    @* 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可 *@
-    @* 醫管室111.06.08 改為18歲以下不可預約莫德納追加劑，但第一劑第二劑可以 *@
-    if (age < 18 && vptype == 2) {
+        /* console.log('now:' + now);
+            console.log('age:' + age);
+            console.log('now-birthday:' + (now - birthday)); */
+        // 醫管室110.10.04從20歲下修為18歲以上可施打疫苗
+        // 醫管室110.11.29從18歲改為滿12歲以上具家長同意書即可
+        // 醫管室111.06.08 改為18歲以下不可預約莫德納追加劑，但第一劑第二劑可以
+        if (age < 18 && vptype == 2) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>年齡不符');
             $('.modal-body').html('<p class="m-0">施打莫德納疫苗追加劑需年滿18歲</p>');
@@ -636,8 +646,7 @@
         }
 
         const answer1 = $('#answer').val();
-    @* console.log(answer1)
-        console.log(answer2) *@
+
         if (answer1 !== answer2) {
             $('.modal').modal('show');
             $('.modal-title').html('<i class="fas fa-exclamation-triangle text-warning pr-2"></i>安全確認碼');
