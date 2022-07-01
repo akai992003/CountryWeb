@@ -22,14 +22,14 @@
             </div>
             <div class="py-2">
                 <h4><i class="fas fa-caret-right text-primary pr-2"></i>COVID-19 疫苗特別門診注意事項</h4>
-                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-06-08(三) 13:00</h6>
+                <h6> &nbsp; &nbsp; &nbsp; 公告日期: 2022-07-01(五) 09:00</h6>
 
                 <p style="margin-left: 20px;color: blue;">
-                    疫苗預約資訊： 預約時段為 6/6(一) - 6/9(四) 下午 13:30-16:30 BNT疫苗(12歲以上)。<br>
+                    疫苗預約資訊： 預約時段為 7/4(一) - 7/5(二) 下午 13:30-16:30 BNT疫苗(12歲以上)。<br>
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp;&nbsp;&nbsp; 預約時段為 6/10(五) 下午 13:30-16:30 莫德納疫苗。<br>
+                    &nbsp;&nbsp;&nbsp; 預約時段為 7/6(三) - 7/8(五) 下午 13:30-16:30 莫德納疫苗(12歲以上)。<br><br>
                     以上皆開放第一劑、第二劑、基礎加強劑、第一次追加劑、第二次追加劑<br>
-                    開放預約時間為:6/2(四) 上午10:00<br>
+                    開放預約時間為:7/1(五) 上午10:00<br>
                 </p>
 
                 @* <p style="margin-left: 20px;color: blue;">
@@ -62,10 +62,13 @@
                     2.請攜帶健保卡、身分證、黃卡(COVID-19疫苗接種紀錄卡，已接種第一劑疫苗者)、身分類別證明文件、電子機票(有出國需求者)以利現場審核，<br>
                     &thinsp; &thinsp; 施打BNT第一劑、第二劑之12~19歲民眾請持<a
                         href="https://www.cdc.gov.tw/File/Get/rj530AJTe4wWbKNVjY1tTA" target="_blank">家長簽名同意書</a>。<br>
-                    &thinsp; &thinsp; 若無法供以上文件、身分類別不符或未達接種間隔，則取消已預約接種資格且不予接種。
+                    &thinsp; &thinsp; 若無法供以上文件、身分類別不符或未達接種間隔，則取消已預約接種資格且不予接種。<br>
+
+                    3. 第一類醫事人員第二次追加劑接種作業，請提供醫事人員執業執照影本備查; <br>
+                    &thinsp; &thinsp; 或非醫事人員之醫事機構工作相關證明文件(如職員證、投保證明等足以認定隸屬院所之非醫事人員證件)影本備查。
                 </p>
                 <p style="margin-left: 20px;color: orangered;">
-                    3. 請全程正確配戴口罩及確實防疫。<br>
+
                     4. 接種民眾請穿著可輕鬆捲袖的短袖或無袖衣物，方便快速露出上臂接種。<br>
                     5. 接種後若有嚴重不適或狀況緊急，請儘速至急診就醫。<br>
                     6. 對疫苗成分有嚴重過敏反應史，須經醫師評估後方可接種。<br>
@@ -155,9 +158,10 @@
                         <div class="form-group">
                             &nbsp; <label for="label1">疫苗種類 : </label> &nbsp;
                             <input type="radio" id="AZ" name="vaccType" value="AZ" checked id="AZ">AZ &nbsp; &nbsp;
-                            <input type="radio" id="MO" name="vaccType" value="MO" id="MO">Moderna &nbsp; &nbsp;
-                            <input type="radio" id="MV" name="vaccType" value="MV" id="MV">高端 &nbsp; &nbsp;
-                            <input type="radio" id="BNT" name="vaccType" value="BNT" id="BNT">BNT
+                            <input type="radio" id="MO" name="vaccType" value="MO">Moderna &nbsp; &nbsp;
+                            <input type="radio" id="MV" name="vaccType" value="MV">高端 &nbsp; &nbsp;
+                            <input type="radio" id="BNT" name="vaccType" value="BNT">BNT &nbsp; &nbsp;
+                            <input type="radio" id="NOVOVAX" name="vaccType" value="NOVOVAX">NOVOVAX
                         </div>
                     </div>
                 </div>
@@ -311,6 +315,8 @@
     let vpMO;
     let vpMV;
     let vpBNT;
+    let vpNOVOVAX;
+
     // Echo 2021-08-08 Add
     let vptype = '1'; //回寫db用
 
@@ -319,7 +325,7 @@
     let cateMO;
     let cateMV;
     let cateBNT;
-
+    let cateNOVOVAX;
     // akai Add on 2021-09-03 點下高端之後帶出日期
     $('#MV').click(function () {
         vptype = '3';
@@ -411,7 +417,7 @@
     });
 
     $('#BNT').click(function () {
-        // AKAI 2021-11-05 Add
+        // AKAI 2021-11-05 Add 點下AZ之後帶出日期
         vptype = '4';
         var formoption = ""; // AKAI 2021-11-05 Add
         $.each(vpBNT, function (v) {
@@ -430,6 +436,35 @@
             var val1 = cateBNT[v].id;
             var val2 = cateBNT[v].head;
             if (cateBNT[v].disabled === true) {
+                formoption1 += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption1 += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+        });
+        $('#idtypes').html(formoption1);
+
+    });
+
+    $('#NOVOVAX').click(function () {
+        // AKAI 2022-07-01 Add 點下NOVOVAX之後帶出日期
+        vptype = '5';
+        var formoption = "";
+        $.each(vpNOVOVAX, function (v) {
+            var val1 = vpNOVOVAX[v].id;
+            var val2 = vpNOVOVAX[v].head;
+            if (vpNOVOVAX[v].disabled === true) {
+                formoption += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
+            } else {
+                formoption += "<option value='" + val1 + "'>" + val2 + "</option>";
+            }
+        });
+        $('#vpid').html(formoption);
+
+        var formoption1 = ""; // akai 2022-07-01 Add
+        $.each(cateNOVOVAX, function (v) {
+            var val1 = cateNOVOVAX[v].id;
+            var val2 = cateNOVOVAX[v].head;
+            if (cateNOVOVAX[v].disabled === true) {
                 formoption1 += "<option value='" + val1 + "' disabled>" + val2 + "</option>";
             } else {
                 formoption1 += "<option value='" + val1 + "'>" + val2 + "</option>";
@@ -505,12 +540,14 @@
                 vpMO = data.vpMo;
                 vpMV = data.vpMv;
                 vpBNT = data.vpBNT;
+                vpNOVOVAX = data.vpNOVOVAX;
 
                 cateAZ = data.cateAZ;
                 cateMO = data.cateMO;
                 cateMV = data.cateMV;
                 cateBNT = data.cateBNT;
-
+                cateNOVOVAX = data.vpNOVOVAX;
+                
                 const vp1 = data.vp1;
                 var formoption = "";
                 $.each(vp1, function (v) {

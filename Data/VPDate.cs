@@ -47,7 +47,8 @@ namespace CountryWeb.Data
         AZ = 1,
         Moderna = 2,
         高端 = 3,
-        BNT = 4
+        BNT = 4,
+        NOVOVAX = 5
     }
 
     public class dtoVP
